@@ -11,9 +11,13 @@ export const getSuperAdminsId = (req, res) => {
   const userId = parseInt(req.params.id, 10);
   const findUser = superAdmins.find((user) => user.id === userId);
   if (findUser) {
-    res.send(findUser);
+    res.status(200).json({
+      data: findUser,
+    });
   } else {
-    res.send('user not find');
+    res.status(404).json({
+      error: 'User not found',
+    });
   }
 };
 
