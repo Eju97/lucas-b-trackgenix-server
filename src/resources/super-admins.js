@@ -37,3 +37,14 @@ export const postSuperAdmins = (req, res) => {
     }
   });
 };
+export const deleteSuperAdmins = (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+  const deleteUser = superAdmins.filter((admin) => admin.id !== userId);
+  fs.writeFile('src/data/super-admins.json', JSON.stringify(deleteUser), (err) => {
+    if (err) {
+      res.send('Cannot deleted user');
+    } else {
+      res.send('User deleted');
+    }
+  });
+};
