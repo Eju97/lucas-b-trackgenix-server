@@ -1,0 +1,45 @@
+[{
+    "id":"1",
+    "first_name":"Willow",
+    "last_name":"Knappen",
+    "email":"wknappen0@squidoo.com",
+    "password":"CMm4Vw",
+    "dni":"1",
+    "phone":"1",
+    "DateOfBirth":"9/12/2022"
+    },{
+        "id":"2",
+    "first_name":"Elden",
+    "last_name":"Breit",
+    "email":"ebreit1@jigsy.com",
+    "password":"l9Hoxg",
+    "dni":"2",
+    "phone":"2",
+    "DateOfBirth":"2/25/2022"
+},{
+    "id":"3",
+    "first_name":"Cristabel",
+    "last_name":"Lovett",
+    "email":"clovett2@xinhuanet.com",
+    "password":"LibBQkAa49",
+    "dni":"3",
+    "phone":"3",
+    "DateOfBirth":"2/20/2022"
+},{
+    "id":"4",
+    "first_name":"Pedro",
+    "last_name":"El Escamoso",
+    "email":"pedrito@hotmail.com",
+    "password":"l9H22222",
+    "phone":"4",
+    "DateOfBirth":"1/5/1991"
+},{
+    "id":"5",
+    "first_name":"Warren",
+    "last_name":"Sanchez",
+    "email":"warrensanchez@hotmail.com",
+    "password":"warren12",
+    "dni":"5",
+    "phone":"5",
+    "DateOfBirth":"2/31/1980"
+    }]
