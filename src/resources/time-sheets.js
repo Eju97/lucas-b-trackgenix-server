@@ -9,7 +9,7 @@ export const createNewTimeSheet = (req, res) => {
     startDate: req.body.startDate,
     endDate: req.body.endDate,
   };
-  const sheetsList = [...timeSheets, { ...newTimeSheet }];
+  const sheetsList = [...timeSheets, newTimeSheet];
   fs.writeFileSync('./src/data/time-sheets.json', JSON.stringify(sheetsList));
   res.status(200).json({
     data: sheetsList,
@@ -18,28 +18,27 @@ export const createNewTimeSheet = (req, res) => {
 
 export const editTimeSheet = (req, res) => {
   const searchId = parseInt(req.params.id, 10);
-  let Index;
+  let searchIndex;
   const sheetsList = timeSheets;
   for (let i = 0; i < sheetsList.length; i += 1) {
     if (sheetsList[i].id === searchId) {
-      Index = i;
+      searchIndex = i;
     }
   }
   if (req.body.name) {
-    sheetsList[Index].name = req.body.name;
+    sheetsList[searchIndex].name = req.body.name;
   }
   if (req.body.description) {
-    sheetsList[Index].description = req.body.description;
+    sheetsList[searchIndex].description = req.body.description;
   }
   if (req.body.startDate) {
-    sheetsList[Index].startDate = req.body.startDate;
+    sheetsList[searchIndex].startDate = req.body.startDate;
   }
   if (req.body.endDate) {
-    sheetsList[Index].endDate = req.body.endDate;
+    sheetsList[searchIndex].endDate = req.body.endDate;
   }
-  const editedSheets = [...sheetsList];
-  fs.writeFileSync('./src/data/time-sheets.json', JSON.stringify(editedSheets));
+  fs.writeFileSync('./src/data/time-sheets.json', JSON.stringify(sheetsList));
   res.status(200).json({
-    editedSheets,
+    sheetsList,
   });
 };

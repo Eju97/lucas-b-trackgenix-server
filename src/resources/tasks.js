@@ -7,7 +7,7 @@ export const createNewTask = (req, res) => {
     name: req.body.name,
     description: req.body.description,
   };
-  const taskList = [...tasks, { ...newTask }];
+  const taskList = [...tasks, newTask];
   fs.writeFileSync('./src/data/tasks.json', JSON.stringify(taskList));
   res.status(200).json({
     data: taskList,
@@ -29,9 +29,8 @@ export const editTask = (req, res) => {
   if (req.body.description) {
     tasksList[taskIndex].description = req.body.description;
   }
-  const editedTasks = [...tasksList];
-  fs.writeFileSync('./src/data/tasks.json', JSON.stringify(editedTasks));
+  fs.writeFileSync('./src/data/tasks.json', JSON.stringify(tasksList));
   res.status(200).json({
-    editedTasks,
+    tasksList,
   });
 };
