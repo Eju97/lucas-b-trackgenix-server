@@ -2,7 +2,9 @@ const fs = require('fs');
 const employees = require('../data/employees.json');
 
 export const getAllEmployees = (req, res) => {
-  res.send(JSON.stringify(employees));
+  res.status(200).json({
+    data: employees,
+  });
 };
 
 export const createEmployees = (req, res) => {
@@ -10,9 +12,13 @@ export const createEmployees = (req, res) => {
   employees.push(newEmployee);
   fs.writeFile('src/data/employees.json', JSON.stringify(employees), (err) => {
     if (err) {
-      res.send('Could not create employee');
+      res.status(400).json({
+        error: 'Could not create employee',
+      });
     } else {
-      res.send('Employee created ');
+      res.status(200).json({
+        message: 'The employee was created successfully',
+      });
     }
   });
 };
