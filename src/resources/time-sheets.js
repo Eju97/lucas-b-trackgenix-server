@@ -20,7 +20,7 @@ export const editTimeSheet = (req, res) => {
   const searchId = parseInt(req.params.id, 10);
   let Index;
   const sheetsList = timeSheets;
-  for (let i = 0; i < sheetsList.length; i++) {
+  for (let i = 0; i < sheetsList.length; i += 1) {
     if (sheetsList[i].id === searchId) {
       Index = i;
     }

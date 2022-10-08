@@ -18,7 +18,7 @@ export const editTask = (req, res) => {
   const searchId = parseInt(req.params.id, 10);
   let taskIndex;
   const tasksList = tasks;
-  for (let i = 0; i < tasksList.length; i++) {
+  for (let i = 0; i < tasksList.length; i += 1) {
     if (tasksList[i].id === searchId) {
       taskIndex = i;
     }
