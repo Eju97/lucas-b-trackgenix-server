@@ -11,18 +11,21 @@ export const postSuperAdmins = (req, res) => {
     DNI: req.body.DNI,
     Phone: req.body.Phone,
   };
-  superAdmins.push(user);
-  fs.writeFile('src/data/super-admins.json', JSON.stringify(superAdmins), () => {
-    if (!user.email || !user.first_name || !user.last_name
+  const newSuperAdmins = [...superAdmins, user];
+  if (!user.email || !user.first_name || !user.last_name
           || !user.date_of_birth || !user.DNI || !user.Phone) {
-      res.send('Cannot save new user');
-    } else {
+    res.status(404).json({
+      error: 'Cannot create a super admin. Invalid body params',
+    });
+  } else {
+    fs.writeFile('src/data/super-admins.json', JSON.stringify(newSuperAdmins, null, 2), () => {
       res.status(200).json({
         message: 'Created new super admin',
       });
-    }
-  });
+    });
+  }
 };
+
 export const deleteSuperAdmins = (req, res) => {
   const userId = parseInt(req.params.id, 10);
   const deleteUser = superAdmins.filter((admin) => admin.id !== userId);
