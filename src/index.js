@@ -1,12 +1,16 @@
 // use "import" to import libraries
 import express from 'express';
-import { postSuperAdmins, deleteSuperAdmins, getFilterAdmin } from './resources/super-admins';
-import { postAdmins, deleteAdmins } from './resources/admins';
+import {
+  postSuperAdmins, deleteSuperAdmins, getSuperAdminsId,
+  editSuperAdmins, filterSuperAdmin,
+} from './resources/super-admins';
+import { postAdmins, deleteAdmins, filterAdmin } from './resources/admins';
 import { getAllEmployees, createEmployees } from './resources/employees';
 import { createNewTask, editTask } from './resources/tasks';
 import { createNewTimeSheet, editTimeSheet } from './resources/time-sheets';
 
 const app = express();
+
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
@@ -16,9 +20,16 @@ app.get('/', (req, res) => {
 });
 app.post('/admins', postAdmins);
 app.delete('/admins/:id', deleteAdmins);
+app.get('/admins', filterAdmin);
+
 app.post('/super-admins', postSuperAdmins);
 app.delete('/super-admins/:id', deleteSuperAdmins);
-app.get('/super-admins?', getFilterAdmin);
+app.get('/super-admins/find/:id', getSuperAdminsId);
+app.put('/super-admins/edit/:id', editSuperAdmins);
+app.get('/super-admins', filterSuperAdmin);
+app.post('/super-admins', postSuperAdmins);
+app.delete('/super-admins/:id', deleteSuperAdmins);
+
 app.get('/employees', getAllEmployees);
 app.post('/employees/add', createEmployees);
 
@@ -29,6 +40,6 @@ app.post('/time-sheets/createNewTimeSheet', createNewTimeSheet);
 app.put('/time-sheets/modifyTimeSheet/:id', editTimeSheet);
 
 app.listen(port, () => {
-  // eslint-disable-next-line no-console
+// eslint-disable-next-line no-console
   console.log(`Example app listening on port ${port}`);
 });
