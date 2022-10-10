@@ -1,12 +1,12 @@
 // use "import" to import libraries
 import express from 'express';
-
-import filterAdmin from './resources/admins';
 import {
-  postSuperAdmins, deleteSuperAdmins,
-  getSuperAdminsId, editSuperAdmins, filterSuperAdmin,
+  postSuperAdmins, deleteSuperAdmins, getSuperAdminsId,
+  editSuperAdmins, filterSuperAdmin,
 } from './resources/super-admins';
+import { postAdmins, deleteAdmins, filterAdmin } from './resources/admins';
 import { createEmployees, getEmployeeById, getEmployees } from './resources/employees';
+
 import { createNewTask, editTask } from './resources/tasks';
 import { createNewTimeSheet, editTimeSheet } from './resources/time-sheets';
 
@@ -15,17 +15,20 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+app.post('/admins', postAdmins);
+app.delete('/admins/:id', deleteAdmins);
+app.get('/admins', filterAdmin);
+
 app.get('/super-admins/find/:id', getSuperAdminsId);
 app.put('/super-admins/edit/:id', editSuperAdmins);
 app.get('/super-admins', filterSuperAdmin);
-app.get('/admins', filterAdmin);
 app.post('/super-admins', postSuperAdmins);
 app.delete('/super-admins/:id', deleteSuperAdmins);
+
 app.get('/employees', getEmployees);
 app.get('/getEmployeeById/:id', getEmployeeById);
 app.post('/employees/add', createEmployees);
