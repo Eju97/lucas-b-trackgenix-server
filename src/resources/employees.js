@@ -3,6 +3,7 @@ const employees = require('../data/employees.json');
 
 export const getEmployees = (req, res) => {
   const queryParams = req.query;
+
   let filterdList = employees;
   if (Object.keys(queryParams).length > 0) {
     const filterById = queryParams.id;
