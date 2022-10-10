@@ -2,12 +2,20 @@
 import express from 'express';
 import { postAdmins, deleteAdmins, filterAdmin } from './resources/admins';
 import {
-  getTaskById, deleteTaskById, getTaskList, createNewTask, editTask,
+  getTaskById,
+  deleteTaskById,
+  getTaskList,
+  createNewTask,
+  editTask,
 } from './resources/tasks';
 import {
-  postSuperAdmins, deleteSuperAdmins, getSuperAdminsId,
-  editSuperAdmins, filterSuperAdmin,
+  postSuperAdmins,
+  deleteSuperAdmins,
+  getSuperAdminsId,
+  editSuperAdmins,
+  filterSuperAdmin,
 } from './resources/super-admins';
+import { getProjects, getProjectById } from './resources/projects';
 import { createEmployees, getEmployeeById, getEmployees } from './resources/employees';
 
 import { createNewTimeSheet, editTimeSheet } from './resources/time-sheets';
@@ -34,7 +42,8 @@ app.delete('/super-admins/:id', deleteSuperAdmins);
 app.get('/employees', getEmployees);
 app.get('/getEmployeeById/:id', getEmployeeById);
 app.post('/employees/add', createEmployees);
-
+app.get('/projects', getProjects);
+app.get('/projects/:id', getProjectById);
 app.post('/tasks/createNewTask', createNewTask);
 app.put('/tasks/modifyTask/:id', editTask);
 
