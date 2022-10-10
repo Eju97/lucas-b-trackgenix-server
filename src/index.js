@@ -1,6 +1,6 @@
 // use "import" to import libraries
 import express from 'express';
-import { postSuperAdmins, deleteSuperAdmins } from './resources/super-admins';
+import { postSuperAdmins, deleteSuperAdmins, getFilterAdmin } from './resources/super-admins';
 import { postAdmins, deleteAdmins } from './resources/admins';
 import { getAllEmployees, createEmployees } from './resources/employees';
 import { createNewTask, editTask } from './resources/tasks';
@@ -18,6 +18,7 @@ app.post('/admins', postAdmins);
 app.delete('/admins/:id', deleteAdmins);
 app.post('/super-admins', postSuperAdmins);
 app.delete('/super-admins/:id', deleteSuperAdmins);
+app.get('/super-admins?', getFilterAdmin);
 app.get('/employees', getAllEmployees);
 app.post('/employees/add', createEmployees);
 
