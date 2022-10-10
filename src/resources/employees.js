@@ -22,3 +22,18 @@ export const createEmployees = (req, res) => {
     }
   });
 };
+
+export const deleteEmployees = (req, res) => {
+  const userId = req.params.id;
+  let deleteUser = employees;
+  deleteUser = employees.filter((user) => user.id !== userId);
+  fs.writeFile('src/data/employees.json', JSON.stringify(deleteUser), (err) => {
+    if (err) {
+      res.send('Cannot deleted user');
+    } else {
+      res.status(200).json({
+        message: 'Employee deleted',
+      });
+    }
+  });
+};

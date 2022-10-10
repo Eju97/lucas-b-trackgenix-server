@@ -5,9 +5,10 @@ import {
   postSuperAdmins, deleteSuperAdmins,
   getSuperAdminsId, editSuperAdmins, filterSuperAdmin,
 } from './resources/super-admins';
-import { getAllEmployees, createEmployees } from './resources/employees';
+import { getAllEmployees, createEmployees, deleteEmployees } from './resources/employees';
 import { createNewTask, editTask } from './resources/tasks';
 import { createNewTimeSheet, editTimeSheet } from './resources/time-sheets';
+import { getAllProjects, createProjects, deleteProjects } from './resources/projects';
 
 const app = express();
 
@@ -28,6 +29,10 @@ app.post('/super-admins', postSuperAdmins);
 app.delete('/super-admins/:id', deleteSuperAdmins);
 app.get('/employees', getAllEmployees);
 app.post('/employees/add', createEmployees);
+app.delete('/employees/delete/:id', deleteEmployees);
+app.get('/projects', getAllProjects);
+app.post('/projects/add', createProjects);
+app.delete('/projects/:id', deleteProjects);
 
 app.post('/tasks/createNewTask', createNewTask);
 app.put('/tasks/modifyTask/:id', editTask);
