@@ -55,3 +55,26 @@ export const createEmployees = (req, res) => {
     }
   });
 };
+
+export const editEmployee = (req, res) => {
+  const editedEmployees = employees.map((employee) => {
+    if (employee.id === req.params.id) {
+      return {
+        id: employee.id,
+        first_name: req.body.first_name || employee.first_name,
+        last_name: req.body.last_name || employee.last_name,
+        email: req.body.email || employee.email,
+        password: req.body.password || employee.password,
+        dni: req.body.dni || employee.dni,
+        phone: req.body.phone || employee.phone,
+        DateOfBirth: req.body.DateOfBirth || employee.DateOfBirth,
+      };
+    }
+    return employee;
+  });
+  fs.writeFile('src/data/employees.json', JSON.stringify(editedEmployees, null, 2), () => {
+    res.status(200).json({
+      message: 'The employee was edited successfully',
+    });
+  });
+};
