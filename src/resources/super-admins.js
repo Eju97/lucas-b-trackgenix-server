@@ -88,17 +88,3 @@ export const deleteSuperAdmins = (req, res) => {
     }
   });
 };
-
-export const getFilterAdmin = (req, res) => {
-  const filters = req.query;
-  const filteredUsers = superAdmins.filter((user) => {
-    let isValid = true;
-    let key;
-    // eslint-disable-next-line no-restricted-syntax, guard-for-in
-    for (key in filters) {
-      isValid = isValid && user[key] === filters[key];
-    }
-    return isValid;
-  });
-  res.send(filteredUsers);
-};
