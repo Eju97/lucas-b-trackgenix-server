@@ -21,7 +21,7 @@ export const getProjects = (req, res) => {
     }
   }
   res.status(200).json({
-    user: filterdList,
+    data: filterdList,
   });
 };
 
@@ -30,11 +30,11 @@ export const getProjectById = ((req, res) => {
   const foundProject = projects.find((user) => user.id === projectID);
   if (foundProject) {
     res.status(200).json({
-      user: foundProject,
+      data: foundProject,
     });
   } else {
     res.status(404).json({
-      error: 'User dont found',
+      error: 'Data dont found',
     });
   }
 });
