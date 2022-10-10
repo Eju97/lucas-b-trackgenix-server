@@ -1,7 +1,7 @@
 // use "import" to import libraries
 import express from 'express';
 import getAllAdmins from './resources/admins';
-import { getEmployeeById, getEmployees, getEmployeeByFilter } from './resources/employees';
+import { getEmployeeById, getEmployees } from './resources/employees';
 
 const app = express();
 
@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
 app.get('/admins', getAllAdmins);
 app.get('/employees', getEmployees);
 app.get('/getEmployeeById/:id', getEmployeeById);
-app.get('/employees/:id', getEmployeeByFilter);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

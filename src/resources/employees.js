@@ -1,27 +1,39 @@
-const employee = require('../data/employees.json');
+const employees = require('../data/employees.json');
 
 export const getEmployees = (req, res) => {
+  const queryParams = req.query;
+  let filterdList = employees;
+  if (Object.keys(queryParams).length > 0) {
+    const filterById = queryParams.id;
+    const filterByName = queryParams.first_name;
+    const filterByDni = queryParams.dni;
+    filterdList = employees.filter((user) => Object.keys(user) === Object.keys(queryParams));
+
+    if (filterById) {
+      filterdList = employees.filter((user) => user.id.includes(filterById));
+    }
+    if (filterByName) {
+      filterdList = employees.filter((user) => user.first_name.includes(filterByName));
+    }
+    if (filterByDni) {
+      filterdList = employees.filter((user) => user.dni.includes(filterByName));
+    }
+  }
   res.status(200).json({
-    data: employee,
+    user: filterdList,
   });
 };
 
 export const getEmployeeById = ((req, res) => {
   const userId = req.params.id;
-  const foundUser = employee.find((user) => user.id === userId);
+  const foundUser = employees.find((user) => user.id === userId);
   if (foundUser) {
-    res.send(foundUser);
+    res.status(200).json({
+      user: foundUser,
+    });
   } else {
-    res.send('User dont found');
-  }
-});
-
-export const getEmployeeByFilter = ((req, res) => {
-  const found = employee.some((user) => user.id === req.params.id);
-
-  if (found) {
-    res.json(employee.filter((user) => user.id === req.params.id));
-  } else {
-    res.status(400).json({ msg: 'Employee not found' });
+    res.status(404).json({
+      error: 'User dont found',
+    });
   }
 });
