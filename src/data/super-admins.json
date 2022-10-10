@@ -18,7 +18,7 @@
     "id": 3,
     "email": "scrosland2@dedecms.com",
     "first_name": "Shaina",
-    "last_name": "Crosland",
+    "last_name": "Heiss",
     "date_of_birth": "28.1.2007",
     "DNI": "5048379162846449",
     "Phone": "796-958-8482"
@@ -38,4 +38,14 @@
     "date_of_birth": "11.8.2001",
     "DNI": "5048378370025267",
     "Phone": "360-184-8223"
-  }]
+  },
+  {
+    "id": 52,
+    "email": "wewinsaa0@angelfire.com",
+    "first_name": "Winnie",
+    "last_name": "Ewins",
+    "date_of_birth": "30.7.2020",
+    "DNI": "50483746249",
+    "Phone": "371-966-4516"
+  }
+]
