@@ -6,6 +6,7 @@ import {
   getSuperAdminsId, editSuperAdmins, filterSuperAdmin,
 } from './resources/super-admins';
 import { getAllEmployees, createEmployees } from './resources/employees';
+import { getProjects, getProjectById } from './resources/projects';
 import { createNewTask, editTask } from './resources/tasks';
 import { createNewTimeSheet, editTimeSheet } from './resources/time-sheets';
 
@@ -28,7 +29,8 @@ app.post('/super-admins', postSuperAdmins);
 app.delete('/super-admins/:id', deleteSuperAdmins);
 app.get('/employees', getAllEmployees);
 app.post('/employees/add', createEmployees);
-
+app.get('/projects', getProjects);
+app.get('/projects/:id', getProjectById);
 app.post('/tasks/createNewTask', createNewTask);
 app.put('/tasks/modifyTask/:id', editTask);
 
