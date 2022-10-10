@@ -4,7 +4,7 @@ import {
   postSuperAdmins, deleteSuperAdmins,
   getAllSuperAdmins, getSuperAdminsId, editSuperAdmins,
 } from './resources/super-admins';
-import getAllAdmins from './resources/admins';
+import { getAllAdmins, getAdminsId, editAdmins } from './resources/admins';
 import { getAllEmployees, createEmployees } from './resources/employees';
 import { createNewTask, editTask } from './resources/tasks';
 import { createNewTimeSheet, editTimeSheet } from './resources/time-sheets';
@@ -18,9 +18,11 @@ app.use(express.urlencoded({ extended: false }));
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+app.get('/admins/filter/:id', getAdminsId);
 app.get('/super-admins', getAllSuperAdmins);
 app.get('/super-admins/find/:id', getSuperAdminsId);
 app.put('/super-admins/edit/:id', editSuperAdmins);
+app.put('/admins/edit/:id', editAdmins);
 
 app.post('/super-admins', postSuperAdmins);
 app.delete('/super-admins/:id', deleteSuperAdmins);
