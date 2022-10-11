@@ -32,7 +32,7 @@ import { createNewTimeSheet, editTimeSheet } from './resources/time-sheets';
 
 const app = express();
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
