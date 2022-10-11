@@ -1,4 +1,6 @@
+const fs = require('fs');
 const projects = require('../data/projects.json');
+const employees = require('../data/employees.json');
 
 export const getProjects = (req, res) => {
   const queryParams = req.query;
@@ -38,3 +40,41 @@ export const getProjectById = ((req, res) => {
     });
   }
 });
+
+export const assignEmployee = (req, res) => {
+  const getEmployeeById = (employeeId) => employees.find((employee) => employee.id === employeeId);
+  const findProjectById = (projectId) => projects.find((project) => project.id === projectId);
+  const selectedProject = findProjectById(req.params.id);
+  const roles = ['PM', 'TL', 'DEV', 'QA'];
+  if (!selectedProject) {
+    return res.status(403).json({
+      error: 'The project does not exist',
+    });
+  }
+  if (!roles.includes(req.body.role)) {
+    return res.status(403).json({
+      error: 'The role is not supported',
+    });
+  }
+  const employee = getEmployeeById(req.body.id);
+  if (!employee) {
+    return res.status(403).json({
+      error: 'Employee not found',
+    });
+  }
+  const newProjects = projects.map((project) => {
+    if (project.id === req.params.id) {
+      return {
+        ...project,
+        employees: [...project.employees, req.body],
+      };
+    }
+    return project;
+  });
+
+  return fs.writeFile('src/data/projects.json', JSON.stringify(newProjects, null, 2), () => {
+    res.status(200).json({
+      message: 'The employee was assigned to the project successfully',
+    });
+  });
+};
