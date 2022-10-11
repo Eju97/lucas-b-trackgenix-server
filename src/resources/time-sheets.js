@@ -10,7 +10,7 @@ const compareDates = (firstDate, secondDate, queryDate) => {
 
 export const createNewTimeSheet = (req, res) => {
   const newTimeSheet = {
-    id: req.body.id,
+    id: parseInt(new Date().getTime().toString().substring(10), 10),
     name: req.body.name,
     description: req.body.description,
     startDate: req.body.startDate,

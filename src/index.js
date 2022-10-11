@@ -1,18 +1,45 @@
-// use "import" to import libraries
+// use 'import' to import libraries
 import express from 'express';
 import {
-  postSuperAdmins, deleteSuperAdmins, getSuperAdminsId,
-  editSuperAdmins, filterSuperAdmin,
+  postAdmins,
+  deleteAdmins,
+  filterAdmin,
+  getAdminsId,
+  editAdmins,
+} from './resources/admins';
+import {
+  getTaskById,
+  deleteTaskById,
+  getTaskList,
+  createNewTask,
+  editTask,
+} from './resources/tasks';
+import {
+  postSuperAdmins,
+  deleteSuperAdmins,
+  getSuperAdminsId,
+  editSuperAdmins,
+  filterSuperAdmin,
 } from './resources/super-admins';
 
-import { getProjects, getProjectById } from './resources/projects';
-import { postAdmins, deleteAdmins, filterAdmin } from './resources/admins';
-import { createEmployees, getEmployeeById, getEmployees } from './resources/employees';
-
-import { createNewTask, editTask } from './resources/tasks';
 import {
   createNewTimeSheet, editTimeSheet, getTimeById, deleteTimeById, getFilteredList,
 } from './resources/time-sheets';
+import {
+  getProjects,
+  getProjectById,
+  createProjects,
+  deleteProjects,
+  assignEmployee,
+  editProject,
+} from './resources/projects';
+import {
+  createEmployees,
+  getEmployeeById,
+  getEmployees,
+  editEmployee,
+  deleteEmployees,
+} from './resources/employees';
 
 const app = express();
 
@@ -23,31 +50,51 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
-app.post('/admins', postAdmins);
-app.delete('/admins/:id', deleteAdmins);
-app.get('/admins', filterAdmin);
 
+// Admins
+app.get('/admins', filterAdmin);
+app.get('/admins/find/:id', getAdminsId);
+app.put('/admins/edit/:id', editAdmins);
+app.post('/admins/add', postAdmins);
+app.delete('/admins/delete/:id', deleteAdmins);
+
+// Super Admins
+app.get('/super-admins', filterSuperAdmin);
 app.get('/super-admins/find/:id', getSuperAdminsId);
 app.put('/super-admins/edit/:id', editSuperAdmins);
-app.get('/super-admins', filterSuperAdmin);
-app.post('/super-admins', postSuperAdmins);
-app.delete('/super-admins/:id', deleteSuperAdmins);
+app.post('/super-admins/add', postSuperAdmins);
+app.delete('/super-admins/delete/:id', deleteSuperAdmins);
 
+// Employees
 app.get('/employees', getEmployees);
-app.get('/getEmployeeById/:id', getEmployeeById);
+app.get('/emplyees/find/:id', getEmployeeById);
+app.put('/employees/edit/:id', editEmployee);
 app.post('/employees/add', createEmployees);
+app.delete('/employees/delete/:id', deleteEmployees);
+
+// Projects
 app.get('/projects', getProjects);
 app.get('/projects/:id', getProjectById);
-app.post('/tasks/createNewTask', createNewTask);
-app.put('/tasks/modifyTask/:id', editTask);
+app.put('/projects/edit/:id', editProject);
+app.put('/projects/:id/assign', assignEmployee);
+app.post('/projects/add', createProjects);
+app.delete('/projects/delete/:id', deleteProjects);
 
-app.post('/time-sheets/createNewTimeSheet', createNewTimeSheet);
-app.put('/time-sheets/modifyTimeSheet/:id', editTimeSheet);
-app.get('/time-sheets/getTimeById/:id', getTimeById);
-app.delete('/time-sheets/deleteTimeById/:id', deleteTimeById);
+// Tasks
+app.get('/tasks', getTaskList);
+app.get('/tasks/find/:id', getTaskById);
+app.put('/tasks/edit/:id', editTask);
+app.post('/tasks/add', createNewTask);
+app.delete('/tasks/delete/:id', deleteTaskById);
+
+// Timesheets
 app.get('/time-sheets', getFilteredList);
+app.get('/time-sheets/find/:id', getTimeById);
+app.put('/time-sheets/edit/:id', editTimeSheet);
+app.post('/time-sheets/add', createNewTimeSheet);
+app.delete('/time-sheets/delete/:id', deleteTimeById);
 
 app.listen(port, () => {
-// eslint-disable-next-line no-console
+  // eslint-disable-next-line no-console
   console.log(`Example app listening on port ${port}`);
 });
