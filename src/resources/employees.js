@@ -3,22 +3,20 @@ const employees = require('../data/employees.json');
 
 export const getEmployees = (req, res) => {
   const queryParams = req.query;
-
   let filterdList = employees;
   if (Object.keys(queryParams).length > 0) {
-    const filterById = queryParams.id;
+    const filterByEmail = queryParams.email;
     const filterByName = queryParams.first_name;
     const filterByDni = queryParams.dni;
     filterdList = employees.filter((user) => Object.keys(user) === Object.keys(queryParams));
-
-    if (filterById) {
-      filterdList = employees.filter((user) => user.id.includes(filterById));
+    if (filterByEmail) {
+      filterdList = employees.filter((user) => user.email.includes(filterByEmail));
     }
     if (filterByName) {
       filterdList = employees.filter((user) => user.first_name.includes(filterByName));
     }
     if (filterByDni) {
-      filterdList = employees.filter((user) => user.dni.includes(filterByName));
+      filterdList = employees.filter((user) => user.dni.toString().includes(filterByDni));
     }
   }
   res.status(200).json({
@@ -27,7 +25,7 @@ export const getEmployees = (req, res) => {
 };
 
 export const getEmployeeById = ((req, res) => {
-  const userId = req.params.id;
+  const userId = parseInt(req.params.id, 10);
   const foundUser = employees.find((user) => user.id === userId);
   if (foundUser) {
     res.status(200).json({
@@ -35,7 +33,7 @@ export const getEmployeeById = ((req, res) => {
     });
   } else {
     res.status(404).json({
-      error: 'User dont found',
+      error: 'User not found',
     });
   }
 });
@@ -60,7 +58,7 @@ export const createEmployees = (req, res) => {
 };
 
 export const deleteEmployees = (req, res) => {
-  const userId = req.params.id;
+  const userId = parseInt(req.params.id, 10);
   let deleteUser = employees;
   deleteUser = employees.filter((user) => user.id !== userId);
   fs.writeFile('src/data/employees.json', JSON.stringify(deleteUser), (err) => {
@@ -76,7 +74,7 @@ export const deleteEmployees = (req, res) => {
 
 export const editEmployee = (req, res) => {
   const editedEmployees = employees.map((employee) => {
-    if (employee.id === req.params.id) {
+    if (employee.id === parseInt(req.params.id, 10)) {
       return {
         id: employee.id,
         first_name: req.body.first_name || employee.first_name,
