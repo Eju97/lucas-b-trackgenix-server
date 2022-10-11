@@ -1,6 +1,12 @@
 // use 'import' to import libraries
 import express from 'express';
-import { postAdmins, deleteAdmins, filterAdmin } from './resources/admins';
+import {
+  postAdmins,
+  deleteAdmins,
+  filterAdmin,
+  getAdminsId,
+  editAdmins,
+} from './resources/admins';
 import {
   getTaskById,
   deleteTaskById,
@@ -35,6 +41,8 @@ app.get('/', (req, res) => {
 });
 
 // Admins
+app.put('/admins/edit/:id', editAdmins);
+app.get('/admins/filter/:id', getAdminsId);
 app.post('/admins', postAdmins);
 app.delete('/admins/:id', deleteAdmins);
 app.get('/admins', filterAdmin);
