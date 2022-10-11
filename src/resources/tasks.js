@@ -47,7 +47,7 @@ export const getTaskList = (req, res) => {
 
 export const createNewTask = (req, res) => {
   const newTask = {
-    id: req.body.id,
+    id: parseInt(new Date().getTime().toString().substring(10), 10),
     name: req.body.name,
     description: req.body.description,
   };
