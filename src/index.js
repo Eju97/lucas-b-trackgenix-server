@@ -11,7 +11,7 @@ import { createEmployees, getEmployeeById, getEmployees } from './resources/empl
 
 import { createNewTask, editTask } from './resources/tasks';
 import {
-  createNewTimeSheet, editTimeSheet, getTimeById, deleteTimeById,
+  createNewTimeSheet, editTimeSheet, getTimeById, deleteTimeById, getFilteredList,
 } from './resources/time-sheets';
 
 const app = express();
@@ -45,6 +45,7 @@ app.post('/time-sheets/createNewTimeSheet', createNewTimeSheet);
 app.put('/time-sheets/modifyTimeSheet/:id', editTimeSheet);
 app.get('/time-sheets/getTimeById/:id', getTimeById);
 app.delete('/time-sheets/deleteTimeById/:id', deleteTimeById);
+app.get('/time-sheets', getFilteredList);
 
 app.listen(port, () => {
 // eslint-disable-next-line no-console

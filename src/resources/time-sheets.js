@@ -1,6 +1,13 @@
 const fs = require('fs');
 const timeSheets = require('../data/time-sheets.json');
 
+const compareDates = (firstDate, secondDate, queryDate) => {
+  const date1 = new Date(firstDate).getTime();
+  const date2 = new Date(secondDate).getTime();
+  const date3 = new Date(queryDate).getTime();
+  return (date1 <= date3 && date3 <= date2);
+};
+
 export const createNewTimeSheet = (req, res) => {
   const newTimeSheet = {
     id: req.body.id,
@@ -51,7 +58,7 @@ export const getTimeById = (req, res) => {
       data: foundTime,
     })
     : res.status(404).json({
-      message: 'Error 404, not found',
+      message: `The ID: ${timeId} doesn't exist`,
     });
 };
 
@@ -62,14 +69,43 @@ export const deleteTimeById = (req, res) => {
   return foundTime
     ? fs.writeFile('src/data/time-sheets.json', JSON.stringify(newTimeList, null, 2), (err) => {
       if (err) {
-        res.send('Cannot edit the file');
+        res.status(500).json({
+          message: 'Cannot edit the file',
+        });
       } else {
         res.status(200).json({
           message: 'Time deleted',
         });
       }
     })
-    : res.status(400).json({
-      message: 'Wrong ID',
+    : res.status(404).json({
+      message: `Error 404, the ID: ${timeId} doesn't exist`,
+    });
+};
+
+export const getFilteredList = (req, res) => {
+  const nameFilter = req.query.name;
+  const descriptionFilter = req.query.description;
+  const dateFilter = req.query.date;
+  let filteredList = timeSheets;
+  if (nameFilter) {
+    filteredList = filteredList.filter((time) => time.name.includes(nameFilter));
+  }
+  if (descriptionFilter) {
+    filteredList = filteredList.filter((time) => time.description.includes(descriptionFilter));
+  }
+  if (dateFilter) {
+    filteredList = filteredList.filter((time) => compareDates(
+      time.startDate,
+      time.endDate,
+      dateFilter,
+    ));
+  }
+  return filteredList.length !== 0
+    ? res.status(200).json({
+      data: filteredList,
+    })
+    : res.status(404).json({
+      message: 'Error 404, doesnt exists any object with that query params',
     });
 };
