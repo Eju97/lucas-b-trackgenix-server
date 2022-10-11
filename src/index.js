@@ -23,7 +23,7 @@ import {
 } from './resources/super-admins';
 
 import {
-  getProjects, getProjectById, createProjects, deleteProjects, assignEmployee,
+  getProjects, getProjectById, createProjects, deleteProjects, assignEmployee, editProject,
 } from './resources/projects';
 import {
   createEmployees,
@@ -71,6 +71,7 @@ app.get('/projects', getProjects);
 app.get('/projects/:id', getProjectById);
 app.post('/projects/add', createProjects);
 app.delete('/projects/:id', deleteProjects);
+app.put('/projects/edit/:id', editProject);
 app.put('/projects/:id/assign', assignEmployee);
 
 // Tasks

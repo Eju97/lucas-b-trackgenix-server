@@ -73,6 +73,28 @@ export const getProjectById = ((req, res) => {
   }
 });
 
+export const editProject = (req, res) => {
+  const editedProjects = projects.map((project) => {
+    if (project.id === req.params.id) {
+      return {
+        id: project.id,
+        name: req.body.name || project.name,
+        clientName: req.body.clientName || project.clientName,
+        description: req.body.description || project.description,
+        startDate: req.body.startDate || project.startDate,
+        endDate: req.body.endDate || project.endDate,
+        employees: req.body.employees || project.employees,
+      };
+    }
+    return project;
+  });
+  fs.writeFile('src/data/projects.json', JSON.stringify(editedProjects, null, 2), () => {
+    res.status(200).json({
+      message: 'The project was edited successfully',
+    });
+  });
+};
+
 export const assignEmployee = (req, res) => {
   const getEmployeeById = (employeeId) => employees.find((employee) => employee.id === employeeId);
   const findProjectById = (projectId) => projects.find((project) => project.id === projectId);
