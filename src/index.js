@@ -10,7 +10,9 @@ import { postAdmins, deleteAdmins, filterAdmin } from './resources/admins';
 import { createEmployees, getEmployeeById, getEmployees } from './resources/employees';
 
 import { createNewTask, editTask } from './resources/tasks';
-import { createNewTimeSheet, editTimeSheet, getTimeById } from './resources/time-sheets';
+import {
+  createNewTimeSheet, editTimeSheet, getTimeById, deleteTimeById,
+} from './resources/time-sheets';
 
 const app = express();
 
@@ -42,6 +44,7 @@ app.put('/tasks/modifyTask/:id', editTask);
 app.post('/time-sheets/createNewTimeSheet', createNewTimeSheet);
 app.put('/time-sheets/modifyTimeSheet/:id', editTimeSheet);
 app.get('/time-sheets/getTimeById/:id', getTimeById);
+app.delete('/time-sheets/deleteTimeById/:id', deleteTimeById);
 
 app.listen(port, () => {
 // eslint-disable-next-line no-console

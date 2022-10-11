@@ -54,3 +54,22 @@ export const getTimeById = (req, res) => {
       message: 'Error 404, not found',
     });
 };
+
+export const deleteTimeById = (req, res) => {
+  const timeId = parseInt(req.params.id, 10);
+  const foundTime = timeSheets.find((time) => time.id === timeId);
+  const newTimeList = timeSheets.filter((time) => timeId !== time.id);
+  return foundTime
+    ? fs.writeFile('src/data/time-sheets.json', JSON.stringify(newTimeList, null, 2), (err) => {
+      if (err) {
+        res.send('Cannot edit the file');
+      } else {
+        res.status(200).json({
+          message: 'Time deleted',
+        });
+      }
+    })
+    : res.status(400).json({
+      message: 'Wrong ID',
+    });
+};
