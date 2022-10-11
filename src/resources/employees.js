@@ -41,7 +41,10 @@ export const getEmployeeById = ((req, res) => {
 });
 
 export const createEmployees = (req, res) => {
-  const newEmployee = req.body;
+  const newEmployee = {
+    ...req.body,
+    id: parseInt(new Date().getTime().toString().substring(6), 10),
+  };
   employees.push(newEmployee);
   fs.writeFile('src/data/employees.json', JSON.stringify(employees), (err) => {
     if (err) {
@@ -51,6 +54,21 @@ export const createEmployees = (req, res) => {
     } else {
       res.status(200).json({
         message: 'The employee was created successfully',
+      });
+    }
+  });
+};
+
+export const deleteEmployees = (req, res) => {
+  const userId = req.params.id;
+  let deleteUser = employees;
+  deleteUser = employees.filter((user) => user.id !== userId);
+  fs.writeFile('src/data/employees.json', JSON.stringify(deleteUser), (err) => {
+    if (err) {
+      res.send('Cannot deleted user');
+    } else {
+      res.status(200).json({
+        message: 'Employee deleted',
       });
     }
   });

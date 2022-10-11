@@ -21,12 +21,16 @@ import {
   editSuperAdmins,
   filterSuperAdmin,
 } from './resources/super-admins';
-import { getProjects, getProjectById, assignEmployee } from './resources/projects';
+
+import {
+  getProjects, getProjectById, createProjects, deleteProjects, assignEmployee,
+} from './resources/projects';
 import {
   createEmployees,
   getEmployeeById,
   getEmployees,
   editEmployee,
+  deleteEmployees,
 } from './resources/employees';
 import { createNewTimeSheet, editTimeSheet } from './resources/time-sheets';
 
@@ -60,10 +64,13 @@ app.put('/employees/edit/:id', editEmployee);
 app.get('/employees', getEmployees);
 app.get('/getEmployeeById/:id', getEmployeeById);
 app.post('/employees/add', createEmployees);
+app.delete('/employees/delete/:id', deleteEmployees);
 
 // Projects
 app.get('/projects', getProjects);
 app.get('/projects/:id', getProjectById);
+app.post('/projects/add', createProjects);
+app.delete('/projects/:id', deleteProjects);
 app.put('/projects/:id/assign', assignEmployee);
 
 // Tasks
