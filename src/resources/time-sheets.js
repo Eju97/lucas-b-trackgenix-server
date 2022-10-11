@@ -42,3 +42,15 @@ export const editTimeSheet = (req, res) => {
     sheetsList,
   });
 };
+
+export const getTimeById = (req, res) => {
+  const timeId = parseInt(req.params.id, 10);
+  const foundTime = timeSheets.find((time) => time.id === timeId);
+  return foundTime
+    ? res.status(200).json({
+      data: foundTime,
+    })
+    : res.status(404).json({
+      message: 'Error 404, not found',
+    });
+};
