@@ -65,12 +65,12 @@ app.get('/employees', getEmployees);
 app.get('/getEmployeeById/:id', getEmployeeById);
 app.post('/employees/add', createEmployees);
 app.delete('/employees/delete/:id', deleteEmployees);
-app.post('/projects/add', createProjects);
-app.delete('/projects/:id', deleteProjects);
 
 // Projects
 app.get('/projects', getProjects);
 app.get('/projects/:id', getProjectById);
+app.post('/projects/add', createProjects);
+app.delete('/projects/:id', deleteProjects);
 
 // Tasks
 app.post('/tasks/createNewTask', createNewTask);

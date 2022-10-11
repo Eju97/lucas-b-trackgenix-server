@@ -41,7 +41,10 @@ export const getEmployeeById = ((req, res) => {
 });
 
 export const createEmployees = (req, res) => {
-  const newEmployee = req.body;
+  const newEmployee = {
+    ...req.body,
+    id: parseInt(new Date().getTime().toString().substring(6), 10),
+  };
   employees.push(newEmployee);
   fs.writeFile('src/data/employees.json', JSON.stringify(employees), (err) => {
     if (err) {

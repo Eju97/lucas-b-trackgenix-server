@@ -2,7 +2,10 @@ const fs = require('fs');
 const projects = require('../data/projects.json');
 
 export const createProjects = (req, res) => {
-  const newProjects = req.body;
+  const newProjects = {
+    ...req.body,
+    id: parseInt(new Date().getTime().toString().substring(6), 10),
+  };
   projects.push(newProjects);
   fs.writeFile('src/data/projects.json', JSON.stringify(projects), (err) => {
     if (err) {
