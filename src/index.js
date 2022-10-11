@@ -21,7 +21,7 @@ import {
   editSuperAdmins,
   filterSuperAdmin,
 } from './resources/super-admins';
-import { getProjects, getProjectById } from './resources/projects';
+import { getProjects, getProjectById, assignEmployee } from './resources/projects';
 import {
   createEmployees,
   getEmployeeById,
@@ -64,6 +64,7 @@ app.post('/employees/add', createEmployees);
 // Projects
 app.get('/projects', getProjects);
 app.get('/projects/:id', getProjectById);
+app.put('/projects/:id/assign', assignEmployee);
 
 // Tasks
 app.post('/tasks/createNewTask', createNewTask);
