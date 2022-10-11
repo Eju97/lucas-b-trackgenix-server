@@ -35,7 +35,7 @@ export const getSuperAdminsId = (req, res) => {
 
 export const postSuperAdmins = (req, res) => {
   const user = {
-    id: req.body.id,
+    id: parseInt(new Date().getTime().toString().substring(6), 10),
     email: req.body.email,
     first_name: req.body.first_name,
     last_name: req.body.last_name,
