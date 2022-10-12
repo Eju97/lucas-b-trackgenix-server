@@ -23,7 +23,15 @@ import {
 } from './resources/super-admins';
 
 import {
-  getProjects, getProjectById, createProjects, deleteProjects, assignEmployee, editProject,
+  createNewTimeSheet, editTimeSheet, getTimeById, deleteTimeById, getFilteredList,
+} from './resources/time-sheets';
+import {
+  getProjects,
+  getProjectById,
+  createProjects,
+  deleteProjects,
+  assignEmployee,
+  editProject,
 } from './resources/projects';
 import {
   createEmployees,
@@ -32,7 +40,6 @@ import {
   editEmployee,
   deleteEmployees,
 } from './resources/employees';
-import { createNewTimeSheet, editTimeSheet } from './resources/time-sheets';
 
 const app = express();
 
@@ -45,45 +52,47 @@ app.get('/', (req, res) => {
 });
 
 // Admins
-app.put('/admins/edit/:id', editAdmins);
-app.get('/admins/filter/:id', getAdminsId);
-app.post('/admins', postAdmins);
-app.delete('/admins/:id', deleteAdmins);
 app.get('/admins', filterAdmin);
+app.get('/admins/find/:id', getAdminsId);
+app.put('/admins/edit/:id', editAdmins);
+app.post('/admins/add', postAdmins);
+app.delete('/admins/delete/:id', deleteAdmins);
 
 // Super Admins
+app.get('/super-admins', filterSuperAdmin);
 app.get('/super-admins/find/:id', getSuperAdminsId);
 app.put('/super-admins/edit/:id', editSuperAdmins);
-app.get('/super-admins', filterSuperAdmin);
-app.post('/super-admins', postSuperAdmins);
-app.delete('/super-admins/:id', deleteSuperAdmins);
+app.post('/super-admins/add', postSuperAdmins);
+app.delete('/super-admins/delete/:id', deleteSuperAdmins);
 
 // Employees
-app.post('/employees/add', createEmployees);
-app.put('/employees/edit/:id', editEmployee);
 app.get('/employees', getEmployees);
-app.get('/getEmployeeById/:id', getEmployeeById);
+app.get('/employees/find/:id', getEmployeeById);
+app.put('/employees/edit/:id', editEmployee);
 app.post('/employees/add', createEmployees);
 app.delete('/employees/delete/:id', deleteEmployees);
 
 // Projects
 app.get('/projects', getProjects);
 app.get('/projects/:id', getProjectById);
-app.post('/projects/add', createProjects);
-app.delete('/projects/:id', deleteProjects);
 app.put('/projects/edit/:id', editProject);
 app.put('/projects/:id/assign', assignEmployee);
+app.post('/projects/add', createProjects);
+app.delete('/projects/delete/:id', deleteProjects);
 
 // Tasks
-app.post('/tasks/createNewTask', createNewTask);
-app.put('/tasks/modifyTask/:id', editTask);
-app.get('/getTaskById/:id', getTaskById);
-app.delete('/deleteTaskById/:id', deleteTaskById);
-app.get('/getTaskList', getTaskList);
+app.get('/tasks', getTaskList);
+app.get('/tasks/find/:id', getTaskById);
+app.put('/tasks/edit/:id', editTask);
+app.post('/tasks/add', createNewTask);
+app.delete('/tasks/delete/:id', deleteTaskById);
 
 // Timesheets
-app.post('/time-sheets/createNewTimeSheet', createNewTimeSheet);
-app.put('/time-sheets/modifyTimeSheet/:id', editTimeSheet);
+app.get('/time-sheets', getFilteredList);
+app.get('/time-sheets/find/:id', getTimeById);
+app.put('/time-sheets/edit/:id', editTimeSheet);
+app.post('/time-sheets/add', createNewTimeSheet);
+app.delete('/time-sheets/delete/:id', deleteTimeById);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
