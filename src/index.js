@@ -67,7 +67,7 @@ app.delete('/super-admins/delete/:id', deleteSuperAdmins);
 
 // Employees
 app.get('/employees', getEmployees);
-app.get('/emplyees/find/:id', getEmployeeById);
+app.get('/employees/find/:id', getEmployeeById);
 app.put('/employees/edit/:id', editEmployee);
 app.post('/employees/add', createEmployees);
 app.delete('/employees/delete/:id', deleteEmployees);
