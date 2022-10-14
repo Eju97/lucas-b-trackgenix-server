@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const validateCreation = (req, res, next) => {
+export const validateCreation = (req, res, next) => {
   const taskValidation = Joi.object({
     description: Joi.string().min(3).max(300),
   });

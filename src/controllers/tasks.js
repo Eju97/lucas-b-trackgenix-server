@@ -5,17 +5,25 @@ const tasksfs = require('../data/tasks.json');
 
 export const getTaskList = async (req, res) => {
   try {
-    const tasks = await Tasks.find();
+    const tasks = await Tasks.find(req.query);
 
+    if (tasks.length === 0) {
+      return res.status(404).json({
+        message: 'Task not found',
+        data: tasks,
+        error: false,
+      });
+    }
     return res.status(200).json({
       message: 'Tasks found',
       data: tasks,
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'An error occurred',
-      error,
+    return res.status(400).json({
+      message: `An error occurred: ${error}`,
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -23,17 +31,18 @@ export const getTaskList = async (req, res) => {
 export const getTaskById = async (req, res) => {
   try {
     const { id } = req.params;
-    const tasks = await Tasks.findById(id);
+    const task = await Tasks.findById(id);
 
     return res.status(200).json({
-      message: 'Tasks found',
-      data: tasks,
+      message: 'Task found',
+      data: task,
       error: false,
     });
   } catch (error) {
-    return res.json({
-      message: 'An error occurred',
-      error,
+    return res.status(400).json({
+      message: `An error occurred: ${error}`,
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -52,8 +61,9 @@ export const createNewTask = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({
-      message: 'An error occurred',
-      error,
+      message: `An error occurred: ${error}`,
+      data: undefined,
+      error: true,
     });
   }
 };
