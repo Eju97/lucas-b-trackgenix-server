@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-const projectSchema = new mongoose.Schema({
+const projectSchema = new Schema({
   name: { type: String, required: true },
   clientName: { type: String, required: true },
   description: { type: String, required: true },
