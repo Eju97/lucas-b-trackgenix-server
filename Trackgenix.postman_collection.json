@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "47ab9df9-94f6-4c65-8263-1ac845540d51",
+		"_postman_id": "fc878dc6-c301-406b-8e28-ab9335fc2ac9",
 		"name": "Trackgenix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23742673"
+		"_exporter_id": "22779793"
 	},
 	"item": [
 		{
@@ -24,7 +24,77 @@
 		},
 		{
 			"name": "tasks",
-			"item": []
+			"item": [
+				{
+					"name": "Get All Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/tasks/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tasks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tasks By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/tasks/6349aeb9fbfd9531c9f2d50c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tasks",
+								"6349aeb9fbfd9531c9f2d50c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Test to post a new Task with mongoose 3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/tasks/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tasks",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "time-sheets",
