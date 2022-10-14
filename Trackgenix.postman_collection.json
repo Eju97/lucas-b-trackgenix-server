@@ -1,0 +1,34 @@
+{
+	"info": {
+		"_postman_id": "47ab9df9-94f6-4c65-8263-1ac845540d51",
+		"name": "Trackgenix",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23742673"
+	},
+	"item": [
+		{
+			"name": "admins",
+			"item": []
+		},
+		{
+			"name": "employees",
+			"item": []
+		},
+		{
+			"name": "projects",
+			"item": []
+		},
+		{
+			"name": "super-admins",
+			"item": []
+		},
+		{
+			"name": "tasks",
+			"item": []
+		},
+		{
+			"name": "time-sheets",
+			"item": []
+		}
+	]
+}
