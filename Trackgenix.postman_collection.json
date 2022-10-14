@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "47ab9df9-94f6-4c65-8263-1ac845540d51",
+		"_postman_id": "e1555474-6607-41f0-98ea-38260c494a31",
 		"name": "Trackgenix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23742673"
+		"_exporter_id": "23739723"
 	},
 	"item": [
 		{
@@ -20,7 +20,36 @@
 		},
 		{
 			"name": "super-admins",
-			"item": []
+			"item": [
+				{
+					"name": "localhost:3000/super-admins/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n      \"name\": \"Maratin\" ,\r\n      \"last_name\": \"Garcia\" ,\r\n      \"email\": \"martin-garcia95@hotmail.com\" ,\r\n      \"password\": \"chocolatada\"\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/super-admins/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"super-admins",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "tasks",
