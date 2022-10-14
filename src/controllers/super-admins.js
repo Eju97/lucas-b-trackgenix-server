@@ -21,6 +21,25 @@ const editSuperAdmins = async (req, res) => {
   }
 };
 
+const deletedSuperAdmins = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await SuperAdmins.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      message: `Super Admin with ID ${id} deleted.`,
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      message: 'An error occurred',
+      error,
+    });
+  }
+};
+
 export default {
   editSuperAdmins,
+  deletedSuperAdmins,
 };
