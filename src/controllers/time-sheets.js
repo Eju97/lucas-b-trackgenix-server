@@ -20,8 +20,8 @@ export const editTimeSheet = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await TimeSheets.findByIdAndUpdate(
-      { _id: id },
-      { ...req.body },
+      id,
+      req.body,
       { new: true },
     );
     return res.status(200).json({
@@ -30,9 +30,10 @@ export const editTimeSheet = async (req, res) => {
       error: false,
     });
   } catch (err) {
-    return res.json({
-      message: 'Time sheet not found',
-      error: err,
+    return res.status(404).json({
+      message: err.toString(),
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -47,9 +48,10 @@ export const deleteTimeSheet = async (req, res) => {
       error: false,
     });
   } catch (err) {
-    return res.json({
-      message: 'Time sheet not found',
-      error: err,
+    return res.status(404).json({
+      message: err.toString(),
+      data: undefined,
+      error: true,
     });
   }
 };
