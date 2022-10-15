@@ -1,7 +1,6 @@
+import fs from 'fs';
 import Tasks from '../models/Tasks';
-
-const fs = require('fs');
-const tasksfs = require('../data/tasks.json');
+import tasksfs from '../data/tasks.json';
 
 export const getTaskList = async (req, res) => {
   try {
@@ -33,8 +32,15 @@ export const getTaskById = async (req, res) => {
     const { id } = req.params;
     const task = await Tasks.findById(id);
 
+    if (task === null) {
+      return res.status(404).json({
+        message: 'Task does not exists',
+        data: task,
+        error: false,
+      });
+    }
     return res.status(200).json({
-      message: 'Task found',
+      message: 'Tasks found',
       data: task,
       error: false,
     });

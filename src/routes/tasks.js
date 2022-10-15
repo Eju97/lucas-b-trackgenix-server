@@ -1,21 +1,20 @@
-const express = require('express');
-const taskValidation = require('../validations/tasks');
-
-const {
+import express from 'express';
+import { validateCreation, validateQuery } from '../validations/tasks';
+import {
   getTaskList,
   getTaskById,
   deleteTaskById,
   createNewTask,
   editTask,
-} = require('../controllers/tasks');
+} from '../controllers/tasks';
 
 const router = express.Router();
 
 router
-  .get('/', getTaskList)
+  .get('/', validateQuery, getTaskList)
   .get('/:id', getTaskById)
   .delete('/:id', deleteTaskById)
-  .post('/', taskValidation.validateCreation, createNewTask)
+  .post('/', validateCreation, createNewTask)
   .put('/:id', editTask);
 
-module.exports = router;
+export default router;
