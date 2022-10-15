@@ -20,7 +20,7 @@ export const getProjectById = async (req, res) => {
   try {
     const project = await Projects.findById(req.params.id);
     return res.status(200).json({
-      message: 'Projects found',
+      message: 'Project found',
       data: project,
       error: false,
     });
