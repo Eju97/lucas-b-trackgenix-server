@@ -32,7 +32,29 @@ export const getProjectById = async (req, res) => {
   }
 };
 
-// export const createProjects = (req, res) => {};
+export const createProjects = async (req, res) => {
+  try {
+    const newProject = await Projects.create({
+      name: req.body.name,
+      clientName: req.body.clientName,
+      description: req.body.description,
+      startDate: req.body.startDate,
+      endDate: req.body.endDate,
+      employees: req.body.employees,
+    });
+    const result = await newProject.save();
+    return res.status(201).json({
+      message: 'Project created',
+      data: result,
+      error: false,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      message: 'An error has ocurred',
+      error: err,
+    });
+  }
+};
 
 // export const deleteProjects = (req, res) => {};
 

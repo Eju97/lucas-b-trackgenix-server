@@ -6,6 +6,8 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
+app.use(express.json());
+
 app.use('/', routes);
 
 const MONGO_URL = 'mongodb+srv://BaSP:BaSP2022@cluster0.p9r8v5b.mongodb.net/BaSP-database-Lucas-b?retryWrites=true&w=majority';
