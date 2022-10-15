@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import superAdminsRoutes from './routes/super-admins';
+import routes from './routes/index';
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.use('/super-admins', superAdminsRoutes);
+app.use('/', routes);
 
 const MONGO_URL = 'mongodb+srv://BaSP:BaSP2022@cluster0.p9r8v5b.mongodb.net/BaSP-database-Lucas-b?retryWrites=true&w=majority';
 
