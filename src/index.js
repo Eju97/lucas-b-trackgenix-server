@@ -1,12 +1,14 @@
 import express from 'express';
+// eslint-disable-next-line import/no-unresolved
 import mongoose from 'mongoose';
+import routes from './routes/index';
 
 const app = express();
 
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-
+app.use('/', routes);
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
@@ -17,8 +19,10 @@ mongoose.connect(
   MONGO_URL,
   (error) => {
     if (error) {
+      // eslint-disable-next-line no-console
       console.log('Fail connection to database', error);
     } else {
+      // eslint-disable-next-line no-console
       console.log('Connected to database');
       app.listen(port, () => {
         // eslint-disable-next-line no-console
