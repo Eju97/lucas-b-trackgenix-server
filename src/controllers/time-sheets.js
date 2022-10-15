@@ -2,7 +2,7 @@ import TimeSheets from '../models/Time-sheets';
 
 export const getAllTimeSheets = async (req, res) => {
   try {
-    const timeSheets = await TimeSheets.find();
+    const timeSheets = await TimeSheets.find(req.query);
     return res.status(200).json({
       message: 'Time sheet found',
       data: timeSheets,
