@@ -1,11 +1,11 @@
 import express from 'express';
-import superAdminsController from '../controllers/super-admins';
+import { editSuperAdmins, deletedSuperAdmins } from '../controllers/super-admins';
 import superAdminsValidation from '../validations/super-admins';
 
 const router = express.Router();
 
 router
-  .delete('/:id', superAdminsController.deletedSuperAdmins)
-  .put('/:id', superAdminsValidation.validateCreation, superAdminsController.editSuperAdmins);
+  .put('/:id', superAdminsValidation, editSuperAdmins)
+  .delete('/:id', deletedSuperAdmins);
 
 export default router;

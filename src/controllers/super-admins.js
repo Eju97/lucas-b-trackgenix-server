@@ -1,9 +1,9 @@
 import SuperAdmins from '../models/Super-admins';
 
-const editSuperAdmins = async (req, res) => {
+export const editSuperAdmins = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await SuperAdmins.findByInAndUpdate(id, req.body, { new: true });
+    const result = await SuperAdmins.findByIdAndUpdate(id, req.body, { new: true });
     return res.status(200).json({
       message: `Super Admin with ID ${id} edited.`,
       data: result,
@@ -18,7 +18,7 @@ const editSuperAdmins = async (req, res) => {
   }
 };
 
-const deletedSuperAdmins = async (req, res) => {
+export const deletedSuperAdmins = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await SuperAdmins.findByIdAndDelete(id);
@@ -35,9 +35,4 @@ const deletedSuperAdmins = async (req, res) => {
       error: true,
     });
   }
-};
-
-export default {
-  editSuperAdmins,
-  deletedSuperAdmins,
 };
