@@ -1,9 +1,10 @@
 import express from 'express';
+import { getProjects, getProjectById } from '../controllers/projects';
 
 const router = express.Router();
 
 router
-  .get('/projects')
-  .get('/projects/:id');
+  .get('/', getProjects)
+  .get('/:id', getProjectById);
 
 export default router;
