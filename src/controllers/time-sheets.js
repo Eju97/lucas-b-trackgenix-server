@@ -3,6 +3,13 @@ import TimeSheets from '../models/Time-sheets';
 export const getAllTimeSheets = async (req, res) => {
   try {
     const timeSheets = await TimeSheets.find(req.query);
+    if (!timeSheets.lenght) {
+      return res.status(404).json({
+        message: 'Time sheet not found',
+        data: timeSheets,
+        error: false,
+      });
+    }
     return res.status(200).json({
       message: 'Time sheet found',
       data: timeSheets,
@@ -42,6 +49,14 @@ export const deleteTimeSheet = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await TimeSheets.findByIdAndDelete(id);
+    if (!result) {
+      return res.status(404).json({
+        message: 'Time sheet does not exists',
+        data: result,
+        error: false,
+      });
+    }
+
     return res.status(200).json({
       message: `Time sheet with id ${id} deleted`,
       data: result,
