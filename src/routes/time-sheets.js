@@ -6,11 +6,6 @@ import validateCreation from '../validations/time-sheets';
 
 const router = express.Router();
 
-// const Logger = (req, res, next) => {
-//   console.log('middleware running');
-//   return next();
-// };
-
 router
   .get('/', getAllTimeSheets)
   .put('/:id', validateCreation, editTimeSheet)
