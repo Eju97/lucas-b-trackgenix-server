@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "47ab9df9-94f6-4c65-8263-1ac845540d51",
+		"_postman_id": "c4ff468c-7cb9-4ee6-94ce-827fe63d6557",
 		"name": "Trackgenix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23742673"
+		"_exporter_id": "23739728"
 	},
 	"item": [
 		{
@@ -20,7 +20,74 @@
 		},
 		{
 			"name": "super-admins",
-			"item": []
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/super-admins/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"super-admins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/super-admins/634b12bb9fcc3adea2f3d2c5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"super-admins",
+								"634b12bb9fcc3adea2f3d2c5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create super admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Winnie\",\r\n    \"last_name\": \"Ewins\",\r\n    \"email\": \"wewins0@angelfire.com\",\r\n    \"password\": \"5048371874746249\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/super-admins/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"super-admins",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "tasks",
