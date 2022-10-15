@@ -6,7 +6,7 @@ export const getTaskList = async (req, res) => {
   try {
     const tasks = await Tasks.find(req.query);
 
-    if (tasks.length === 0) {
+    if (!tasks.length) {
       return res.status(404).json({
         message: 'Task not found',
         data: tasks,
@@ -32,7 +32,7 @@ export const getTaskById = async (req, res) => {
     const { id } = req.params;
     const task = await Tasks.findById(id);
 
-    if (task === null) {
+    if (!task) {
       return res.status(404).json({
         message: 'Task does not exists',
         data: task,
