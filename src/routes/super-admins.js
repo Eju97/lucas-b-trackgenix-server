@@ -1,8 +1,10 @@
 import express from 'express';
-import superAdminsControllers from '../controllers/super-admins';
+import { getAllSuperAdmins, getByIdSuperAdmin } from '../controllers/super-admins';
 
 const router = express.Router();
 
-router.get('/', superAdminsControllers.getAllSuperAdmins);
+router
+  .get('/', getAllSuperAdmins)
+  .get('/:id', getByIdSuperAdmin);
 
 export default router;
