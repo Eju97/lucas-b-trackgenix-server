@@ -36,3 +36,20 @@ export const editTimeSheet = async (req, res) => {
     });
   }
 };
+
+export const deleteTimeSheet = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await TimeSheets.findByIdAndDelete(id);
+    return res.status(200).json({
+      message: `Time sheet with id ${id} deleted`,
+      data: result,
+      error: false,
+    });
+  } catch (err) {
+    return res.json({
+      message: 'Time sheet not found',
+      error: err,
+    });
+  }
+};
