@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-export const validateCreation = (req, res, next) => {
+export const validateTaskBody = (req, res, next) => {
   const taskValidation = Joi.object({
     description: Joi.string().min(3).max(300).required(),
   });
@@ -18,7 +18,7 @@ export const validateCreation = (req, res, next) => {
   return next();
 };
 
-export const validateQuery = (req, res, next) => {
+export const validateTaskQueryParams = (req, res, next) => {
   if (Object.keys(req.query).length === 0
    || (!(req.query.description === undefined) && (Object.keys(req.query).length === 1))) {
     return next();
