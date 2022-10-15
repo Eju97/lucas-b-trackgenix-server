@@ -1,11 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import employeesRoutes from './routes/employees';
 
 const app = express();
 
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use('/employees', employeesRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
