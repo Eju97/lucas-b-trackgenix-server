@@ -34,3 +34,26 @@ export const getByIdSuperAdmin = async (req, res) => {
     });
   }
 };
+
+export const createSuperAdmin = async (req, res) => {
+  try {
+    const superAdminCreate = new SuperAdmins({
+      name: req.body.name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      password: req.body.password,
+    });
+    const result = await superAdminCreate.save();
+    return res.status(201).json({
+      message: 'Super Admin created',
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: error,
+      data: undefined,
+      error: true,
+    });
+  }
+};

@@ -1,10 +1,12 @@
 import express from 'express';
-import { getAllSuperAdmins, getByIdSuperAdmin } from '../controllers/super-admins';
+import { createSuperAdmin, getAllSuperAdmins, getByIdSuperAdmin } from '../controllers/super-admins';
+import validateSuperAdmins from '../validations/super-admins';
 
 const router = express.Router();
 
 router
   .get('/', getAllSuperAdmins)
-  .get('/:id', getByIdSuperAdmin);
+  .get('/:id', getByIdSuperAdmin)
+  .post('/', validateSuperAdmins, createSuperAdmin);
 
 export default router;
