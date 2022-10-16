@@ -24,6 +24,7 @@ export const getTaskList = async (req, res) => {
     });
   }
 };
+
 export const getTaskById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -49,11 +50,13 @@ export const getTaskById = async (req, res) => {
     });
   }
 };
+
 export const createNewTask = async (req, res) => {
   try {
     const task = new Tasks({
       description: req.body.description,
     });
+
     const result = await task.save();
     return res.status(201).json({
       message: 'Task created successfully',
@@ -68,6 +71,7 @@ export const createNewTask = async (req, res) => {
     });
   }
 };
+
 export const deleteTaskById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -94,6 +98,7 @@ export const deleteTaskById = async (req, res) => {
     });
   }
 };
+
 export const editTask = async (req, res) => {
   try {
     const { id } = req.params;

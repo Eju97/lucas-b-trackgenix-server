@@ -4,7 +4,9 @@ export const validateTaskBody = (req, res, next) => {
   const taskValidation = Joi.object({
     description: Joi.string().min(3).max(300).required(),
   });
+
   const validation = taskValidation.validate(req.body);
+
   if (validation.error) {
     return res.status(400).json({
       message: `There was an error: ${validation.error.details[0].message}`,

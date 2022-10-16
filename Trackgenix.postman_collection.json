@@ -20,7 +20,36 @@
 		},
 		{
 			"name": "super-admins",
-			"item": []
+			"item": [
+				{
+					"name": "localhost:3000/super-admins/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n      \"name\": \"Maratin\" ,\r\n      \"last_name\": \"Garcia\" ,\r\n      \"email\": \"martin-garcia95@hotmail.com\" ,\r\n      \"password\": \"chocolatada\"\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/super-admins/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"super-admins",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "tasks",
@@ -40,18 +69,6 @@
 							"path": [
 								"tasks",
 								""
-							],
-							"query": [
-								{
-									"key": "testq",
-									"value": "test",
-									"disabled": true
-								},
-								{
-									"key": "description",
-									"value": "Test to post a new Task with mongoose 4",
-									"disabled": true
-								}
 							]
 						}
 					},
@@ -63,7 +80,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/tasks/6349af2efbfd9531c9f2d50f",
+							"raw": "http://localhost:3000/tasks/6349aeb9fbfd9531c9f2d50c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -71,7 +88,7 @@
 							"port": "3000",
 							"path": [
 								"tasks",
-								"6349af2efbfd9531c9f2d50f"
+								"6349aeb9fbfd9531c9f2d50c"
 							]
 						}
 					},
