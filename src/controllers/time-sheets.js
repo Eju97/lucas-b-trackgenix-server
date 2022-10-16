@@ -49,13 +49,6 @@ export const deleteTimeSheet = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await TimeSheets.findByIdAndDelete(id);
-    if (!result) {
-      return res.status(404).json({
-        message: 'Time sheet does not exists',
-        data: result,
-        error: false,
-      });
-    }
 
     return res.status(200).json({
       message: `Time sheet with id ${id} deleted`,
