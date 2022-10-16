@@ -1,12 +1,17 @@
 import express from 'express';
-import employeesControllers from '../controllers/employees';
 import employeeValidations from '../validations/employees';
+
+import {
+  getEmployees,
+  getEmployeesById,
+  createEmployee,
+} from '../controllers/employees';
 
 const router = express.Router();
 
 router
-  .get('/', employeesControllers.getEmployees)
-  .get('/:id', employeesControllers.getEmployeesById)
-  .post('/', employeeValidations.validateCreation, employeesControllers.createEmployee);
+  .get('/', getEmployees)
+  .get('/:id', getEmployeesById)
+  .post('/', employeeValidations.validateEmployeesBody, createEmployee);
 
 export default router;

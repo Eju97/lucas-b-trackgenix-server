@@ -1,10 +1,10 @@
 import Employees from '../models/Employees';
 
-const getEmployees = async (req, res) => {
+export const getEmployees = async (req, res) => {
   try {
     const employees = await Employees.find();
 
-    if (employees.length === 0) {
+    if (!employees.length) {
       return res.status(404).json({
         message: 'There are not registered employees',
         error: false,
@@ -17,31 +17,35 @@ const getEmployees = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({
-      message: 'An error has ocurred',
+      message: `An error has occurred: ${error}`,
       error,
     });
   }
 };
 
-const getEmployeesById = async (req, res) => {
+export const getEmployeesById = async (req, res) => {
   try {
-    const employeeId = req.params.id;
-    const employees = await Employees.findById(employeeId);
-
+    const employee = await Employees.findById(req.params.id);
+    if (!employee) {
+      return res.status(404).json({
+        message: 'Employee does not exists',
+        error: false,
+      });
+    }
     return res.status(200).json({
       message: 'Employees found',
-      data: employees,
+      data: employee,
       error: false,
     });
   } catch (error) {
     return res.status(400).json({
-      message: 'An error has ocurred',
+      message: `An error has occurred: ${error}`,
       error,
     });
   }
 };
 
-const createEmployee = async (req, res) => {
+export const createEmployee = async (req, res) => {
   try {
     const newEmployee = new Employees({
       name: req.body.name,
@@ -60,15 +64,9 @@ const createEmployee = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({
-      message: 'An error has ocurred',
+      message: `An error has occurred: ${error}`,
       data: undefined,
       error,
     });
   }
-};
-
-export default {
-  getEmployees,
-  getEmployeesById,
-  createEmployee,
 };
