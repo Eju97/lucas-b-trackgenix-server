@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const validateCreation = (req, res, next) => {
+const validateTimeSheetBody = (req, res, next) => {
   const timeSheetValidation = Joi.object({
     description: Joi.string().min(3).max(300).required(),
     date: Joi.date().iso().required(),
@@ -20,4 +20,4 @@ const validateCreation = (req, res, next) => {
   return next();
 };
 
-export default validateCreation;
+export default validateTimeSheetBody;
