@@ -127,7 +127,108 @@
 		},
 		{
 			"name": "time-sheets",
-			"item": []
+			"item": [{
+                "name": "Get All Time Sheets",
+                "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                        "raw": "http://localhost:3000/time-sheets",
+                        "protocol": "http",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "3000",
+                        "path": [
+                            "time-sheets"
+                        ]
+                    }
+                },
+                "response": []
+            },
+            {
+                "name": "Delete Time Sheets",
+                "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                        "raw": "http://localhost:3000/time-sheets/:id",
+                        "protocol": "http",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "3000",
+                        "path": [
+                            "time-sheets",
+                            ":id"
+                        ],
+                        "variable": [
+                            {
+                                "key": "id",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "response": []
+            },
+            {
+                "name": "Update Time Sheets",
+                "request": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                        "mode": "raw",
+                        "raw": "{\r\n    \"description\": \"example for description\",\r\n    \"date\": \"05/01/1992\",\r\n    \"hours\": 35,\r\n    \"tasks\": \"2\"\r\n}",
+                        "options": {
+                            "raw": {
+                                "language": "json"
+                            }
+                        }
+                    },
+                    "url": {
+                        "raw": "http://localhost:3000/time-sheets/6349f64dca79634b3babde4f",
+                        "protocol": "http",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "3000",
+                        "path": [
+                            "time-sheets",
+                            "6349f64dca79634b3babde4f"
+                        ]
+                    }
+                },
+                "response": []
+            },
+            {
+                "name": "Create Time Sheets",
+                "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                        "mode": "raw",
+                        "raw": "{\r\n    \"description\": \"example 3 for description\",\r\n    \"date\": \"1900/05/20\",\r\n    \"hours\": 10,\r\n    \"tasks\": \"5\"\r\n}",
+                        "options": {
+                            "raw": {
+                                "language": "json"
+                            }
+                        }
+                    },
+                    "url": {
+                        "raw": "http://localhost:3000/time-sheets",
+                        "protocol": "http",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "3000",
+                        "path": [
+                            "time-sheets"
+                        ]
+                    }
+                },
+                "response": []
+            }]
 		}
 	]
 }
