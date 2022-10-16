@@ -20,7 +20,36 @@
 		},
 		{
 			"name": "super-admins",
-			"item": []
+			"item": [
+				{
+					"name": "localhost:3000/super-admins/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n      \"name\": \"Maratin\" ,\r\n      \"last_name\": \"Garcia\" ,\r\n      \"email\": \"martin-garcia95@hotmail.com\" ,\r\n      \"password\": \"chocolatada\"\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/super-admins/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"super-admins",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "tasks",
