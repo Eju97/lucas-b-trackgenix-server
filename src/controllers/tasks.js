@@ -97,11 +97,7 @@ export const deleteTaskById = async (req, res) => {
 export const editTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const update = await Tasks.findByIdAndUpdate(
-      { _id: id },
-      { ...req.body },
-      { new: true },
-    );
+    const update = await Tasks.findByIdAndUpdate(id, req.body, { new: true });
 
     if (!update) {
       return res.status(404).json({
