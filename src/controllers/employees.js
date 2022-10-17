@@ -10,6 +10,7 @@ export const getEmployees = async (req, res) => {
     if (!employees.length) {
       return res.status(404).json({
         message: 'There are not registered employees',
+        data: undefined,
         error: false,
       });
     }
