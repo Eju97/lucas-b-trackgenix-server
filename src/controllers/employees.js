@@ -18,7 +18,8 @@ export const getEmployees = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       message: `An error has occurred: ${error}`,
-      error,
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -30,6 +31,7 @@ export const getEmployeesById = async (req, res) => {
     if (!employee) {
       return res.status(404).json({
         message: 'Employee does not exists',
+        data: undefined,
         error: true,
       });
     }
