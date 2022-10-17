@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const validateCreation = (req, res, next) => {
+export const validateCreation = (req, res, next) => {
   const letterSpacesRegEx = /^[a-zA-Z\s]*$/;
   const adminValidation = Joi.object({
     name: Joi.string().min(3).max(50).regex(letterSpacesRegEx)
@@ -23,4 +23,20 @@ const validateCreation = (req, res, next) => {
   return next();
 };
 
-export default validateCreation;
+const checkQueryParams = (obj) => {
+  const validQueryParams = ['name', 'lastName', 'email', 'password'];
+  const keyList = Object.keys(obj);
+  return keyList.length === 0 || keyList.every((key) => (validQueryParams.includes(key)));
+};
+
+export const validateQueryParams = (req, res, next) => {
+  const queryObject = req.query;
+  if (checkQueryParams(queryObject)) {
+    return next();
+  }
+  return res.status(400).json({
+    message: 'Bad request',
+    data: undefined,
+    error: true,
+  });
+};

@@ -1,7 +1,29 @@
 import Admins from '../models/Admins';
 
-const fs = require('fs');
-const admins = require('../data/admins.json');
+export const getAdmins = async (req, res) => {
+  try {
+    const admins = await Admins.find(req.query);
+    if (!admins.length) {
+      return res.status(404).json({
+        message: 'Cannot find admins with this query params',
+        data: {},
+        error: true,
+      });
+    }
+
+    return res.status(200).json({
+      message: 'Admin/s found',
+      data: admins,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: 'An error has occurred',
+      data: undefined,
+      error: true,
+    });
+  }
+};
 
 export const getAdminsbyId = async (req, res) => {
   try {
@@ -10,7 +32,7 @@ export const getAdminsbyId = async (req, res) => {
       return res.status(404).json({
         message: `Cannot find admin with ID ${req.params.id}`,
         data: {},
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
@@ -20,28 +42,11 @@ export const getAdminsbyId = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({
-      message: 'An error has occured',
+      message: 'An error has occurred',
       data: undefined,
       error: true,
     });
   }
-};
-
-export const editAdmins = (req, res) => {
-  const newAdmins = admins.map((admin) => {
-    if (admin.id === parseInt(req.params.id, 10)) {
-      return {
-        ...req.body,
-        id: parseInt(req.params.id, 10),
-      };
-    }
-    return admin;
-  });
-  fs.writeFile('src/data/admins.json', JSON.stringify(newAdmins, null, 2), () => {
-    res.status(200).json({
-      message: 'The admin was modified',
-    });
-  });
 };
 
 export const createAdmin = async (req, res) => {
@@ -64,36 +69,5 @@ export const createAdmin = async (req, res) => {
       data: undefined,
       error: true,
     });
-  }
-};
-
-export const deleteAdmins = (req, res) => {
-  const userId = parseInt(req.params.id, 10);
-  const deleteUser = admins.filter((admin) => admin.id !== userId);
-  fs.writeFile('src/data/super-admins.json', JSON.stringify(deleteUser), (err) => {
-    if (err) {
-      res.send('Cannot deleted user');
-    } else {
-      res.status(200).json({
-        message: 'Super admin deleted',
-      });
-    }
-  });
-};
-export const filterAdmin = (req, res) => {
-  const filters = req.query;
-  const filteredUsers = admins.filter((user) => {
-    let isValid = true;
-    let key;
-    // eslint-disable-next-line no-restricted-syntax, guard-for-in
-    for (key in filters) {
-      isValid = isValid && user[key] === filters[key];
-    }
-    return isValid;
-  });
-  if (filteredUsers.length !== 0) {
-    res.status(200).json(filteredUsers);
-  } else {
-    res.status(404).json('Not found');
   }
 };
