@@ -2,7 +2,7 @@ import TimeSheets from '../models/Time-sheets';
 
 export const getAllTimeSheets = async (req, res) => {
   try {
-    const timeSheets = await TimeSheets.find();
+    const timeSheets = await TimeSheets.find(req.query);
     return res.status(200).json({
       message: 'Time sheets found',
       data: timeSheets,
@@ -31,9 +31,10 @@ export const getTimeSheetById = async (req, res) => {
       error: true,
     });
   } catch (err) {
-    return res.status(404).json({
-      message: 'An error has occured',
-      error: err,
+    return res.status(400).json({
+      message: err.toString(),
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -53,9 +54,10 @@ export const createTimeSheet = async (req, res) => {
       error: false,
     });
   } catch (err) {
-    return res.status(404).json({
-      message: 'Time sheet cannot be created',
-      error: err,
+    return res.status(400).json({
+      message: err.toString(),
+      data: undefined,
+      error: true,
     });
   }
 };
