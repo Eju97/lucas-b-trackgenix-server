@@ -13,6 +13,23 @@ export const getAllSuperAdmins = async (req, res) => {
     return res.status(200).json({
       message: 'Super Admins founded.',
       data: SuperAdmin,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error occurred: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+export const editSuperAdmins = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await SuperAdmins.findByIdAndUpdate(id, req.body, { new: true });
+    return res.status(200).json({
+      message: `Super Admin with ID ${id} edited.`,
+      data: result,
       error: false,
     });
   } catch (error) {
@@ -38,6 +55,24 @@ export const getByIdSuperAdmin = async (req, res) => {
     return res.status(200).json({
       message: 'Super admin found',
       data: SuperAdmin,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error occurred: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+export const deletedSuperAdmins = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await SuperAdmins.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      message: `Super Admin with ID ${id} deleted.`,
+      data: result,
       error: false,
     });
   } catch (error) {
@@ -65,7 +100,7 @@ export const createSuperAdmin = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({
-      message: error,
+      message: `An error occurred: ${error}`,
       data: undefined,
       error: true,
     });
