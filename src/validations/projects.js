@@ -5,14 +5,17 @@ const validateProjectBody = (req, res, next) => {
     name: Joi.string()
       .min(3)
       .max(50)
+      .regex(/^[a-zA-Z\s]*$/)
       .required(),
     clientName: Joi.string()
       .min(3)
       .max(50)
+      .regex(/^[a-zA-Z\s]*$/)
       .required(),
     description: Joi.string()
       .min(3)
       .max(300)
+      .regex(/^[a-zA-Z\s]*$/)
       .required(),
     startDate: Joi.date()
       .iso()

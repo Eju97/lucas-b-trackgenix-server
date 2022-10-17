@@ -2,16 +2,24 @@ import Projects from '../models/Projects';
 
 export const getProjects = async (req, res) => {
   try {
-    const projects = await Projects.find();
+    const projects = await Projects.find(req.query);
+    if (!projects.length) {
+      return res.status(404).json({
+        message: 'There are no projects available',
+        data: projects,
+        error: false,
+      });
+    }
     return res.status(200).json({
       message: 'Projects found',
       data: projects,
       error: false,
     });
-  } catch (error) {
-    return res.json({
-      message: 'An error has ocurred',
-      error,
+  } catch (err) {
+    return res.status(400).json({
+      message: `An error occurred: ${err}`,
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -19,15 +27,23 @@ export const getProjects = async (req, res) => {
 export const getProjectById = async (req, res) => {
   try {
     const project = await Projects.findById(req.params.id);
+    if (!project) {
+      return res.status(404).json({
+        message: 'Project does not exist',
+        data: project,
+        error: false,
+      });
+    }
     return res.status(200).json({
       message: 'Project found',
       data: project,
       error: false,
     });
-  } catch (error) {
-    return res.json({
-      message: 'An error has ocurred',
-      error,
+  } catch (err) {
+    return res.status(400).json({
+      message: `An error occurred: ${err}`,
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -50,14 +66,9 @@ export const createProjects = async (req, res) => {
     });
   } catch (err) {
     return res.status(400).json({
-      message: 'An error has ocurred',
-      error: err,
+      message: `An error occurred: ${err}`,
+      data: undefined,
+      error: true,
     });
   }
 };
-
-// export const deleteProjects = (req, res) => {};
-
-// export const editProject = (req, res) => {};
-
-// export const assignEmployee = (req, res) => {};
