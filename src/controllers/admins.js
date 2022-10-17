@@ -1,16 +1,28 @@
+import Admins from '../models/Admins';
+
 const fs = require('fs');
 const admins = require('../data/admins.json');
 
-export const getAdminsId = (req, res) => {
-  const userID = parseInt(req.params.id, 10);
-  const filterUserId = admins.find((user) => user.id === userID);
-  if (filterUserId) {
-    res.status(200).json({
-      data: filterUserId,
+export const getAdminsbyId = async (req, res) => {
+  try {
+    const filteredAdmin = await Admins.findById(req.params.id);
+    if (!filteredAdmin) {
+      return res.status(404).json({
+        message: `Cannot find admin with ID ${req.params.id}`,
+        data: {},
+        error: false,
+      });
+    }
+    return res.status(200).json({
+      message: 'Admin found',
+      data: filteredAdmin,
+      error: false,
     });
-  } else {
-    res.status(404).json({
-      error: 'User not found',
+  } catch (error) {
+    return res.status(400).json({
+      message: 'An error has occured',
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -32,27 +44,25 @@ export const editAdmins = (req, res) => {
   });
 };
 
-export const postAdmins = (req, res) => {
-  const user = {
-    id: parseInt(new Date().getTime().toString().substring(6), 10),
-    email: req.body.email,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    date_of_birth: req.body.date_of_birth,
-    DNI: req.body.DNI,
-    Phone: req.body.Phone,
-  };
-  const newAdmins = [...admins, user];
-  if (!user.email || !user.first_name || !user.last_name
-          || !user.date_of_birth || !user.DNI || !user.Phone) {
-    res.status(404).json({
-      error: 'Cannot create an admin. Invalid body params',
+export const createAdmin = async (req, res) => {
+  try {
+    const admin = new Admins({
+      name: req.body.name,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
     });
-  } else {
-    fs.writeFile('src/data/admins.json', JSON.stringify(newAdmins, null, 2), () => {
-      res.status(200).json({
-        message: 'Created new admin',
-      });
+    const result = await admin.save();
+    return res.status(201).json({
+      message: 'Project created successfully.',
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: 'An error has occured',
+      data: undefined,
+      error: true,
     });
   }
 };
