@@ -74,3 +74,45 @@ export const createEmployee = async (req, res) => {
     });
   }
 };
+
+export const deleteEmployee = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Employees.findByIdAndDelete(id);
+    return res.status(200).json({
+      message: `Employee with ID ${id} deleted.`,
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: 'An error has occurred',
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+export const editEmployee = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Employees.findByIdAndUpdate(id, req.body, { new: true });
+    if (!result) {
+      return res.status(404).json({
+        message: 'Employee does not exists',
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: `Employee with ID ${id} edited.`,
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: 'An error occurred',
+      data: undefined,
+      error: true,
+    });
+  }
+};
