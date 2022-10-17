@@ -2,10 +2,7 @@ import Employees from '../models/Employees';
 
 export const getEmployees = async (req, res) => {
   try {
-    const employeeId = parseInt(req.params.id, 10);
-    const filterEmployee = Employees.find((user) => user.id === employeeId);
-
-    const employees = await Employees.find(filterEmployee);
+    const employees = await Employees.find(req.query);
 
     if (!employees.length) {
       return res.status(404).json({
