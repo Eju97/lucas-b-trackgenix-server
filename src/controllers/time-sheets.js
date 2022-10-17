@@ -53,3 +53,44 @@ export const createTimeSheet = async (req, res) => {
     });
   }
 };
+
+export const editTimeSheet = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await TimeSheets.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true },
+    );
+    return res.status(200).json({
+      message: `Time sheet with id ${id} edited`,
+      data: result,
+      error: false,
+    });
+  } catch (err) {
+    return res.status(404).json({
+      message: err.toString(),
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+export const deleteTimeSheet = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await TimeSheets.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      message: `Time sheet with id ${id} deleted`,
+      data: result,
+      error: false,
+    });
+  } catch (err) {
+    return res.status(404).json({
+      message: err.toString(),
+      data: undefined,
+      error: true,
+    });
+  }
+};
