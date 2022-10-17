@@ -1,6 +1,5 @@
 {
 	"info": {
-		"_postman_id": "fc878dc6-c301-406b-8e28-ab9335fc2ac9",
 		"name": "Trackgenix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22779793"
@@ -12,7 +11,79 @@
 		},
 		{
 			"name": "employees",
-			"item": []
+			"item": [
+				{
+					"name": "localhost:3000/Employees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/Employees",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"Employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/Employees/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/Employees/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"Employees",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/Employees/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"example\",\r\n    \"lastName\": \"example\",\r\n    \"phone\": \"0123456789\",\r\n    \"email\": \"example@email.com\",\r\n    \"password\": \"Test123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/Employees/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"Employees",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "projects",
@@ -176,7 +247,108 @@
 		},
 		{
 			"name": "time-sheets",
-			"item": []
+			"item": [{
+                "name": "Get All Time Sheets",
+                "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                        "raw": "http://localhost:3000/time-sheets",
+                        "protocol": "http",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "3000",
+                        "path": [
+                            "time-sheets"
+                        ]
+                    }
+                },
+                "response": []
+            },
+            {
+                "name": "Delete Time Sheets",
+                "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                        "raw": "http://localhost:3000/time-sheets/:id",
+                        "protocol": "http",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "3000",
+                        "path": [
+                            "time-sheets",
+                            ":id"
+                        ],
+                        "variable": [
+                            {
+                                "key": "id",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "response": []
+            },
+            {
+                "name": "Update Time Sheets",
+                "request": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                        "mode": "raw",
+                        "raw": "{\r\n    \"description\": \"example for description\",\r\n    \"date\": \"05/01/1992\",\r\n    \"hours\": 35,\r\n    \"tasks\": \"2\"\r\n}",
+                        "options": {
+                            "raw": {
+                                "language": "json"
+                            }
+                        }
+                    },
+                    "url": {
+                        "raw": "http://localhost:3000/time-sheets/6349f64dca79634b3babde4f",
+                        "protocol": "http",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "3000",
+                        "path": [
+                            "time-sheets",
+                            "6349f64dca79634b3babde4f"
+                        ]
+                    }
+                },
+                "response": []
+            },
+            {
+                "name": "Create Time Sheets",
+                "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                        "mode": "raw",
+                        "raw": "{\r\n    \"description\": \"example 3 for description\",\r\n    \"date\": \"1900/05/20\",\r\n    \"hours\": 10,\r\n    \"tasks\": \"5\"\r\n}",
+                        "options": {
+                            "raw": {
+                                "language": "json"
+                            }
+                        }
+                    },
+                    "url": {
+                        "raw": "http://localhost:3000/time-sheets",
+                        "protocol": "http",
+                        "host": [
+                            "localhost"
+                        ],
+                        "port": "3000",
+                        "path": [
+                            "time-sheets"
+                        ]
+                    }
+                },
+                "response": []
+            }]
 		}
 	]
 }
