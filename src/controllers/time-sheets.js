@@ -19,19 +19,17 @@ export const getAllTimeSheets = async (req, res) => {
 export const getTimeSheetById = async (req, res) => {
   try {
     const timeSheet = await TimeSheets.findById(req.params.id);
-    if (timeSheet){
+    if (timeSheet) {
       return res.status(200).json({
         message: 'Time sheet found',
         data: timeSheet,
         error: false,
       });
-    }else{
-      return res.status(404).json({
-        message: 'Time sheet not found',
-        error: true,
-      })
     }
-    
+    return res.status(404).json({
+      message: 'Time sheet not found',
+      error: true,
+    });
   } catch (err) {
     return res.status(404).json({
       message: 'An error has occured',
