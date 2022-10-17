@@ -2,7 +2,10 @@ import Employees from '../models/Employees';
 
 export const getEmployees = async (req, res) => {
   try {
-    const employees = await Employees.find();
+    const employeeId = parseInt(req.params.id, 10);
+    const filterEmployee = Employees.find((user) => user.id === employeeId);
+
+    const employees = await Employees.find(filterEmployee);
 
     if (!employees.length) {
       return res.status(404).json({
@@ -26,8 +29,7 @@ export const getEmployees = async (req, res) => {
 
 export const getEmployeesById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const employee = await Employees.findById(id, req.body, { new: true });
+    const employee = await Employees.findById(req.params.id);
     if (!employee) {
       return res.status(404).json({
         message: 'Employee does not exists',
