@@ -20,6 +20,4 @@ const validateEmployeesBody = (req, res, next) => {
   return next();
 };
 
-export default {
-  validateEmployeesBody,
-};
+export default validateEmployeesBody;

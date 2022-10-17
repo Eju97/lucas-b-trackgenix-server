@@ -25,22 +25,24 @@ export const getEmployees = async (req, res) => {
 
 export const getEmployeesById = async (req, res) => {
   try {
-    const employee = await Employees.findById(req.params.id);
+    const { id } = req.params;
+    const employee = await Employees.findById(id, req.body, { new: true });
     if (!employee) {
       return res.status(404).json({
         message: 'Employee does not exists',
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
       message: 'Employees found',
       data: employee,
-      error: false,
+      error: true,
     });
   } catch (error) {
     return res.status(400).json({
       message: `An error has occurred: ${error}`,
-      error,
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -66,7 +68,7 @@ export const createEmployee = async (req, res) => {
     return res.status(400).json({
       message: `An error has occurred: ${error}`,
       data: undefined,
-      error,
+      error: true,
     });
   }
 };
