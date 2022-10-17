@@ -1,11 +1,11 @@
 import express from 'express';
-import {
-  getAllTimeSheets,
-} from '../controllers/time-sheets';
-// import validateCreation from '../validations/time-sheets';
+import { getAllTimeSheets, getTimeSheetById, createTimeSheet } from '../controllers/time-sheets';
+// import validateTimeSheet from '../validations/time-sheets';
 
 const router = express.Router();
 
 router
-  .get('/', getAllTimeSheets);
+  .get('/', getAllTimeSheets)
+  .get('/:id', getTimeSheetById)
+  .post('/', createTimeSheet);
 export default router;
