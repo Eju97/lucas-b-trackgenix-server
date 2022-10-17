@@ -1,5 +1,4 @@
 import express from 'express';
-// eslint-disable-next-line import/no-unresolved
 import mongoose from 'mongoose';
 import routes from './routes/index';
 
