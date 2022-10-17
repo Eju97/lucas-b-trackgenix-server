@@ -172,7 +172,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"Test to post a new Task with mongoose 3\"\r\n}",
+							"raw": "{\r\n    \"description\": \"Test to post a new Task with mongoose 6\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -189,6 +189,55 @@
 							"path": [
 								"tasks",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/tasks/6349f320f36577d76119fa7d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tasks",
+								"6349f320f36577d76119fa7d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tasks By Id Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Test to update a task\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/tasks/6349aeb9fbfd9531c9f2d50c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tasks",
+								"6349aeb9fbfd9531c9f2d50c"
 							]
 						}
 					},

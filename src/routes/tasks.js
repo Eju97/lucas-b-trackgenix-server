@@ -15,6 +15,6 @@ router
   .get('/:id', getTaskById)
   .delete('/:id', deleteTaskById)
   .post('/', validateTaskBody, createNewTask)
-  .put('/:id', editTask);
+  .put('/:id', validateTaskBody, editTask);
 
 export default router;

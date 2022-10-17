@@ -14,7 +14,6 @@ export const validateTaskBody = (req, res, next) => {
       error: true,
     });
   }
-
   return next();
 };
 
@@ -23,7 +22,6 @@ export const validateTaskQueryParams = (req, res, next) => {
    || (!(req.query.description === undefined) && (Object.keys(req.query).length === 1))) {
     return next();
   }
-
   return res.status(400).json({
     message: 'There was an error: The query parameters are invalid',
     data: undefined,

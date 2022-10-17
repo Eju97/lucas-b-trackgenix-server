@@ -1,6 +1,4 @@
-import fs from 'fs';
 import Tasks from '../models/Tasks';
-import tasksfs from '../data/tasks.json';
 
 export const getTaskList = async (req, res) => {
   try {
@@ -74,38 +72,40 @@ export const createNewTask = async (req, res) => {
   }
 };
 
-export const deleteTaskById = (req, res) => {
-  const taskId = parseInt(req.params.id, 10);
-  const deletedTask = tasksfs.filter((task) => task.id !== taskId);
-  if (deletedTask.length < tasksfs.length) {
-    fs.writeFileSync('src/data/tasks.json', JSON.stringify(deletedTask));
-    res.status(200).json({
-      message: 'Task has been deleted',
+export const deleteTaskById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Tasks.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      message: `Task with Id ${id} deleted`,
+      data: result,
+      error: false,
     });
-  } else {
-    res.status(404).json({
-      message: 'Task could not be deleted',
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error occurred: ${error}`,
+      data: undefined,
+      error: true,
     });
   }
 };
 
-export const editTask = (req, res) => {
-  const searchId = parseInt(req.params.id, 10);
-  let taskIndex;
-  const tasksList = tasksfs;
-  for (let i = 0; i < tasksList.length; i += 1) {
-    if (tasksList[i].id === searchId) {
-      taskIndex = i;
-    }
+export const editTask = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedTask = await Tasks.findByIdAndUpdate(id, req.body, { new: true });
+
+    return res.status(200).json({
+      message: `Task with Id ${id} updated`,
+      data: updatedTask,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: `An error occurred: ${error}`,
+      data: undefined,
+      error: true,
+    });
   }
-  if (req.body.name) {
-    tasksList[taskIndex].name = req.body.name;
-  }
-  if (req.body.description) {
-    tasksList[taskIndex].description = req.body.description;
-  }
-  fs.writeFileSync('./src/data/tasks.json', JSON.stringify(tasksList));
-  res.status(200).json({
-    tasksList,
-  });
 };
