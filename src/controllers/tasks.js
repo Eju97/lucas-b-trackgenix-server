@@ -77,6 +77,13 @@ export const deleteTaskById = async (req, res) => {
     const { id } = req.params;
     const result = await Tasks.findByIdAndDelete(id);
 
+    if (!result) {
+      return res.status(404).json({
+        message: `Task with Id ${id} does not exists`,
+        data: undefined,
+        error: false,
+      });
+    }
     return res.status(200).json({
       message: `Task with Id ${id} deleted`,
       data: result,
@@ -96,6 +103,13 @@ export const editTask = async (req, res) => {
     const { id } = req.params;
     const updatedTask = await Tasks.findByIdAndUpdate(id, req.body, { new: true });
 
+    if (!updatedTask) {
+      return res.status(404).json({
+        message: `Task with Id ${id} does not exists`,
+        data: undefined,
+        error: false,
+      });
+    }
     return res.status(200).json({
       message: `Task with Id ${id} updated`,
       data: updatedTask,
