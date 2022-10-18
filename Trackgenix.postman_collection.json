@@ -399,6 +399,72 @@
 			"name": "super-admins",
 			"item": [
 				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/super-admins/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"super-admins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/super-admins/634b12bb9fcc3adea2f3d2c5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"super-admins",
+								"634b12bb9fcc3adea2f3d2c5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create super admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Winnie\",\r\n    \"last_name\": \"Ewins\",\r\n    \"email\": \"wewins0@angelfire.com\",\r\n    \"password\": \"5048371874746249\"\r\n  }",
+              "options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/super-admins/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"super-admins",
+								""
+							]
+						}
+					},
+					"response": []
+        },
+        {
 					"name": "localhost:3000/super-admins/",
 					"request": {
 						"method": "PUT",
