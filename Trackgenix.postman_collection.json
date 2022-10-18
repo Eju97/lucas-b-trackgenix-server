@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ddc34904-1c1d-4808-a611-7ecfe873a239",
+		"_postman_id": "223e954a-c1b4-4af8-92fa-33dcd6af5e5a",
 		"name": "Trackgenix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23798493"
+		"_exporter_id": "21854984"
 	},
 	"item": [
 		{
@@ -261,7 +261,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Create Project",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -287,8 +287,106 @@
 							"query": [
 								{
 									"key": "",
-									"value": null,
+									"value": "",
 									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Project",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/projects/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"projects",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Project",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"\",\r\n    \"clientName\": \"\",\r\n    \"description\": \"\",\r\n    \"startDate\": \"YYYY-MM-DD\",\r\n    \"endDate\": \"YYYY-MM-DD\",\r\n    \"employees\": [\r\n      {\r\n        \"rate\": 0,\r\n        \"role\": \"DEV\"\r\n      }\r\n    ]\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/projects/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"projects",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Employee",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rate\": 50,\r\n    \"role\": \"QA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/projects/:id/assign/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"projects",
+								":id",
+								"assign",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
 								}
 							]
 						}
