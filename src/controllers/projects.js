@@ -120,3 +120,31 @@ export const editProject = async (req, res) => {
     });
   }
 };
+
+export const assignEmployee = async (req, res) => {
+  try {
+    const result = await Projects.findByIdAndUpdate(
+      req.params.id,
+      { $push: { employees: req.body } },
+      { new: true },
+    );
+    if (!result) {
+      return res.status(404).json({
+        message: 'Project does not exist',
+        data: result,
+        error: false,
+      });
+    }
+    return res.status(200).json({
+      message: 'Employee assigned to project successfully',
+      data: result,
+      error: false,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      message: `An error occurred: ${err}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};

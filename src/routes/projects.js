@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getProjects, getProjectById, createProjects, deleteProject, editProject,
+  getProjects, getProjectById, createProjects, deleteProject, editProject, assignEmployee,
 } from '../controllers/projects';
 import validateProjectBody from '../validations/projects';
 
@@ -10,7 +10,8 @@ router
   .get('/', getProjects)
   .get('/:id', getProjectById)
   .post('/', validateProjectBody, createProjects)
-  .delete('/:id', deleteProject)
-  .put('/:id', editProject);
+  .put('/:id', editProject)
+  .put('/:id/assign', assignEmployee)
+  .delete('/:id', deleteProject);
 
 export default router;
