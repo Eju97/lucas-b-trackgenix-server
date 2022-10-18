@@ -76,18 +76,17 @@ export const deleteAdmin = async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await Admins.findByIdAndDelete(id);
-    if (!deleted) {
-      return res.status(404).json({
+    return !deleted
+      ? res.status(404).json({
         message: `Cannot find admin with ID ${id}`,
         data: undefined,
         error: true,
+      })
+      : res.status(204).json({
+        message: 'Admin deleted',
+        data: deleted,
+        error: false,
       });
-    }
-    return res.status(204).json({
-      message: 'Admin deleted',
-      data: deleted,
-      error: false,
-    });
   } catch (error) {
     return res.status(400).json({
       message: 'An error has occurred',
