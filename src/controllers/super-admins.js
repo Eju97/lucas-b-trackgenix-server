@@ -2,17 +2,17 @@ import SuperAdmins from '../models/Super-admins';
 
 export const getAllSuperAdmins = async (req, res) => {
   try {
-    const SuperAdmin = await SuperAdmins.find(req.query);
-    if (!SuperAdmin.length) {
+    const superAdmin = await SuperAdmins.find(req.query);
+    if (!superAdmin.length) {
       return res.status(404).json({
         message: 'Super Admin not found',
-        data: SuperAdmin,
+        data: superAdmin,
         error: false,
       });
     }
     return res.status(200).json({
       message: 'Super Admins founded.',
-      data: SuperAdmin,
+      data: superAdmin,
     });
   } catch (error) {
     return res.status(400).json({
@@ -44,17 +44,17 @@ export const editSuperAdmins = async (req, res) => {
 export const getByIdSuperAdmin = async (req, res) => {
   try {
     const { id } = req.params;
-    const SuperAdmin = await SuperAdmins.findById(id);
-    if (!SuperAdmin) {
+    const superAdmin = await SuperAdmins.findById(id);
+    if (!superAdmin) {
       return res.status(404).json({
         message: 'Super Admin not found',
-        data: SuperAdmin,
+        data: superAdmin,
         error: false,
       });
     }
     return res.status(200).json({
       message: 'Super admin found',
-      data: SuperAdmin,
+      data: superAdmin,
     });
   } catch (error) {
     return res.status(400).json({
