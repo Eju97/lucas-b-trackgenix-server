@@ -72,3 +72,27 @@ export const createProjects = async (req, res) => {
     });
   }
 };
+
+export const deleteProject = async (req, res) => {
+  try {
+    const result = await Projects.findByIdAndDelete(req.params.id);
+    if (!result) {
+      return res.status(404).json({
+        message: 'Project does not exist',
+        data: result,
+        error: false,
+      });
+    }
+    return res.status(200).json({
+      message: 'Project deleted successfully',
+      data: result,
+      error: false,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      message: `An error occurred: ${err}`,
+      data: undefined,
+      error: true,
+    });
+  }
+};
