@@ -71,3 +71,51 @@ export const createAdmin = async (req, res) => {
     });
   }
 };
+
+export const deleteAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Admins.findByIdAndDelete(id);
+    return !deleted
+      ? res.status(404).json({
+        message: `Cannot find admin with ID ${id}`,
+        data: undefined,
+        error: true,
+      })
+      : res.status(204).json({
+        message: 'Admin deleted',
+        data: deleted,
+        error: false,
+      });
+  } catch (error) {
+    return res.status(400).json({
+      message: 'An error has occurred',
+      data: undefined,
+      error: true,
+    });
+  }
+};
+
+export const editAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const edited = await Admins.findByIdAndUpdate(id, req.body, { new: true });
+    return !edited
+      ? res.status(404).json({
+        message: `Cannot find admin with ID ${id}`,
+        data: undefined,
+        error: true,
+      })
+      : res.status(201).json({
+        message: 'Admin updated',
+        data: edited,
+        error: false,
+      });
+  } catch (error) {
+    return res.status(400).json({
+      message: 'An error has occurred',
+      data: undefined,
+      error: true,
+    });
+  }
+};

@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "223e954a-c1b4-4af8-92fa-33dcd6af5e5a",
+		"_postman_id": "bbfb93e4-f806-492f-8df6-726d37864957",
 		"name": "Trackgenix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "21854984"
+		"_exporter_id": "23798493"
 	},
 	"item": [
 		{
@@ -70,6 +70,67 @@
 							"path": [
 								"admins",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/admins/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admins",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test\",\n    \"lastName\": \"Last Name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/admins/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admins",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -601,7 +662,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/tasks/6349aeb9fbfd9531c9f2d50c",
+							"raw": "http://localhost:3000/tasks/634ec44e40795b1fa06df272",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -609,7 +670,7 @@
 							"port": "3000",
 							"path": [
 								"tasks",
-								"6349aeb9fbfd9531c9f2d50c"
+								"634ec44e40795b1fa06df272"
 							]
 						}
 					},
