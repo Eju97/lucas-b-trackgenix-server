@@ -1,21 +1,12 @@
-import express from 'express';
 import mongoose from 'mongoose';
-import routes from './routes/index';
+import dotenv from 'dotenv';
+import app from './app';
 
-const app = express();
-
+dotenv.config();
 const port = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use('/', routes);
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-const MONGO_URL = 'mongodb+srv://BaSP:BaSP2022@cluster0.p9r8v5b.mongodb.net/BaSP-database-Lucas-b?retryWrites=true&w=majority';
-
 mongoose.connect(
-  MONGO_URL,
+  process.env.DATABASE_URL,
   (error) => {
     if (error) {
       // eslint-disable-next-line no-console
