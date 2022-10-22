@@ -4,6 +4,9 @@ import Employees from '../models/Employees';
 import employeesSeed from '../seed/employees';
 
 describe('Employee - Tests', () => {
+  let newEmployee;
+  const invalidID = '123c68f3658f142935ea7f6z';
+
   const mockedEmployee = {
     name: 'test',
     lastName: 'test',
@@ -26,10 +29,30 @@ describe('Employee - Tests', () => {
     });
   });
 
+  describe('GETbyID /employees', () => {
+    beforeEach(async () => {
+      newEmployee = await Employees.create(mockedEmployee);
+    });
+
+    test('should GET an employee by ID', async () => {
+      const response = await request(app).get(`/Employees/${newEmployee.id}`).send();
+      expect(response.status).toBe(200);
+      expect(response.body.data).toBeDefined();
+      const foundEmployee = await Employees.findById(newEmployee.id);
+      expect(foundEmployee).toBeDefined();
+    });
+
+    test('should not GET an employee by ID', async () => {
+      const response = await request(app).get(`/Employees/${invalidID}`).send();
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+    });
+  });
+
   describe('POST /employees', () => {
     test('should create a employee', async () => {
       const response = await request(app).post('/Employees').send(mockedEmployee);
-      // emploteeID = response.body.data.id;
       expect(response.status).toBe(201);
       expect(response.body.error).toBeFalsy();
       expect(response.body.data).toMatchObject({
@@ -95,9 +118,6 @@ describe('Employee - Tests', () => {
   });
 
   describe('PUT /employees', () => {
-    let newEmployee;
-    const invalidID = '123c68f3658f142935ea7f6z';
-
     beforeEach(async () => {
       newEmployee = await Employees.create(mockedEmployee);
     });
@@ -120,6 +140,29 @@ describe('Employee - Tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
+    });
+  });
+
+  describe('DELETE /employees', () => {
+    beforeEach(async () => {
+      newEmployee = await Employees.create(mockedEmployee);
+    });
+
+    test('should remove an employee', async () => {
+      const response = await request(app).delete(`/Employees/${newEmployee.id}`).send();
+      expect(response.status).toBe(200);
+      expect(response.body.error).toBeFalsy();
+      expect(response.body.data).toBeDefined();
+      const foundEmployee = await Employees.findById(newEmployee.id);
+      expect(foundEmployee).toBeNull();
+    });
+
+    test('should not remove an employee', async () => {
+      const response = await request(app).delete(`/Employees/${invalidID}`).send();
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toEqual('An error has occurred');
     });
   });
 });
