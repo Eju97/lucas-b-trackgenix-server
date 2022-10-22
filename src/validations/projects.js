@@ -23,7 +23,7 @@ export const validateProjectBody = (req, res, next) => {
       .iso()
       .required(),
     employees: Joi.array().items(Joi.object({
-      employee: Joi.required(),
+      employee: Joi.string().hex().length(24).required(),
       rate: Joi.number().required(),
       role: Joi.string().valid('DEV', 'TL', 'PM', 'QA').required(),
     })),
@@ -43,7 +43,7 @@ export const validateProjectBody = (req, res, next) => {
 
 export const validateEmployeeBody = (req, res, next) => {
   const employeeSchema = Joi.object({
-    employee: Joi.required(),
+    employee: Joi.string().hex().length(24).required(),
     rate: Joi.number().required(),
     role: Joi.string().valid('DEV', 'TL', 'PM', 'QA').required(),
   });
