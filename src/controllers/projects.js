@@ -2,12 +2,12 @@ import Projects from '../models/Projects';
 
 export const getProjects = async (req, res) => {
   try {
-    const projects = await Projects.find(req.query);
+    const projects = await Projects.find(req.query).populate('employees.employee');
     if (!projects.length) {
       return res.status(404).json({
         message: 'There are no projects available',
         data: projects,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
@@ -26,12 +26,12 @@ export const getProjects = async (req, res) => {
 
 export const getProjectById = async (req, res) => {
   try {
-    const project = await Projects.findById(req.params.id);
+    const project = await Projects.findById(req.params.id).populate('employees.employee');
     if (!project) {
       return res.status(404).json({
         message: 'Project does not exist',
         data: project,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
@@ -58,10 +58,11 @@ export const createProjects = async (req, res) => {
       endDate: req.body.endDate,
       employees: req.body.employees,
     });
-    const result = await newProject.save();
+    await newProject.save();
+    const projects = await Projects.find(newProject).populate('employees.employee');
     return res.status(201).json({
       message: 'Project created',
-      data: result,
+      data: projects,
       error: false,
     });
   } catch (err) {
@@ -80,7 +81,7 @@ export const deleteProject = async (req, res) => {
       return res.status(404).json({
         message: 'Project does not exist',
         data: result,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
@@ -99,12 +100,12 @@ export const deleteProject = async (req, res) => {
 
 export const editProject = async (req, res) => {
   try {
-    const result = await Projects.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const result = await Projects.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('employees.employee');
     if (!result) {
       return res.status(404).json({
         message: 'Project does not exist',
         data: result,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
@@ -127,12 +128,12 @@ export const assignEmployee = async (req, res) => {
       req.params.id,
       { $push: { employees: req.body } },
       { new: true },
-    );
+    ).populate('employees.employee');
     if (!result) {
       return res.status(404).json({
         message: 'Project does not exist',
         data: result,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({

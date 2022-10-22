@@ -7,6 +7,8 @@ const projectSchema = new Schema({
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
   employees: [{
+    _id: false, // Para evitar que mongoose autogenere un nuevo id
+    employee: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Employees' },
     rate: { type: Number, required: true },
     role: { type: String, required: true },
   }],
