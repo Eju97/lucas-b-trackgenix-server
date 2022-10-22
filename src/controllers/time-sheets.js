@@ -2,7 +2,10 @@ import TimeSheets from '../models/Time-sheets';
 
 export const getAllTimeSheets = async (req, res) => {
   try {
-    const timeSheets = await TimeSheets.find(req.query);
+    const timeSheets = await TimeSheets.find(req.query)
+      .populate('task')
+      .populate('employee')
+      .populate('proyect');
     return res.status(200).json({
       message: 'Time sheets found',
       data: timeSheets,
@@ -46,6 +49,8 @@ export const createTimeSheet = async (req, res) => {
       date: req.body.date,
       hours: req.body.hours,
       tasks: req.body.tasks,
+      employee: req.body.employee,
+      project: req.body.project,
     });
     const result = await newTimeSheet.save();
     return res.status(201).json({
