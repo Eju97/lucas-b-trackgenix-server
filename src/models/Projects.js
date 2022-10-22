@@ -9,6 +9,12 @@ const projectSchema = new Schema({
   employees: [{
     rate: { type: Number, required: true },
     role: { type: String, required: true },
+    _id: false,
+    employee: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'Employees',
+    },
   }],
 });
 
