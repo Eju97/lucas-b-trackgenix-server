@@ -59,10 +59,10 @@ export const createProjects = async (req, res) => {
       employees: req.body.employees,
     });
     await newProject.save();
-    const projects = await Projects.find(newProject).populate('employees.employee');
+    const project = await Projects.find(newProject).populate('employees.employee');
     return res.status(201).json({
       message: 'Project created',
-      data: projects,
+      data: project,
       error: false,
     });
   } catch (err) {
