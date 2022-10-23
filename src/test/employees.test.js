@@ -51,13 +51,7 @@ describe('Employee - Tests', () => {
       const response = await request(app).post('/Employees').send(mockedEmployee);
       expect(response.status).toBe(201);
       expect(response.body.error).toBeFalsy();
-      expect(response.body.data).toMatchObject({
-        name: mockedEmployee.name,
-        lastName: mockedEmployee.lastName,
-        phone: mockedEmployee.phone,
-        email: mockedEmployee.email,
-        password: mockedEmployee.password,
-      });
+      expect(response.body.data).toMatchObject(mockedEmployee);
     });
 
     test('should return an error with status code 400 when we are trying to create an employee without body', async () => {
