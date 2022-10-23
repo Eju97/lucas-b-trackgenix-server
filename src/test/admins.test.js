@@ -110,4 +110,24 @@ describe('Admins - Unit tests', () => {
       expect(res.body.data).toBeUndefined();
     });
   });
+
+  describe('PUT /admins', () => {
+    test('Should return status code 200 and edit an admin.', async () => {
+      // eslint-disable-next-line no-underscore-dangle
+      const res = await request(app).put(`/admins/${adminsSeed[1]._id}`).send();
+      expect(res.status).toBe(201);
+      expect(res.body.error).toBeFalsy();
+      expect(res.body.message).toEqual('Admin updated');
+    });
+    test('Should return status code 404 for id not found.', async () => {
+      const res = await request(app).put(`/admins/${notFoundId}`).send();
+      expect(res.status).toBe(404);
+      expect(res.body.error).toBeTruthy();
+      expect(res.body.message).toEqual(`Cannot find admin with ID ${notFoundId}`);
+    });
+    test('Should return status code 404 for wrong id.', async () => {
+      const res = await request(app).put('/admins/').send();
+      expect(res.status).toBe(404);
+    });
+  });
 });
