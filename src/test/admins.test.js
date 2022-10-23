@@ -88,4 +88,26 @@ describe('Admins - Unit tests', () => {
       expect(res.body.data).toBeUndefined();
     });
   });
+
+  describe('DELETE /admins', () => {
+    test('Should return status code 200 and delete an admin.', async () => {
+      // eslint-disable-next-line no-underscore-dangle
+      const res = await request(app).delete(`/admins/${adminsSeed[2]._id}`).send();
+      expect(res.status).toBe(200);
+      expect(res.body.error).toBeFalsy();
+      expect(res.body.message).toEqual('Admin deleted');
+    });
+    test('Should return admin by id not found and status code 404.', async () => {
+      const res = await request(app).delete(`/admins/${notFoundId}`).send();
+      expect(res.status).toBe(404);
+      expect(res.body.data).toBeUndefined();
+      expect(res.body.error).toBeTruthy();
+    });
+    test('Should return status code 400.', async () => {
+      const res = await request(app).delete(`/admins/${invalidId}`).send();
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBeTruthy();
+      expect(res.body.data).toBeUndefined();
+    });
+  });
 });
