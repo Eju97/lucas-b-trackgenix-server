@@ -4,7 +4,8 @@ import Employees from '../models/Employees';
 import employeesSeed from '../seed/employees';
 
 describe('Employee - Tests', () => {
-  let newEmployee;
+  // eslint-disable-next-line no-underscore-dangle
+  const EmployeeID = employeesSeed[0]._id;
   const invalidID = '123c68f3658f142935ea7f6z';
 
   const mockedEmployee = {
@@ -19,27 +20,22 @@ describe('Employee - Tests', () => {
     await Employees.collection.insertMany(employeesSeed);
   });
 
-  // let emploteeID;
   describe('GET /employees', () => {
-    test('should get code 200', async () => {
+    test('should return the status code 200 and the list of employees', async () => {
       const response = await request(app).get('/Employees').send();
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
-      expect(response.body.data.length).toBeGreaterThan(0);
     });
   });
 
   describe('GETbyID /employees', () => {
-    beforeEach(async () => {
-      newEmployee = await Employees.create(mockedEmployee);
-    });
-
     test('should GET an employee by ID', async () => {
-      const response = await request(app).get(`/Employees/${newEmployee.id}`).send();
+      const response = await request(app).get(`/Employees/${EmployeeID}`).send();
       expect(response.status).toBe(200);
       expect(response.body.data).toBeDefined();
-      const foundEmployee = await Employees.findById(newEmployee.id);
-      expect(foundEmployee).toBeDefined();
+      expect(response.body.data).toMatchObject({
+        _id: EmployeeID,
+      });
     });
 
     test('should not GET an employee by ID', async () => {
@@ -64,100 +60,95 @@ describe('Employee - Tests', () => {
       });
     });
 
-    test('should not create a employee', async () => {
+    test('should return an error with status code 400 when we are trying to create an employee without body', async () => {
       const response = await request(app).post('/Employees').send();
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toEqual('There was an error:"name" is required');
     });
 
-    test('the employee should not be created because the name is wrong', async () => {
+    test('should return an error with status 400 when we are sending an invalid name in the request body', async () => {
       const response = await request(app).post('/Employees').send({
         ...mockedEmployee,
         name: 'te',
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('There was an error:"name" length must be at least 3 characters long');
     });
 
-    test('the employee should not be created because the last name is wrong', async () => {
+    test('should return an error with status 400 when we are sending an invalid last name in the request body', async () => {
       const response = await request(app).post('/Employees').send({
         ...mockedEmployee,
         lastName: 'te',
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('There was an error:"lastName" length must be at least 3 characters long');
     });
 
-    test('the employee should not be created because the phone is wrong', async () => {
+    test('should return an error with status 400 when we are sending an phone in the request body', async () => {
       const response = await request(app).post('/Employees').send({
         ...mockedEmployee,
         phone: '102a',
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('There was an error:"phone" length must be 10 characters long');
     });
 
-    test('the employee should not be created because the email is wrong', async () => {
+    test('should return an error with status 400 when we are sending an email in the request body', async () => {
       const response = await request(app).post('/Employees').send({
         ...mockedEmployee,
         email: 'email.com',
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('There was an error:"email" must be a valid email');
     });
 
-    test('the employee should not be created because the password is wrong', async () => {
+    test('should return an error with status 400 when we are sending an password in the request body', async () => {
       const response = await request(app).post('/Employees').send({
         ...mockedEmployee,
         password: 'test12',
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('There was an error:"password" with value "test12" fails to match the required pattern: /^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/');
     });
   });
 
   describe('PUT /employees', () => {
-    beforeEach(async () => {
-      newEmployee = await Employees.create(mockedEmployee);
-    });
-
-    afterEach(async () => {
-      await Employees.findByIdAndUpdate(newEmployee.id);
-    });
-
-    test('the employee should be editable', async () => {
-      const response = await request(app).put(`/Employees/${newEmployee.id}`).send({
+    test('should edit an existing employee and return the new data', async () => {
+      const response = await request(app).put(`/Employees/${EmployeeID}`).send({
         ...mockedEmployee,
         name: 'newName',
       });
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
+      expect(response.body.data).toBeDefined();
+      expect(response.body.data.name).toBe('newName');
     });
 
-    test('should have an invalid information error', async () => {
+    test('should return an error when the user tries to edit an employee without sending a body', async () => {
       const response = await request(app).put(`/Employees/${invalidID}`).send();
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toEqual('There was an error:"name" is required');
     });
   });
 
   describe('DELETE /employees', () => {
-    beforeEach(async () => {
-      newEmployee = await Employees.create(mockedEmployee);
-    });
-
     test('should remove an employee', async () => {
-      const response = await request(app).delete(`/Employees/${newEmployee.id}`).send();
+      const response = await request(app).delete(`/Employees/${EmployeeID}`).send();
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
       expect(response.body.data).toBeDefined();
-      const foundEmployee = await Employees.findById(newEmployee.id);
-      expect(foundEmployee).toBeNull();
     });
 
-    test('should not remove an employee', async () => {
+    test('should return an error when the user sends an invalid id', async () => {
       const response = await request(app).delete(`/Employees/${invalidID}`).send();
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
