@@ -4,8 +4,7 @@ import app from '../app';
 import projects from '../models/Projects';
 import projectSeed from '../seed/projects';
 
-describe('Projects -Test', () => {
-  let newProject;
+describe('Projects - Test', () => {
   const invalidProjectId = '63543102f794c80a1abb24a6';
   const mockedProject = {
     clientName: 'Coca Cola',
@@ -29,13 +28,7 @@ describe('Projects -Test', () => {
     test('should return the status code 200 and the list of projects', async () => {
       const response = await request(app).get('/projects').send();
       expect(response.status).toBe(200);
-    });
-    test('return false', async () => {
-      const response = await request(app).get('/projects').send();
       expect(response.body.error).toBeFalsy();
-    });
-    test('return more than one project', async () => {
-      const response = await request(app).get('/projects').send();
       expect(response.body.data.length).toEqual(4);
     });
   });
@@ -55,58 +48,65 @@ describe('Projects -Test', () => {
         employees: mockedProject.employees,
       }]);
     });
-    test('should not create a project', async () => {
+
+    test('should not create a project when there is not body', async () => {
       const response = await request(app).post('/projects').send();
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
     });
-    test('Project not created because incorrect Project name', async () => {
-      const response = await request(app).post('/projects').send({ mockedProject, name: 'a' });
 
+    test('should not create a project when the user rend an invalid project name', async () => {
+      const response = await request(app).post('/projects').send({ mockedProject, name: 'a' });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('There was an error: "name" length must be at least 3 characters long');
     });
+
     test('Project not created because incorrect Project description', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, description: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('There was an error: "name" is required');
     });
+
     test('Project not created because incorrect Project end date', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, endDate: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('There was an error: "name" is required');
     });
+
     test('Project not created because incorrect Client name', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, clientName: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('There was an error: "name" is required');
     });
+
     test('Project not created because incorrect Project start date', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, startDate: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('There was an error: "name" is required');
     });
+
     test('Project not created because incorrect Project employee', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, employee: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('There was an error: "name" is required');
     });
   });
 
   describe('PUT /projects', () => {
-    beforeEach(async () => {
-      newProject = await projects.create(mockedProject);
-    });
-    afterEach(async () => {
-      await projects.findByIdAndUpdate(newProject.id);
-    });
     test('should edit a project', async () => {
-      const response = await request(app).put(`/projects/${newProject.id}`).send({ ...mockedProject, clientName: 'newName' });
+      // eslint-disable-next-line no-underscore-dangle
+      const response = await request(app).put(`/projects/${projectSeed[0]._id}`).send({ ...mockedProject, clientName: 'newName' });
       expect(response.status).toBe(200);
-      expect(response.body.error).toBeFalsy();
+      expect(response.body.data).toBeDefined();
     });
-    test('should not edit the project because an error', async () => {
+    test('should not edit a project when the user sends a invalid project id', async () => {
       const response = await request(app).put(`/projects/${invalidProjectId}`).send();
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
@@ -115,32 +115,31 @@ describe('Projects -Test', () => {
   });
 
   describe('DELETE /projects', () => {
-    beforeEach(async () => {
-      newProject = await projects.create(mockedProject);
-    });
     test('should remove the project', async () => {
-      const response = await request(app).delete(`/projects/${newProject.id}`).send();
+      // eslint-disable-next-line no-underscore-dangle
+      const response = await request(app).delete(`/projects/${projectSeed[1]._id}`).send();
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
+    });
+    test('Cant remove the project, invalid ID', async () => {
+      const response = await request(app).delete(`/projects/${invalidProjectId}`).send();
+      expect(response.status).toBe(404);
+      expect(response.body.error).toBeTruthy();
     });
   });
 
   describe('GetById /projects', () => {
-    beforeEach(async () => {
-      newProject = await projects.create(mockedProject);
-    });
     test('should get a project by ID', async () => {
-      const response = await request(app).get(`/projects/${newProject.id}`).send();
+      // eslint-disable-next-line no-underscore-dangle
+      const response = await request(app).get(`/projects/${projectSeed[2]._id}`).send();
       expect(response.status).toBe(200);
-      expect(response.body.data).toBeDefined();
-      const projectFound = await projects.findById(newProject.id);
-      expect(projectFound).toBeDefined();
     });
     test('Project ID not found', async () => {
       const response = await request(app).get(`/projects/${invalidProjectId}`).send();
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeNull();
+      expect(response.body.message).toEqual('Project does not exist');
     });
   });
 });
