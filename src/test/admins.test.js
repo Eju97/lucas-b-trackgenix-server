@@ -3,6 +3,8 @@ import app from '../app';
 import Admins from '../models/Admins';
 import adminsSeed from '../seed/admins';
 
+const notFoundId = '63548c0849d3451aa2e435af';
+const invalidId = '63548c0849d3451';
 const mockedAdmin = {
   name: 'Radium',
   lastName: 'Rocket',
@@ -63,6 +65,27 @@ describe('Admins - Unit tests', () => {
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
       expect(res.body.message).toEqual('There was an error: "password" with value "R" fails to match the required pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$/');
+    });
+  });
+
+  describe('GET BY ID /admins', () => {
+    test('Should return admin by id found and status code 200.', async () => {
+      // eslint-disable-next-line no-underscore-dangle
+      const res = await request(app).get(`/admins/${adminsSeed[0]._id}`).send();
+      expect(res.status).toBe(200);
+      expect(res.body.error).toBeFalsy();
+      expect(res.body.data).toBeDefined();
+    });
+    test('Should return admin by id not found and status code 404.', async () => {
+      const res = await request(app).get(`/admins/${notFoundId}`).send();
+      expect(res.status).toBe(404);
+      expect(res.body.error).toBeTruthy();
+    });
+    test('Should return status code 400.', async () => {
+      const res = await request(app).get(`/admins/${invalidId}`).send();
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBeTruthy();
+      expect(res.body.data).toBeUndefined();
     });
   });
 });
