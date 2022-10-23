@@ -13,6 +13,7 @@ export const getAllSuperAdmins = async (req, res) => {
     return res.status(200).json({
       message: 'Super Admins founded.',
       data: superAdmin,
+      error: false,
     });
   } catch (error) {
     return res.status(400).json({
@@ -55,6 +56,7 @@ export const getByIdSuperAdmin = async (req, res) => {
     return res.status(200).json({
       message: 'Super admin found',
       data: superAdmin,
+      error: false,
     });
   } catch (error) {
     return res.status(400).json({
