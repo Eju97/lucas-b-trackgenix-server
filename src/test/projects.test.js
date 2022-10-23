@@ -36,7 +36,6 @@ describe('Projects - Test', () => {
   describe('POST /projects', () => {
     test('should create a project', async () => {
       const response = await request(app).post('/projects').send(mockedProject);
-
       expect(response.status).toBe(201);
       expect(response.body.error).toBeFalsy();
       expect(response.body.data).toMatchObject([{
@@ -56,42 +55,42 @@ describe('Projects - Test', () => {
       expect(response.body.data).toBeUndefined();
     });
 
-    test('should not create a project when the user rend an invalid project name', async () => {
+    test('should not create a project when the user send an invalid project name', async () => {
       const response = await request(app).post('/projects').send({ mockedProject, name: 'a' });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.message).toEqual('There was an error: "name" length must be at least 3 characters long');
     });
 
-    test('Project not created because incorrect Project description', async () => {
+    test('should not create a project when the user sends an invalid project description', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, description: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.message).toEqual('There was an error: "name" is required');
     });
 
-    test('Project not created because incorrect Project end date', async () => {
+    test('should not create a project when the user sends an invalid project endDate', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, endDate: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.message).toEqual('There was an error: "name" is required');
     });
 
-    test('Project not created because incorrect Client name', async () => {
+    test('should not create a project when the user sends an invalid project clientName', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, clientName: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.message).toEqual('There was an error: "name" is required');
     });
 
-    test('Project not created because incorrect Project start date', async () => {
+    test('should not create a project when the user sends an invalid project startDate', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, startDate: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.message).toEqual('There was an error: "name" is required');
     });
 
-    test('Project not created because incorrect Project employee', async () => {
+    test('should not create a project when the user sends an invalid project employee', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, employee: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
@@ -106,6 +105,7 @@ describe('Projects - Test', () => {
       expect(response.status).toBe(200);
       expect(response.body.data).toBeDefined();
     });
+
     test('should not edit a project when the user sends a invalid project id', async () => {
       const response = await request(app).put(`/projects/${invalidProjectId}`).send();
       expect(response.status).toBe(400);
@@ -121,10 +121,12 @@ describe('Projects - Test', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
     });
-    test('Cant remove the project, invalid ID', async () => {
+
+    test('should return an error when the user sends an invalid id', async () => {
       const response = await request(app).delete(`/projects/${invalidProjectId}`).send();
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
+      expect(response.body.message).toEqual('Project does not exist');
     });
   });
 
@@ -134,6 +136,7 @@ describe('Projects - Test', () => {
       const response = await request(app).get(`/projects/${projectSeed[2]._id}`).send();
       expect(response.status).toBe(200);
     });
+
     test('Project ID not found', async () => {
       const response = await request(app).get(`/projects/${invalidProjectId}`).send();
       expect(response.status).toBe(404);
