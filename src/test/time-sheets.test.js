@@ -38,6 +38,7 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.data).toBeDefined();
       expect(response.body.data.length).toBeGreaterThan(0);
     });
+
     test('status should be 200, correct query, empty result', async () => {
       const response = await request(app).get('/time-sheets/?description=ThisWontWork').send();
       expect(response.status).toBe(200);
@@ -54,12 +55,14 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.error).toBeFalsy();
       expect(response.body.data).toBeDefined();
     });
+
     test('status should be 400 if the body is empty', async () => {
       const response = await request(app).post('/time-sheets').send();
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
+
     test('status should be 400 when the description is shorter than 3 characters', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
@@ -69,6 +72,7 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
+
     test('status should be 400 when the description is larger than 300 characters', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
@@ -81,6 +85,7 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
+
     test('status should be 400 when the date is not ISO formated', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
@@ -90,6 +95,7 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
+
     test('status should be 400 when the hours are negative', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
@@ -99,6 +105,7 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
+
     test('status should be 400 when the task is shorter than 24 character', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
@@ -108,6 +115,7 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
+
     test('status should be 400 when the task is larger than 24 character', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
@@ -117,6 +125,7 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
+
     test('status should be 400 when the employee is shorter than 24 character', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
@@ -126,6 +135,7 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
+
     test('status should be 400 when the employee is larger than 24 character', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
@@ -135,6 +145,7 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
+
     test('status should be 400 when the project is shorter than 24 character', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
@@ -144,6 +155,7 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
+
     test('status should be 400 when the project is larger than 24 character', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
