@@ -24,15 +24,7 @@ describe('Super-admins - Unit tests', () => {
     test('should return status code 200', async () => {
       const response = await request(app).get('/super-admins').send();
       expect(response.status).toBe(200);
-    });
-
-    test('should return error false', async () => {
-      const response = await request(app).get('/super-admins').send();
       expect(response.body.error).toBeFalsy();
-    });
-
-    test('should return more than one super admin', async () => {
-      const response = await request(app).get('/super-admins').send();
       expect(response.body.data.length).toBeGreaterThan(0);
     });
   });
@@ -44,7 +36,7 @@ describe('Super-admins - Unit tests', () => {
       expect(response.body.data).toBeDefined();
     });
 
-    test('should not return a super admin by ID', async () => {
+    test('should return an error when the user sends an invalid id', async () => {
       const response = await request(app).get(`/super-admins/${invalidID}`).send();
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
@@ -55,6 +47,7 @@ describe('Super-admins - Unit tests', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeNull();
+      expect(response.body.message).toEqual('Super Admin not found');
     });
   });
 
@@ -143,12 +136,23 @@ describe('Super-admins - Unit tests', () => {
       expect(response.body.data).toBeDefined();
     });
 
-    test('should not edit a super admin when the user sends an invalid id', async () => {
-      const response = await request(app).put(`/super-admins/${invalidID}`).send();
+    test('should edit a super admin', async () => {
+      const response = await request(app).put(`/super-admins/${validId}`).send();
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
       expect(response.body.message).toEqual('There was an error: "name" is required');
+    });
+
+    test('should not edit a super admin when the user sends an invalid id', async () => {
+      const response = await request(app).put(`/super-admins/${invalidID}`).send({
+        ...mockedSuperAdmin,
+        name: 'NewName',
+      });
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toEqual('An error occurred: CastError: Cast to ObjectId failed for value "6349bc420340abc705a7e8a5naid" (type string) at path "_id" for model "SuperAdmins"');
     });
   });
 });
