@@ -50,7 +50,7 @@ export const getByIdSuperAdmin = async (req, res) => {
       return res.status(404).json({
         message: 'Super Admin not found',
         data: superAdmin,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
