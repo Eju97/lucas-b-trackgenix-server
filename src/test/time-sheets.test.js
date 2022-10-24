@@ -26,6 +26,7 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
     });
+
     test('should not delete when the user sends an invalid id', async () => {
       const response = await request(app).delete(`/time-sheets/${invalidId}`).send();
       expect(response.status).toBe(404);

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 export default [{
   _id: mongoose.Types.ObjectId('635321207ca59575d18db35b'),
-  description: 'Example for testing with jest in timesheet',
+  description: 'Example for testing with jest in timesheet 1',
   date: '2022-05-15',
   hours: 18,
   task: mongoose.Types.ObjectId('6352dae0282ae0599b7acd91'),
@@ -11,10 +11,35 @@ export default [{
 },
 {
   _id: mongoose.Types.ObjectId('63532598456a79a9b1c34790'),
-  description: 'Example for testing with jest in timesheet',
-  date: '2022-05-15',
+  description: 'Example for testing with jest in timesheet 2',
+  date: '2022-09-03',
   hours: 15,
   task: mongoose.Types.ObjectId('635325a5c39a0040ecf7a860'),
   employee: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
   projects: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
-}];
+}, {
+  _id: mongoose.Types.ObjectId('635721ed5709dfe90aa28e3a'),
+  description: 'Example for testing with jest in timesheet 3',
+  date: '2020-12-24',
+  hours: 12,
+  task: mongoose.Types.ObjectId('635721ff7006474df2d29575'),
+  employee: mongoose.Types.ObjectId('6357220894031325d6589c3d'),
+  projects: mongoose.Types.ObjectId('6357220e4dc6c52dedfa7d6b'),
+}, {
+  _id: mongoose.Types.ObjectId('63572212fa42f5a6d762b5ba'),
+  description: 'Example for testing with jest in timesheet 4',
+  date: '2021-02-30',
+  hours: 30,
+  task: mongoose.Types.ObjectId('6357221987d5ace742abdd26'),
+  employee: mongoose.Types.ObjectId('63572220f3a2bd043cba247f'),
+  projects: mongoose.Types.ObjectId('635722269e99353670028f6b'),
+}, {
+  _id: mongoose.Types.ObjectId('6357222b6db04df70c7b04dd'),
+  description: 'Example for testing with jest in timesheet 5',
+  date: '2022-01-10',
+  hours: 40,
+  task: mongoose.Types.ObjectId('63572236a29cc64e123464d6'),
+  employee: mongoose.Types.ObjectId('6357223cb3c143782846d09d'),
+  projects: mongoose.Types.ObjectId('63572241e3b9566518920034'),
+},
+];
