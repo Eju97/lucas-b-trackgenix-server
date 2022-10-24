@@ -9,7 +9,7 @@ export default [{
   endDate: '2022-03-25T03:00:00.000Z',
   employees: [
     {
-      _id: mongoose.Types.ObjectId('634c68f3658f142935ea7f6e'),
+      employee: mongoose.Types.ObjectId('634c68f3658f142935ea7f6e'),
       rate: 20,
       role: 'DEV',
     },
@@ -24,7 +24,7 @@ export default [{
   endDate: '2022-03-25T03:00:00.000Z',
   employees: [
     {
-      _id: mongoose.Types.ObjectId('634c68f3658f142935ea7f6e'),
+      employee: mongoose.Types.ObjectId('634c68f3658f142935ea7f6e'),
       rate: 20,
       role: 'DEV',
     },
@@ -39,7 +39,7 @@ export default [{
   endDate: '2022-03-25T03:00:00.000Z',
   employees: [
     {
-      _id: mongoose.Types.ObjectId('634c68f3658f142935ea7f6e'),
+      employee: mongoose.Types.ObjectId('634c68f3658f142935ea7f6e'),
       rate: 20,
       role: 'DEV',
     },
@@ -54,7 +54,7 @@ export default [{
   endDate: '2022-03-25T03:00:00.000Z',
   employees: [
     {
-      _id: mongoose.Types.ObjectId('634c68f3658f142935ea7f6e'),
+      employee: mongoose.Types.ObjectId('634c68f3658f142935ea7f6e'),
       rate: 20,
       role: 'DEV',
     },
