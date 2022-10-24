@@ -5,7 +5,7 @@ export const getAllTimeSheets = async (req, res) => {
     const timeSheets = await TimeSheets.find(req.query)
       .populate('task')
       .populate('employee')
-      .populate('proyect');
+      .populate('project');
     return res.status(200).json({
       message: 'Time sheets found',
       data: timeSheets,
