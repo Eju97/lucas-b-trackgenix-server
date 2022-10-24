@@ -42,6 +42,7 @@ describe('Super-admins - Unit tests', () => {
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
     });
+
     test('should not return a super admin, ID not found', async () => {
       const response = await request(app).get(`/super-admins/${IdNotFound}`).send();
       expect(response.status).toBe(404);
@@ -61,10 +62,11 @@ describe('Super-admins - Unit tests', () => {
 
     test('should return error', async () => {
       const response = await request(app).post('/super-admins').send();
+      console.log(response.body.mesage);
       expect(response.status).toBe(400);
       expect(response.body.data).toBeUndefined();
       expect(response.body.error).toBeTruthy();
-      expect(response.body.mesage).toBeUndefined();
+      expect(response.body.message).toBeDefined();
     });
 
     test('should return an error with status 400 when we are sending an invalid name in the request body', async () => {
