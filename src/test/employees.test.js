@@ -5,7 +5,7 @@ import employeesSeed from '../seed/employees';
 
 describe('Employee - Tests', () => {
   // eslint-disable-next-line no-underscore-dangle
-  const EmployeeID = employeesSeed[0]._id;
+  const employeeId = employeesSeed[0]._id;
   const invalidID = '123c68f3658f142935ea7f6z';
 
   const mockedEmployee = {
@@ -25,16 +25,17 @@ describe('Employee - Tests', () => {
       const response = await request(app).get('/Employees').send();
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
+      expect(response.body.data).toBeDefined();
     });
   });
 
   describe('GETbyID /employees', () => {
     test('should GET an employee by ID', async () => {
-      const response = await request(app).get(`/Employees/${EmployeeID}`).send();
+      const response = await request(app).get(`/Employees/${employeeId}`).send();
       expect(response.status).toBe(200);
       expect(response.body.data).toBeDefined();
       expect(response.body.data).toMatchObject({
-        _id: EmployeeID,
+        _id: employeeId,
       });
     });
 
@@ -115,7 +116,7 @@ describe('Employee - Tests', () => {
 
   describe('PUT /employees', () => {
     test('should edit an existing employee and return the new data', async () => {
-      const response = await request(app).put(`/Employees/${EmployeeID}`).send({
+      const response = await request(app).put(`/Employees/${employeeId}`).send({
         ...mockedEmployee,
         name: 'newName',
       });
@@ -136,7 +137,7 @@ describe('Employee - Tests', () => {
 
   describe('DELETE /employees', () => {
     test('should remove an employee', async () => {
-      const response = await request(app).delete(`/Employees/${EmployeeID}`).send();
+      const response = await request(app).delete(`/Employees/${employeeId}`).send();
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
       expect(response.body.data).toBeDefined();
