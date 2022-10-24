@@ -15,7 +15,7 @@ const mockedTimeSheet = {
   date: '2022-03-22T03:00:00.000Z',
   hours: 15,
   task: mongoose.Types.ObjectId('635325a5c39a0040ecf7a860'),
-  employees: [{ rate: 10, role: 'QA', employee: mongoose.Types.ObjectId('635325adc90228d7485c0e1f') }],
+  employees: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
   project: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
 };
 
@@ -120,7 +120,7 @@ describe('TESTS endpoints /time-sheets', () => {
     test('status should be 400 when the employee is shorter than 24 character', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
-        employees: [{ ...mockedTimeSheet, employee: shorterId }],
+        employees: shorterId,
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
@@ -129,7 +129,7 @@ describe('TESTS endpoints /time-sheets', () => {
     test('status should be 400 when the employee is larger than 24 character', async () => {
       const response = await request(app).post('/time-sheets').send({
         ...mockedTimeSheet,
-        employees: [{ ...mockedTimeSheet, employee: largerId }],
+        employees: largerId,
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();

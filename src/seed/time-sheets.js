@@ -6,7 +6,7 @@ export default [{
   date: '2022-05-15',
   hours: 18,
   task: mongoose.Types.ObjectId('6352dae0282ae0599b7acd91'),
-  employees: { rate: 10, role: 'QA', employee: mongoose.Types.ObjectId('634c68f3658f142935ea7f6e') },
+  employee: mongoose.Types.ObjectId('634c68f3658f142935ea7f6e'),
   projects: mongoose.Types.ObjectId('6352dae0282ae0599b7acd92'),
 },
 {
@@ -15,6 +15,6 @@ export default [{
   date: '2022-05-15',
   hours: 15,
   task: mongoose.Types.ObjectId('635325a5c39a0040ecf7a860'),
-  employees: { rate: 10, role: 'DEV', employee: mongoose.Types.ObjectId('635325adc90228d7485c0e1f') },
+  employee: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
   projects: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
 }];
