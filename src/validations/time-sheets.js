@@ -6,7 +6,11 @@ const validateTimeSheetBody = (req, res, next) => {
     date: Joi.date().iso().required(),
     hours: Joi.number().positive().required(),
     task: Joi.string().length(24).required(),
-    employees: Joi.string().length(24).required(),
+    employees: Joi.array().items(Joi.object({
+      employee: Joi.string().length(24).required(),
+      rate: Joi.number().required(),
+      role: Joi.string().valid('DEV', 'TL', 'PM', 'QA').required(),
+    })),
     project: Joi.string().length(24).required(),
   });
 

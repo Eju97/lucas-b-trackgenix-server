@@ -15,20 +15,12 @@ const mockedTimeSheet = {
   date: '2022-03-22T03:00:00.000Z',
   hours: 15,
   task: mongoose.Types.ObjectId('635325a5c39a0040ecf7a860'),
-  employees: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
+  employees: [{ rate: 10, role: 'QA', employee: mongoose.Types.ObjectId('635325adc90228d7485c0e1f') }],
   project: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
 };
 
-const failedMockedTimeSheet = {
-  description: 'Example for testing with jest in timesheet',
-  date: '2022-03-22T03:00:00.000Z',
-  hours: 'Twenty',
-  task: mongoose.Types.ObjectId('635325a5c39a0040ecf7a860'),
-  employees: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
-  project: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
-};
-
-const incorrectMongooseType = '635325a5c39a0040ecf7a860';
+const shorterId = '635325a5c39a0040ecf7a86';
+const largerId = '635325a5c39a0040ecf7a8601';
 
 describe('TESTS endpoints /time-sheets', () => {
   beforeAll(async () => {
@@ -70,7 +62,7 @@ describe('TESTS endpoints /time-sheets', () => {
     });
     test('status should be 400 when the description is shorter than 3 characters', async () => {
       const response = await request(app).post('/time-sheets').send({
-        ...failedMockedTimeSheet,
+        ...mockedTimeSheet,
         description: 'no',
       });
       expect(response.status).toBe(400);
@@ -79,8 +71,11 @@ describe('TESTS endpoints /time-sheets', () => {
     });
     test('status should be 400 when the description is larger than 300 characters', async () => {
       const response = await request(app).post('/time-sheets').send({
-        ...failedMockedTimeSheet,
-        description: 'Should not work, phrase repeted till 301 character.Should not work, phrase repeted till 301 character.Should not work, phrase repeted till 301 character.Should not work, phrase repeted till 301 character.Should not work, phrase repeted till 301 character.Should not work, phrase repeted till 301 character.',
+        ...mockedTimeSheet,
+        description: 'Should not work, phrase repeted till 301 character.'
+        + 'Should not work, phrase repeted till 301 character.Should not work, phrase repeted till 301 character.'
+        + 'Should not work, phrase repeted till 301 character.Should not work, phrase repeted till 301 character.'
+        + 'Should not work, phrase repeted till 301 character.',
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
@@ -88,7 +83,7 @@ describe('TESTS endpoints /time-sheets', () => {
     });
     test('status should be 400 when the date is not ISO formated', async () => {
       const response = await request(app).post('/time-sheets').send({
-        ...failedMockedTimeSheet,
+        ...mockedTimeSheet,
         date: '23/10/2022',
       });
       expect(response.status).toBe(400);
@@ -97,35 +92,62 @@ describe('TESTS endpoints /time-sheets', () => {
     });
     test('status should be 400 when the hours are negative', async () => {
       const response = await request(app).post('/time-sheets').send({
-        ...failedMockedTimeSheet,
+        ...mockedTimeSheet,
         hours: -20,
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
-    test('status should be 400 when the task is not an mongoose.Types.ObjectId from task', async () => {
+    test('status should be 400 when the task is shorter than 24 character', async () => {
       const response = await request(app).post('/time-sheets').send({
-        ...failedMockedTimeSheet,
-        task: incorrectMongooseType,
+        ...mockedTimeSheet,
+        task: shorterId,
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
-    test('status should be 400 when the employee is not an mongoose.Types.ObjectId', async () => {
+    test('status should be 400 when the task is larger than 24 character', async () => {
       const response = await request(app).post('/time-sheets').send({
-        ...failedMockedTimeSheet,
-        employee: incorrectMongooseType,
+        ...mockedTimeSheet,
+        task: largerId,
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBe(undefined);
     });
-    test('status should be 400 when the project is not an mongoose.Types.ObjectId', async () => {
+    test('status should be 400 when the employee is shorter than 24 character', async () => {
       const response = await request(app).post('/time-sheets').send({
-        ...failedMockedTimeSheet,
-        employee: incorrectMongooseType,
+        ...mockedTimeSheet,
+        employees: [{ ...mockedTimeSheet, employee: shorterId }],
+      });
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBe(undefined);
+    });
+    test('status should be 400 when the employee is larger than 24 character', async () => {
+      const response = await request(app).post('/time-sheets').send({
+        ...mockedTimeSheet,
+        employees: [{ ...mockedTimeSheet, employee: largerId }],
+      });
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBe(undefined);
+    });
+    test('status should be 400 when the project is shorter than 24 character', async () => {
+      const response = await request(app).post('/time-sheets').send({
+        ...mockedTimeSheet,
+        project: shorterId,
+      });
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBe(undefined);
+    });
+    test('status should be 400 when the project is larger than 24 character', async () => {
+      const response = await request(app).post('/time-sheets').send({
+        ...mockedTimeSheet,
+        project: largerId,
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
