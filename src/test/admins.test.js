@@ -18,20 +18,17 @@ describe('Admins - Unit tests', () => {
   });
 
   describe('GET /admins', () => {
-    test('Should return status code 404 when the path is wrong.', async () => {
-      const res = await request(app).get('/admin').send();
-      expect(res.status).toBe(404);
-    });
-    test('Should return status code 200 and the admins.', async () => {
+    test('Should return status code 200 and the admins when path is correct.', async () => {
       const res = await request(app).get('/admins').send();
       expect(res.status).toBe(200);
       expect(res.body.error).toBeFalsy();
       expect(res.body.data.length).toBeGreaterThan(0);
+      expect(res.body.message).toEqual('Admin/s found');
     });
   });
 
   describe('POST /admins', () => {
-    test('Should return status code 201 and create an admin.', async () => {
+    test('Should return status code 201 and create an admin when we are sending valid parameters.', async () => {
       const res = await request(app).post('/admins').send(mockedAdmin);
       expect(res.status).toBe(201);
       expect(res.body.error).toBeFalsy();
@@ -41,26 +38,27 @@ describe('Admins - Unit tests', () => {
         email: mockedAdmin.email,
         password: mockedAdmin.password,
       });
+      expect(res.body.message).toEqual('Project created successfully.');
     });
-    test('Should return status code 400 and not create an admin.', async () => {
+    test('Should return status code 400 and not create an admin when we are sending an invalid name in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, name: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
       expect(res.body.message).toEqual('There was an error: "name" length must be at least 3 characters long');
     });
-    test('Should return status code 400 and not create an admin.', async () => {
+    test('Should return status code 400 and not create an admin when we are sending an invalid last name in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, lastName: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
       expect(res.body.message).toEqual('There was an error: "lastName" length must be at least 3 characters long');
     });
-    test('Should return status code 400 and not create an admin.', async () => {
+    test('Should return status code 400 and not create an admin when we are sending an invalid email in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, email: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
       expect(res.body.message).toEqual('There was an error: "email" must be a valid email');
     });
-    test('Should return status code 400 and not create an admin.', async () => {
+    test('Should return status code 400 and not create an admin when we are sending an invalid password in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, password: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
@@ -69,65 +67,72 @@ describe('Admins - Unit tests', () => {
   });
 
   describe('GET BY ID /admins', () => {
-    test('Should return admin by id found and status code 200.', async () => {
+    test('Should return admin by id found and status code 200 when we are sending a valid id.', async () => {
       // eslint-disable-next-line no-underscore-dangle
       const res = await request(app).get(`/admins/${adminsSeed[0]._id}`).send();
       expect(res.status).toBe(200);
       expect(res.body.error).toBeFalsy();
       expect(res.body.data).toBeDefined();
+      expect(res.body.message).toEqual('Admin found');
     });
-    test('Should return admin by id not found and status code 404.', async () => {
+    test('Should return admin by id not found and status code 404 when we are sending an id not found in the database.', async () => {
       const res = await request(app).get(`/admins/${notFoundId}`).send();
       expect(res.status).toBe(404);
       expect(res.body.error).toBeTruthy();
+      expect(res.body.message).toEqual(`Cannot find admin with ID ${notFoundId}`);
     });
-    test('Should return status code 400.', async () => {
+    test('Should return status code 400 when we are sending an invalid id in the request body', async () => {
       const res = await request(app).get(`/admins/${invalidId}`).send();
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
       expect(res.body.data).toBeUndefined();
+      expect(res.body.message).toEqual('An error has occurred');
     });
   });
 
   describe('DELETE /admins', () => {
-    test('Should return status code 200 and delete an admin.', async () => {
+    test('Should return status code 200 and delete an admin when we are sending a valid id.', async () => {
       // eslint-disable-next-line no-underscore-dangle
       const res = await request(app).delete(`/admins/${adminsSeed[2]._id}`).send();
       expect(res.status).toBe(200);
       expect(res.body.error).toBeFalsy();
       expect(res.body.message).toEqual('Admin deleted');
     });
-    test('Should return admin by id not found and status code 404.', async () => {
+    test('Should return admin by id not found and status code 404 when we are sending an id not found in the database.', async () => {
       const res = await request(app).delete(`/admins/${notFoundId}`).send();
       expect(res.status).toBe(404);
       expect(res.body.data).toBeUndefined();
       expect(res.body.error).toBeTruthy();
+      expect(res.body.message).toEqual(`Cannot find admin with ID ${notFoundId}`);
     });
-    test('Should return status code 400.', async () => {
+    test('Should return status code 400 when we are sending an invalid id in the request body', async () => {
       const res = await request(app).delete(`/admins/${invalidId}`).send();
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
       expect(res.body.data).toBeUndefined();
+      expect(res.body.message).toEqual('An error has occurred');
     });
   });
 
   describe('PUT /admins', () => {
-    test('Should return status code 200 and edit an admin.', async () => {
+    test('Should return status code 200 and edit an admin when we are sending a valid id.', async () => {
       // eslint-disable-next-line no-underscore-dangle
       const res = await request(app).put(`/admins/${adminsSeed[1]._id}`).send();
       expect(res.status).toBe(201);
       expect(res.body.error).toBeFalsy();
       expect(res.body.message).toEqual('Admin updated');
     });
-    test('Should return status code 404 for id not found.', async () => {
+    test('Should return status code 404 when we are sending an id not found in the database.', async () => {
       const res = await request(app).put(`/admins/${notFoundId}`).send();
       expect(res.status).toBe(404);
       expect(res.body.error).toBeTruthy();
       expect(res.body.message).toEqual(`Cannot find admin with ID ${notFoundId}`);
     });
-    test('Should return status code 404 for wrong id.', async () => {
-      const res = await request(app).put('/admins/').send();
-      expect(res.status).toBe(404);
+    test('Should return status code 400 when we are sending an invalid id in the request body.', async () => {
+      const res = await request(app).put(`/admins/${invalidId}`).send();
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBeTruthy();
+      expect(res.body.message).toEqual('An error has occurred');
     });
   });
 });
