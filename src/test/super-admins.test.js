@@ -54,7 +54,7 @@ describe('Super-admins - Unit tests', () => {
   });
 
   describe('POST /Super-admins', () => {
-    test('should return an error with status code 400 when we are trying to create a super admin without body', async () => {
+    test('Should return status code 201 and create a super admin when we are sending valid parameters.', async () => {
       const response = await request(app).post('/super-admins').send(mockedSuperAdmin);
       expect(response.status).toBe(201);
       expect(response.body.error).toBeFalsy();
