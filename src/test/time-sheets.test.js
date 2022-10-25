@@ -10,6 +10,10 @@ import employeesSeed from '../seed/employees';
 import projectsSeed from '../seed/projects';
 import tasksSeed from '../seed/tasks';
 
+const validId = '635321207ca59575d18db35b';
+const invalidId = '635321207ca59575d18db35b2';
+const shorterId = '635325a5c39a0040ecf7a86';
+const largerId = '635325a5c39a0040ecf7a8601';
 const mockedTimeSheet = {
   description: 'Example for testing with jest in timesheet',
   date: '2022-03-22T03:00:00.000Z',
@@ -19,15 +23,27 @@ const mockedTimeSheet = {
   project: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
 };
 
-const shorterId = '635325a5c39a0040ecf7a86';
-const largerId = '635325a5c39a0040ecf7a8601';
-
-describe('TESTS endpoints /time-sheets', () => {
+describe('Time-sheet - Unit tests', () => {
   beforeAll(async () => {
     await TimeSheets.collection.insertMany(timeSheetSeed);
     await Employees.collection.insertMany(employeesSeed);
     await Projects.collection.insertMany(projectsSeed);
     await Tasks.collection.insertMany(tasksSeed);
+  });
+
+  describe('DELETE /time-sheets', () => {
+    test('should delete user when user send an valid id', async () => {
+      const response = await request(app).delete(`/time-sheets/${validId}`).send();
+      expect(response.status).toBe(200);
+      expect(response.body.error).toBeFalsy();
+    });
+
+    test('should not delete when the user sends an invalid id', async () => {
+      const response = await request(app).delete(`/time-sheets/${invalidId}`).send();
+      expect(response.status).toBe(404);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+    });
   });
 
   describe('GET /time-sheets', () => {
