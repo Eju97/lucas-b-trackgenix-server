@@ -7,7 +7,7 @@ export const getProjects = async (req, res) => {
       return res.status(404).json({
         message: 'There are no projects available',
         data: projects,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
@@ -31,7 +31,7 @@ export const getProjectById = async (req, res) => {
       return res.status(404).json({
         message: 'Project does not exist',
         data: project,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
@@ -81,7 +81,7 @@ export const deleteProject = async (req, res) => {
       return res.status(404).json({
         message: 'Project does not exist',
         data: result,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
@@ -105,7 +105,7 @@ export const editProject = async (req, res) => {
       return res.status(404).json({
         message: 'Project does not exist',
         data: result,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
@@ -133,7 +133,7 @@ export const assignEmployee = async (req, res) => {
       return res.status(404).json({
         message: 'Project does not exist',
         data: result,
-        error: false,
+        error: true,
       });
     }
     return res.status(200).json({
