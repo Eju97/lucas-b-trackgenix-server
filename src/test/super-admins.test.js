@@ -41,6 +41,7 @@ describe('Super-admins - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toEqual('An error occurred: CastError: Cast to ObjectId failed for value "6349bc420340abc705a7e8a5naid" (type string) at path "_id" for model "SuperAdmins"');
     });
 
     test('should not return a super admin, ID not found', async () => {
@@ -53,7 +54,7 @@ describe('Super-admins - Unit tests', () => {
   });
 
   describe('POST /Super-admins', () => {
-    test('should return an error with status code 400 when we are trying to create an employee without body', async () => {
+    test('should return an error with status code 400 when we are trying to create a super admin without body', async () => {
       const response = await request(app).post('/super-admins').send(mockedSuperAdmin);
       expect(response.status).toBe(201);
       expect(response.body.error).toBeFalsy();
@@ -62,11 +63,11 @@ describe('Super-admins - Unit tests', () => {
 
     test('should return error', async () => {
       const response = await request(app).post('/super-admins').send();
-      console.log(response.body.mesage);
       expect(response.status).toBe(400);
       expect(response.body.data).toBeUndefined();
       expect(response.body.error).toBeTruthy();
       expect(response.body.message).toBeDefined();
+      expect(response.body.message).toEqual('There was an error: "name" is required');
     });
 
     test('should return an error with status 400 when we are sending an invalid name in the request body', async () => {
