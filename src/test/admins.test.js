@@ -40,24 +40,28 @@ describe('Admins - Unit tests', () => {
       });
       expect(res.body.message).toEqual('Project created successfully.');
     });
+
     test('Should return status code 400 and not create an admin when we are sending an invalid name in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, name: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
       expect(res.body.message).toEqual('There was an error: "name" length must be at least 3 characters long');
     });
+
     test('Should return status code 400 and not create an admin when we are sending an invalid last name in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, lastName: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
       expect(res.body.message).toEqual('There was an error: "lastName" length must be at least 3 characters long');
     });
+
     test('Should return status code 400 and not create an admin when we are sending an invalid email in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, email: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
       expect(res.body.message).toEqual('There was an error: "email" must be a valid email');
     });
+
     test('Should return status code 400 and not create an admin when we are sending an invalid password in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, password: 'R' });
       expect(res.status).toBe(400);
@@ -75,12 +79,14 @@ describe('Admins - Unit tests', () => {
       expect(res.body.data).toBeDefined();
       expect(res.body.message).toEqual('Admin found');
     });
+
     test('Should return admin by id not found and status code 404 when we are sending an id not found in the database.', async () => {
       const res = await request(app).get(`/admins/${notFoundId}`).send();
       expect(res.status).toBe(404);
       expect(res.body.error).toBeTruthy();
       expect(res.body.message).toEqual(`Cannot find admin with ID ${notFoundId}`);
     });
+
     test('Should return status code 400 when we are sending an invalid id in the request body', async () => {
       const res = await request(app).get(`/admins/${invalidId}`).send();
       expect(res.status).toBe(400);
@@ -98,6 +104,7 @@ describe('Admins - Unit tests', () => {
       expect(res.body.error).toBeFalsy();
       expect(res.body.message).toEqual('Admin deleted');
     });
+
     test('Should return admin by id not found and status code 404 when we are sending an id not found in the database.', async () => {
       const res = await request(app).delete(`/admins/${notFoundId}`).send();
       expect(res.status).toBe(404);
@@ -105,6 +112,7 @@ describe('Admins - Unit tests', () => {
       expect(res.body.error).toBeTruthy();
       expect(res.body.message).toEqual(`Cannot find admin with ID ${notFoundId}`);
     });
+
     test('Should return status code 400 when we are sending an invalid id in the request body', async () => {
       const res = await request(app).delete(`/admins/${invalidId}`).send();
       expect(res.status).toBe(400);
@@ -122,12 +130,14 @@ describe('Admins - Unit tests', () => {
       expect(res.body.error).toBeFalsy();
       expect(res.body.message).toEqual('Admin updated');
     });
+
     test('Should return status code 404 when we are sending an id not found in the database.', async () => {
       const res = await request(app).put(`/admins/${notFoundId}`).send();
       expect(res.status).toBe(404);
       expect(res.body.error).toBeTruthy();
       expect(res.body.message).toEqual(`Cannot find admin with ID ${notFoundId}`);
     });
+
     test('Should return status code 400 when we are sending an invalid id in the request body.', async () => {
       const res = await request(app).put(`/admins/${invalidId}`).send();
       expect(res.status).toBe(400);
