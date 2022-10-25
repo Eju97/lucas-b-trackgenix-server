@@ -71,7 +71,7 @@ describe('TESTS endpoints /time-sheets', () => {
   });
 
   describe('GET by ID /time-sheets', () => {
-    test('status should be 200', async () => {
+    test('status should be 200 and get an object from the timesheet', async () => {
       const response = await request(app).get(`/time-sheets/${timesheetId}`).send();
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
@@ -80,13 +80,13 @@ describe('TESTS endpoints /time-sheets', () => {
       });
     });
 
-    test('should not get an employee by ID which is not in DB', async () => {
+    test('status should be 404 not get an employee when the id is not in the DB', async () => {
       const response = await request(app).get(`/time-sheets/${notFoundId}`).send();
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
     });
 
-    test('should not get an employee by an invalid ID', async () => {
+    test('status should be 400 and not get an employee when the id is invalid', async () => {
       const response = await request(app).get(`/time-sheets/${shorterId}`).send();
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
