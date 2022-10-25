@@ -21,6 +21,9 @@ const mockedTimeSheet = {
 
 const shorterId = '635325a5c39a0040ecf7a86';
 const largerId = '635325a5c39a0040ecf7a8601';
+const notFindedId = '635325a5c39a0040ecf7a861';
+// eslint-disable-next-line no-underscore-dangle
+const timesheetId = timeSheetSeed[0]._id;
 
 describe('TESTS endpoints /time-sheets', () => {
   beforeAll(async () => {
@@ -45,6 +48,30 @@ describe('TESTS endpoints /time-sheets', () => {
       expect(response.body.error).toBeFalsy();
       expect(response.body.data).toStrictEqual([]);
       expect(response.body.data.length).not.toBeGreaterThan(0);
+    });
+  });
+
+  describe('GET by ID', () => {
+    test('status should be 200', async () => {
+      const response = await request(app).get(`/time-sheets/${timesheetId}`).send();
+      expect(response.status).toBe(200);
+      expect(response.body.error).toBeFalsy();
+      expect(response.body.data).toMatchObject({
+        _id: timesheetId,
+      });
+    });
+
+    test('should not get an employee by ID which is not in DB', async () => {
+      const response = await request(app).get(`/time-sheets/${notFindedId}`).send();
+      expect(response.status).toBe(404);
+      expect(response.body.error).toBeTruthy();
+    });
+
+    test('should not get an employee by an invalid ID', async () => {
+      const response = await request(app).get(`/time-sheets/${shorterId}`).send();
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).not.toBeDefined();
     });
   });
 
