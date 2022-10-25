@@ -20,6 +20,11 @@ describe('Projects - Test', () => {
       },
     ],
   };
+  const mockedEmployee = {
+    employee: mongoose.Types.ObjectId('634c68f3658f142935ea7f6e'),
+    rate: 20,
+    role: 'DEV',
+  };
   beforeAll(async () => {
     await projects.collection.insertMany(projectSeed);
   });
@@ -143,6 +148,35 @@ describe('Projects - Test', () => {
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeNull();
       expect(response.body.message).toEqual('Project does not exist');
+    });
+  });
+
+  describe('PUT /projects/id:/assign', () => {
+    test('should add a new employee to the project', async () => {
+      // eslint-disable-next-line no-underscore-dangle
+      const response = await request(app).put(`/projects/${projectSeed[2]._id}/assign`).send(mockedEmployee);
+      expect(response.status).toBe(200);
+      expect(response.body.error).toBeFalsy();
+      expect(response.body.message).toEqual('Employee assigned to project successfully');
+    });
+
+    test('should return status code 404 when the user sends an invalid id', async () => {
+      const response = await request(app).put(`/projects/${invalidProjectId}/assign`).send(mockedEmployee);
+      expect(response.status).toBe(404);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeNull();
+      expect(response.body.message).toEqual('Project does not exist');
+    });
+
+    test('should return status code 400 when the user sends an invalid body', async () => {
+      // eslint-disable-next-line no-underscore-dangle
+      const response = await request(app).put(`/projects/${projectSeed[2]._id}/assign`).send({
+        ...mockedEmployee,
+        role: 'BRO',
+      });
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
     });
   });
 });
