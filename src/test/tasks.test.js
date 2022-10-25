@@ -82,7 +82,7 @@ describe('Tasks - unit tests', () => {
       expect(res.body.message).toBe('Task created successfully');
     });
 
-    test('Should return status code 400 when the task is not created', async () => {
+    test('Should return status code 400 when the request body is empty', async () => {
       const res = await request(app).post('/tasks').send();
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
