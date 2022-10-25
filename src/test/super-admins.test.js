@@ -61,7 +61,7 @@ describe('Super-admins - Unit tests', () => {
       expect(response.body).toBeInstanceOf(Object);
     });
 
-    test('should return error', async () => {
+    test('should return an error with status code 400 when we are sending an empty body', async () => {
       const response = await request(app).post('/super-admins').send();
       expect(response.status).toBe(400);
       expect(response.body.data).toBeUndefined();
