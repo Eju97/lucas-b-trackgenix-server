@@ -82,7 +82,7 @@ export const deleteAdmin = async (req, res) => {
         data: undefined,
         error: true,
       })
-      : res.status(204).json({
+      : res.status(200).json({
         message: 'Admin deleted',
         data: deleted,
         error: false,

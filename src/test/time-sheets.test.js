@@ -10,6 +10,12 @@ import employeesSeed from '../seed/employees';
 import projectsSeed from '../seed/projects';
 import tasksSeed from '../seed/tasks';
 
+const validId = '635321207ca59575d18db35b';
+const invalidId = '635321207ca59575d18db35b2';
+const shorterId = '635325a5c39a0040ecf7a86';
+const largerId = '635325a5c39a0040ecf7a8601';
+const notFoundId = '635325a5c39a0040ecf7a861';
+
 const mockedTimeSheet = {
   description: 'Example for testing with jest in timesheet',
   date: '2022-03-22T03:00:00.000Z',
@@ -38,13 +44,10 @@ const mockedIncompleteTimeSheet = {
   project: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
 };
 
-const shorterId = '635325a5c39a0040ecf7a86';
-const largerId = '635325a5c39a0040ecf7a8601';
-const notFoundId = '635325a5c39a0040ecf7a861';
 // eslint-disable-next-line no-underscore-dangle
 const timesheetId = timeSheetSeed[0]._id;
 
-describe('TESTS endpoints /time-sheets', () => {
+describe('Time-sheet - Unit tests', () => {
   beforeAll(async () => {
     await TimeSheets.collection.insertMany(timeSheetSeed);
     await Employees.collection.insertMany(employeesSeed);
@@ -72,7 +75,7 @@ describe('TESTS endpoints /time-sheets', () => {
 
   describe('GET by ID /time-sheets', () => {
     test('status should be 200 and get an object from the timesheet', async () => {
-      const response = await request(app).get(`/time-sheets/${timesheetId}`).send();
+      const response = await request(app).get(`/time-sheets/${validId}`).send();
       expect(response.status).toBe(200);
       expect(response.body.error).toBeFalsy();
       expect(response.body.data).toMatchObject({
@@ -374,6 +377,21 @@ describe('TESTS endpoints /time-sheets', () => {
       });
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
+    });
+  });
+
+  describe('DELETE /time-sheets', () => {
+    test('should delete user when user send an valid id', async () => {
+      const response = await request(app).delete(`/time-sheets/${validId}`).send();
+      expect(response.status).toBe(200);
+      expect(response.body.error).toBeFalsy();
+    });
+
+    test('should not delete when the user sends an invalid id', async () => {
+      const response = await request(app).delete(`/time-sheets/${invalidId}`).send();
+      expect(response.status).toBe(404);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
     });
   });
 });
