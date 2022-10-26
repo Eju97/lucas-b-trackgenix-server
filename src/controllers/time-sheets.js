@@ -75,13 +75,19 @@ export const editTimeSheet = async (req, res) => {
       req.body,
       { new: true },
     );
-    return res.status(200).json({
-      message: `Time sheet with id ${id} edited`,
-      data: result,
-      error: false,
-    });
+    return !result
+      ? res.status(404).json({
+        message: `The time-sheet with the id ${id} was not found`,
+        data: undefined,
+        error: true,
+      })
+      : res.status(200).json({
+        message: `Time sheet with id ${id} edited`,
+        data: result,
+        error: false,
+      });
   } catch (err) {
-    return res.status(404).json({
+    return res.status(400).json({
       message: err.toString(),
       data: undefined,
       error: true,
