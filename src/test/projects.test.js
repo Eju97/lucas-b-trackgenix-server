@@ -131,7 +131,7 @@ describe('Projects - Test', () => {
       const response = await request(app).delete(`/projects/${invalidProjectId}`).send();
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('Project does not exist');
+      expect(response.body.message).toEqual('Project not found');
     });
   });
 
@@ -146,8 +146,7 @@ describe('Projects - Test', () => {
       const response = await request(app).get(`/projects/${invalidProjectId}`).send();
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.data).toBeNull();
-      expect(response.body.message).toEqual('Project does not exist');
+      expect(response.body.message).toEqual('Project not found');
     });
   });
 
@@ -164,8 +163,7 @@ describe('Projects - Test', () => {
       const response = await request(app).put(`/projects/${invalidProjectId}/assign`).send(mockedEmployee);
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.data).toBeNull();
-      expect(response.body.message).toEqual('Project does not exist');
+      expect(response.body.message).toEqual('Project not found');
     });
 
     test('should return status code 400 when the user sends an invalid body', async () => {

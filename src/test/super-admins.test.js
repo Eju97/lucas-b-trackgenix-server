@@ -38,17 +38,15 @@ describe('Super-admins - Unit tests', () => {
 
     test('should return an error when the user sends an invalid id', async () => {
       const response = await request(app).get(`/super-admins/${invalidID}`).send();
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('An error occurred: CastError: Cast to ObjectId failed for value "6349bc420340abc705a7e8a5naid" (type string) at path "_id" for model "SuperAdmins"');
+      expect(response.body.message).toEqual('Cast to ObjectId failed for value "6349bc420340abc705a7e8a5naid" (type string) at path "_id" for model "SuperAdmins"');
     });
 
     test('should not return a super admin, ID not found', async () => {
       const response = await request(app).get(`/super-admins/${IdNotFound}`).send();
       expect(response.status).toBe(404);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.data).toBeNull();
       expect(response.body.message).toEqual('Super Admin not found');
     });
   });
@@ -111,23 +109,6 @@ describe('Super-admins - Unit tests', () => {
     });
   });
 
-  describe('DELETE /Super-admins', () => {
-    test('should delete a super admin', async () => {
-      const response = await request(app).delete(`/super-admins/${validId}`).send();
-      expect(response.status).toBe(200);
-      expect(response.body.error).toBeFalsy();
-      expect(response.body.data).toBeDefined();
-    });
-
-    test('should not remove a super admin when the user sends an invalid id', async () => {
-      const response = await request(app).delete(`/super-admins/${invalidID}`).send();
-      expect(response.status).toBe(400);
-      expect(response.body.error).toBeTruthy();
-      expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('An error occurred: CastError: Cast to ObjectId failed for value "6349bc420340abc705a7e8a5naid" (type string) at path "_id" for model "SuperAdmins"');
-    });
-  });
-
   describe('PUT /Super-admins', () => {
     test('should edit a super admin', async () => {
       const response = await request(app).put(`/super-admins/${validId}`).send({
@@ -152,10 +133,27 @@ describe('Super-admins - Unit tests', () => {
         ...mockedSuperAdmin,
         name: 'NewName',
       });
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('An error occurred: CastError: Cast to ObjectId failed for value "6349bc420340abc705a7e8a5naid" (type string) at path "_id" for model "SuperAdmins"');
+      expect(response.body.message).toEqual('Cast to ObjectId failed for value "6349bc420340abc705a7e8a5naid" (type string) at path "_id" for model "SuperAdmins"');
+    });
+  });
+
+  describe('DELETE /Super-admins', () => {
+    test('should delete a super admin', async () => {
+      const response = await request(app).delete(`/super-admins/${validId}`).send();
+      expect(response.status).toBe(200);
+      expect(response.body.error).toBeFalsy();
+      expect(response.body.data).toBeDefined();
+    });
+
+    test('should not remove a super admin when the user sends an invalid id', async () => {
+      const response = await request(app).delete(`/super-admins/${invalidID}`).send();
+      expect(response.status).toBe(500);
+      expect(response.body.error).toBeTruthy();
+      expect(response.body.data).toBeUndefined();
+      expect(response.body.message).toEqual('Cast to ObjectId failed for value "6349bc420340abc705a7e8a5naid" (type string) at path "_id" for model "SuperAdmins"');
     });
   });
 });

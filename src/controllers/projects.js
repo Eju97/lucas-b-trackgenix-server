@@ -1,24 +1,17 @@
 import Projects from '../models/Projects';
+import APIError from '../utils/APIError';
 
 export const getProjects = async (req, res) => {
   try {
     const projects = await Projects.find(req.query).populate('employees.employee');
-    if (!projects.length) {
-      return res.status(404).json({
-        message: 'There are no projects available',
-        data: projects,
-        error: true,
-      });
-    }
     return res.status(200).json({
       message: 'Projects found',
       data: projects,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: `An error occurred: ${err}`,
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -28,10 +21,9 @@ export const getProjectById = async (req, res) => {
   try {
     const project = await Projects.findById(req.params.id).populate('employees.employee');
     if (!project) {
-      return res.status(404).json({
-        message: 'Project does not exist',
-        data: project,
-        error: true,
+      throw new APIError({
+        message: 'Project not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -39,10 +31,9 @@ export const getProjectById = async (req, res) => {
       data: project,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: `An error occurred: ${err}`,
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -65,10 +56,9 @@ export const createProjects = async (req, res) => {
       data: project,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: `An error occurred: ${err}`,
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -78,10 +68,9 @@ export const deleteProject = async (req, res) => {
   try {
     const result = await Projects.findByIdAndDelete(req.params.id);
     if (!result) {
-      return res.status(404).json({
-        message: 'Project does not exist',
-        data: result,
-        error: true,
+      throw new APIError({
+        message: 'Project not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -89,10 +78,9 @@ export const deleteProject = async (req, res) => {
       data: result,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: `An error occurred: ${err}`,
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -102,10 +90,9 @@ export const editProject = async (req, res) => {
   try {
     const result = await Projects.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('employees.employee');
     if (!result) {
-      return res.status(404).json({
-        message: 'Project does not exist',
-        data: result,
-        error: true,
+      throw new APIError({
+        message: 'Project not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -113,10 +100,9 @@ export const editProject = async (req, res) => {
       data: result,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: `An error occurred: ${err}`,
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -130,10 +116,9 @@ export const assignEmployee = async (req, res) => {
       { new: true },
     ).populate('employees.employee');
     if (!result) {
-      return res.status(404).json({
-        message: 'Project does not exist',
-        data: result,
-        error: true,
+      throw new APIError({
+        message: 'Project not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -141,10 +126,9 @@ export const assignEmployee = async (req, res) => {
       data: result,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: `An error occurred: ${err}`,
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }

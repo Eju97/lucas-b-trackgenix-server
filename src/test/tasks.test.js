@@ -41,13 +41,13 @@ describe('Tasks - unit tests', () => {
     test('Should return status code 404 when you send a non existing id', async () => {
       const res = await request(app).get(`/tasks/${wrongMockedTaskId}`).send();
       expect(res.status).toBe(404);
-      expect(res.body.error).toBeFalsy();
-      expect(res.body.message).toBe('Task does not exists');
+      expect(res.body.error).toBeTruthy();
+      expect(res.body.message).toBe('Task not found');
     });
 
-    test('Should return status code 400 when you send an invalid id', async () => {
+    test('Should return status code 500 when you send an invalid id', async () => {
       const res = await request(app).get(`/tasks/${wrongTaskId}`).send();
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(500);
       expect(res.body.error).toBeTruthy();
     });
   });
@@ -63,13 +63,13 @@ describe('Tasks - unit tests', () => {
     test('Should return status code 404 when you send a non existing id', async () => {
       const res = await request(app).delete(`/tasks/${wrongMockedTaskId}`).send();
       expect(res.status).toBe(404);
-      expect(res.body.error).toBeFalsy();
-      expect(res.body.message).toBe(`Task with Id ${wrongMockedTaskId} does not exists`);
+      expect(res.body.error).toBeTruthy();
+      expect(res.body.message).toBe('Task not found');
     });
 
-    test('Should return status code 400 when you send an invalid id', async () => {
+    test('Should return status code 500 when you send an invalid id', async () => {
       const res = await request(app).delete(`/tasks/${wrongTaskId}`).send();
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(500);
       expect(res.body.error).toBeTruthy();
     });
   });
@@ -108,13 +108,13 @@ describe('Tasks - unit tests', () => {
     test('Should return status code 404 when you send a non existing id', async () => {
       const res = await request(app).put(`/tasks/${wrongMockedTaskId}`).send(mockedTask);
       expect(res.status).toBe(404);
-      expect(res.body.error).toBeFalsy();
-      expect(res.body.message).toBe(`Task with Id ${wrongMockedTaskId} does not exists`);
+      expect(res.body.error).toBeTruthy();
+      expect(res.body.message).toBe('Task not found');
     });
 
-    test('Should return status code 400 when you send an invalid id', async () => {
+    test('Should return status code 500 when you send an invalid id', async () => {
       const res = await request(app).put(`/tasks/${wrongTaskId}`).send(mockedTask);
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(500);
       expect(res.body.error).toBeTruthy();
     });
   });

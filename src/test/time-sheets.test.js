@@ -89,9 +89,9 @@ describe('Time-sheet - Unit tests', () => {
       expect(response.body.error).toBeTruthy();
     });
 
-    test('status should be 400 and not get an employee when the id is invalid', async () => {
+    test('status should be 500 and not get an employee when the id is invalid', async () => {
       const response = await request(app).get(`/time-sheets/${shorterId}`).send();
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).not.toBeDefined();
     });
@@ -389,7 +389,7 @@ describe('Time-sheet - Unit tests', () => {
 
     test('should not delete when the user sends an invalid id', async () => {
       const response = await request(app).delete(`/time-sheets/${invalidId}`).send();
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
     });

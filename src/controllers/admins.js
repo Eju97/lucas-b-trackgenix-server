@@ -1,38 +1,30 @@
 import Admins from '../models/Admins';
+import APIError from '../utils/APIError';
 
 export const getAdmins = async (req, res) => {
   try {
     const admins = await Admins.find(req.query);
-    if (!admins.length) {
-      return res.status(404).json({
-        message: 'Cannot find admins with this query params',
-        data: {},
-        error: true,
-      });
-    }
 
     return res.status(200).json({
-      message: 'Admin/s found',
+      message: 'Admins found',
       data: admins,
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: 'An error has occurred',
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
 };
 
-export const getAdminsbyId = async (req, res) => {
+export const getAdminsById = async (req, res) => {
   try {
     const filteredAdmin = await Admins.findById(req.params.id);
     if (!filteredAdmin) {
-      return res.status(404).json({
-        message: `Cannot find admin with ID ${req.params.id}`,
-        data: {},
-        error: true,
+      throw new APIError({
+        message: 'Admin not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -41,9 +33,8 @@ export const getAdminsbyId = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: 'An error has occurred',
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -64,9 +55,8 @@ export const createAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: 'An error has occured',
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -76,21 +66,22 @@ export const deleteAdmin = async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await Admins.findByIdAndDelete(id);
-    return !deleted
-      ? res.status(404).json({
-        message: `Cannot find admin with ID ${id}`,
-        data: undefined,
-        error: true,
-      })
-      : res.status(200).json({
-        message: 'Admin deleted',
-        data: deleted,
-        error: false,
+
+    if (!deleted) {
+      throw new APIError({
+        message: 'Admin not found',
+        status: 404,
       });
+    }
+
+    return res.status(201).json({
+      message: 'Admin deleted',
+      data: deleted,
+      error: false,
+    });
   } catch (error) {
-    return res.status(400).json({
-      message: 'An error has occurred',
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -100,21 +91,21 @@ export const editAdmin = async (req, res) => {
   try {
     const { id } = req.params;
     const edited = await Admins.findByIdAndUpdate(id, req.body, { new: true });
-    return !edited
-      ? res.status(404).json({
-        message: `Cannot find admin with ID ${id}`,
-        data: undefined,
-        error: true,
-      })
-      : res.status(201).json({
-        message: 'Admin updated',
-        data: edited,
-        error: false,
+
+    if (!edited) {
+      throw new APIError({
+        message: 'Admin not found',
+        status: 404,
       });
+    }
+    return res.status(201).json({
+      message: 'Admin updated',
+      data: edited,
+      error: false,
+    });
   } catch (error) {
-    return res.status(400).json({
-      message: 'An error has occurred',
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }

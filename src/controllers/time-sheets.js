@@ -1,4 +1,5 @@
 import TimeSheets from '../models/Time-sheets';
+import APIError from '../utils/APIError';
 
 export const getAllTimeSheets = async (req, res) => {
   try {
@@ -11,10 +12,10 @@ export const getAllTimeSheets = async (req, res) => {
       data: timeSheets,
       error: false,
     });
-  } catch (err) {
-    return res.status(404).json({
-      message: 'An error has ocurred',
-      error: err,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
+      error: true,
     });
   }
 };
@@ -22,21 +23,22 @@ export const getAllTimeSheets = async (req, res) => {
 export const getTimeSheetById = async (req, res) => {
   try {
     const timeSheet = await TimeSheets.findById(req.params.id);
-    if (timeSheet) {
-      return res.status(200).json({
-        message: 'Time sheet found',
-        data: timeSheet,
-        error: false,
+
+    if (!timeSheet) {
+      throw new APIError({
+        message: 'Time Sheet not found',
+        status: 404,
       });
     }
-    return res.status(404).json({
-      message: 'Time sheet not found',
-      error: true,
+
+    return res.status(200).json({
+      message: 'Time sheet found',
+      data: timeSheet,
+      error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: err.toString(),
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -58,10 +60,9 @@ export const createTimeSheet = async (req, res) => {
       data: result,
       error: false,
     });
-  } catch (err) {
-    return res.status(400).json({
-      message: err.toString(),
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -75,21 +76,22 @@ export const editTimeSheet = async (req, res) => {
       req.body,
       { new: true },
     );
-    return !result
-      ? res.status(404).json({
-        message: `The time-sheet with the id ${id} was not found`,
-        data: undefined,
-        error: true,
-      })
-      : res.status(200).json({
-        message: `Time sheet with id ${id} edited`,
-        data: result,
-        error: false,
+
+    if (!result) {
+      throw new APIError({
+        message: 'Time Sheet not found',
+        status: 404,
       });
-  } catch (err) {
-    return res.status(400).json({
-      message: err.toString(),
-      data: undefined,
+    }
+
+    return res.status(200).json({
+      message: `Time sheet with id ${id} edited`,
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -100,15 +102,21 @@ export const deleteTimeSheet = async (req, res) => {
     const { id } = req.params;
     const result = await TimeSheets.findByIdAndDelete(id);
 
+    if (!result) {
+      throw new APIError({
+        message: 'Time Sheet not found',
+        status: 404,
+      });
+    }
+
     return res.status(200).json({
       message: `Time sheet with id ${id} deleted`,
       data: result,
       error: false,
     });
-  } catch (err) {
-    return res.status(404).json({
-      message: err.toString(),
-      data: undefined,
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }

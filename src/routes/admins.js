@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getAdminsbyId,
+  getAdminsById,
   createAdmin,
   getAdmins,
   deleteAdmin,
@@ -12,7 +12,7 @@ const router = express.Router();
 
 router
   .get('/', validateQueryParams, getAdmins)
-  .get('/:id', getAdminsbyId)
+  .get('/:id', getAdminsById)
   .post('/', validateCreation, createAdmin)
   .delete('/:id', deleteAdmin)
   .put('/:id', validateEdit, editAdmin);

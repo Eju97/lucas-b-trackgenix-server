@@ -1,25 +1,18 @@
 import Tasks from '../models/Tasks';
+import APIError from '../utils/APIError';
 
 export const getTaskList = async (req, res) => {
   try {
     const tasks = await Tasks.find(req.query);
 
-    if (!tasks.length) {
-      return res.status(404).json({
-        message: 'Task not found',
-        data: tasks,
-        error: false,
-      });
-    }
     return res.status(200).json({
       message: 'Tasks found',
       data: tasks,
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error occurred: ${error}`,
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -31,10 +24,9 @@ export const getTaskById = async (req, res) => {
     const task = await Tasks.findById(id);
 
     if (!task) {
-      return res.status(404).json({
-        message: 'Task does not exists',
-        data: task,
-        error: false,
+      throw new APIError({
+        message: 'Task not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -43,9 +35,8 @@ export const getTaskById = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error occurred: ${error}`,
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -64,9 +55,8 @@ export const createNewTask = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error occurred: ${error}`,
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -78,10 +68,9 @@ export const deleteTaskById = async (req, res) => {
     const result = await Tasks.findByIdAndDelete(id);
 
     if (!result) {
-      return res.status(404).json({
-        message: `Task with Id ${id} does not exists`,
-        data: undefined,
-        error: false,
+      throw new APIError({
+        message: 'Task not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -90,9 +79,8 @@ export const deleteTaskById = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error occurred: ${error}`,
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }
@@ -104,10 +92,9 @@ export const editTask = async (req, res) => {
     const updatedTask = await Tasks.findByIdAndUpdate(id, req.body, { new: true });
 
     if (!updatedTask) {
-      return res.status(404).json({
-        message: `Task with Id ${id} does not exists`,
-        data: undefined,
-        error: false,
+      throw new APIError({
+        message: 'Task not found',
+        status: 404,
       });
     }
     return res.status(200).json({
@@ -116,9 +103,8 @@ export const editTask = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: `An error occurred: ${error}`,
-      data: undefined,
+    return res.status(error.status || 500).json({
+      message: error.message || error,
       error: true,
     });
   }

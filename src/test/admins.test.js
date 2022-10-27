@@ -23,7 +23,7 @@ describe('Admins - Unit tests', () => {
       expect(res.status).toBe(200);
       expect(res.body.error).toBeFalsy();
       expect(res.body.data.length).toBeGreaterThan(0);
-      expect(res.body.message).toEqual('Admin/s found');
+      expect(res.body.message).toEqual('Admins found');
     });
   });
 
@@ -84,23 +84,23 @@ describe('Admins - Unit tests', () => {
       const res = await request(app).get(`/admins/${notFoundId}`).send();
       expect(res.status).toBe(404);
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual(`Cannot find admin with ID ${notFoundId}`);
+      expect(res.body.message).toEqual('Admin not found');
     });
 
-    test('Should return status code 400 when we are sending an invalid id in the request body', async () => {
+    test('Should return status code 500 when we are sending an invalid id in the request body', async () => {
       const res = await request(app).get(`/admins/${invalidId}`).send();
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(500);
       expect(res.body.error).toBeTruthy();
       expect(res.body.data).toBeUndefined();
-      expect(res.body.message).toEqual('An error has occurred');
+      expect(res.body.message).toEqual('Cast to ObjectId failed for value "63548c0849d3451" (type string) at path "_id" for model "Admins"');
     });
   });
 
   describe('DELETE /admins', () => {
-    test('Should return status code 200 and delete an admin when we are sending a valid id.', async () => {
+    test('Should return status code 204 and delete an admin when we are sending a valid id.', async () => {
       // eslint-disable-next-line no-underscore-dangle
       const res = await request(app).delete(`/admins/${adminsSeed[2]._id}`).send();
-      expect(res.status).toBe(200);
+      expect(res.status).toBe(201);
       expect(res.body.error).toBeFalsy();
       expect(res.body.message).toEqual('Admin deleted');
     });
@@ -110,15 +110,15 @@ describe('Admins - Unit tests', () => {
       expect(res.status).toBe(404);
       expect(res.body.data).toBeUndefined();
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual(`Cannot find admin with ID ${notFoundId}`);
+      expect(res.body.message).toEqual('Admin not found');
     });
 
-    test('Should return status code 400 when we are sending an invalid id in the request body', async () => {
+    test('Should return status code 500 when we are sending an invalid id in the request body', async () => {
       const res = await request(app).delete(`/admins/${invalidId}`).send();
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(500);
       expect(res.body.error).toBeTruthy();
       expect(res.body.data).toBeUndefined();
-      expect(res.body.message).toEqual('An error has occurred');
+      expect(res.body.message).toEqual('Cast to ObjectId failed for value "63548c0849d3451" (type string) at path "_id" for model "Admins"');
     });
   });
 
@@ -135,14 +135,14 @@ describe('Admins - Unit tests', () => {
       const res = await request(app).put(`/admins/${notFoundId}`).send();
       expect(res.status).toBe(404);
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual(`Cannot find admin with ID ${notFoundId}`);
+      expect(res.body.message).toEqual('Admin not found');
     });
 
-    test('Should return status code 400 when we are sending an invalid id in the request body.', async () => {
+    test('Should return status code 500 when we are sending an invalid id in the request body.', async () => {
       const res = await request(app).put(`/admins/${invalidId}`).send();
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(500);
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual('An error has occurred');
+      expect(res.body.message).toEqual('Cast to ObjectId failed for value "63548c0849d3451" (type string) at path "_id" for model "Admins"');
     });
   });
 });

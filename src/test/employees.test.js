@@ -41,7 +41,7 @@ describe('Employee - Tests', () => {
 
     test('should not GET an employee by ID', async () => {
       const response = await request(app).get(`/Employees/${invalidID}`).send();
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
     });
@@ -145,10 +145,10 @@ describe('Employee - Tests', () => {
 
     test('should return an error when the user sends an invalid id', async () => {
       const response = await request(app).delete(`/Employees/${invalidID}`).send();
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('An error has occurred');
+      expect(response.body.message).toEqual('Cast to ObjectId failed for value "123c68f3658f142935ea7f6z" (type string) at path "_id" for model "Employees"');
     });
   });
 });
