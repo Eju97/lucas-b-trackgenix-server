@@ -50,7 +50,7 @@ export const createTimeSheet = async (req, res) => {
       description: req.body.description,
       date: req.body.date,
       hours: req.body.hours,
-      tasks: req.body.tasks,
+      task: req.body.task,
       employee: req.body.employee,
       project: req.body.project,
     });

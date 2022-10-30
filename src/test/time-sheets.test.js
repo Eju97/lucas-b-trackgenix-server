@@ -21,7 +21,7 @@ const mockedTimeSheet = {
   date: '2022-03-22T03:00:00.000Z',
   hours: 15,
   task: mongoose.Types.ObjectId('635325a5c39a0040ecf7a860'),
-  employees: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
+  employee: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
   project: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
 };
 
@@ -31,7 +31,7 @@ const mockedWrongTimeSheet = {
   date: '2022-03-22T03:00:00.000Z',
   hours: 15,
   task: mongoose.Types.ObjectId('635325a5c39a0040ecf7a860'),
-  employees: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
+  employee: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
   project: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
 };
 
@@ -40,7 +40,7 @@ const mockedIncompleteTimeSheet = {
   description: 'Example for testing with jest in timesheet',
   hours: 15,
   task: mongoose.Types.ObjectId('635325a5c39a0040ecf7a860'),
-  employees: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
+  employee: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
   project: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
 };
 
