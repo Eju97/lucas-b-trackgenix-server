@@ -22,7 +22,10 @@ export const getAllTimeSheets = async (req, res) => {
 
 export const getTimeSheetById = async (req, res) => {
   try {
-    const timeSheet = await TimeSheets.findById(req.params.id);
+    const timeSheet = await TimeSheets.findById(req.params.id)
+      .populate('task')
+      .populate('employee')
+      .populate('project');
 
     if (!timeSheet) {
       throw new APIError({
@@ -71,11 +74,9 @@ export const createTimeSheet = async (req, res) => {
 export const editTimeSheet = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await TimeSheets.findByIdAndUpdate(
-      id,
-      req.body,
-      { new: true },
-    );
+    const result = await TimeSheets.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
 
     if (!result) {
       throw new APIError({
