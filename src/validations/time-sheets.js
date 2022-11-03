@@ -4,7 +4,8 @@ const validateTimeSheetBody = (req, res, next) => {
   const timeSheetValidation = Joi.object({
     description: Joi.string().min(3).max(300).required(),
     date: Joi.date().iso().required(),
-    hours: Joi.number().positive().required(),
+    hours: Joi.number().positive().integer().positive()
+      .required(),
     task: Joi.string().length(24).required(),
     employee: Joi.string().length(24).required(),
     project: Joi.string().length(24).required(),
