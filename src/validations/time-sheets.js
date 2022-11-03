@@ -17,7 +17,7 @@ const validateTimeSheetBody = (req, res, next) => {
       .messages({
         'date.base': 'Insert a valid date',
         'data.empty': 'Date is not allowed to be empty',
-        'date.iso': 'Date must follow the pattern yyyy-mm-dd',
+        'date.format': 'Date must follow the pattern yyyy-mm-dd',
         'date.required': 'Date is required',
       }),
     hours: Joi.number().positive().required()
