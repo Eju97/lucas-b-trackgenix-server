@@ -76,7 +76,10 @@ export const editTimeSheet = async (req, res) => {
     const { id } = req.params;
     const result = await TimeSheets.findByIdAndUpdate(id, req.body, {
       new: true,
-    });
+    })
+      .populate('task')
+      .populate('employee')
+      .populate('project');
 
     if (!result) {
       throw new APIError({
