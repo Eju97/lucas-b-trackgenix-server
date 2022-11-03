@@ -3,10 +3,9 @@ import APIError from '../utils/APIError';
 
 export const getAllTimeSheets = async (req, res) => {
   try {
-    const timeSheets = await TimeSheets.find(req.query)
-      .populate('task')
-      .populate('employee')
-      .populate('project');
+    const timeSheets = await TimeSheets.find(req.query).populate(
+      'task project employee',
+    );
     return res.status(200).json({
       message: 'Time sheets found',
       data: timeSheets,
@@ -22,11 +21,9 @@ export const getAllTimeSheets = async (req, res) => {
 
 export const getTimeSheetById = async (req, res) => {
   try {
-    const timeSheet = await TimeSheets.findById(req.params.id)
-      .populate('task')
-      .populate('employee')
-      .populate('project');
-
+    const timeSheet = await TimeSheets.findById(req.params.id).populate(
+      'task project employee',
+    );
     if (!timeSheet) {
       throw new APIError({
         message: 'Time Sheet not found',
@@ -57,14 +54,11 @@ export const createTimeSheet = async (req, res) => {
       employee: req.body.employee,
       project: req.body.project,
     });
-    await newTimeSheet.save();
-    const result = await TimeSheets.find(newTimeSheet)
-      .populate('task')
-      .populate('employee')
-      .populate('project');
+    const result = await newTimeSheet.save();
+    const populatedResult = await result.populate('task project employee');
     return res.status(201).json({
       message: 'Time sheet created successfully',
-      data: result,
+      data: populatedResult,
       error: false,
     });
   } catch (error) {
@@ -80,11 +74,7 @@ export const editTimeSheet = async (req, res) => {
     const { id } = req.params;
     const result = await TimeSheets.findByIdAndUpdate(id, req.body, {
       new: true,
-    })
-      .populate('task')
-      .populate('employee')
-      .populate('project');
-
+    }).populate('task project employee');
     if (!result) {
       throw new APIError({
         message: 'Time Sheet not found',
