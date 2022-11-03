@@ -38,7 +38,7 @@ describe('Admins - Unit tests', () => {
         email: mockedAdmin.email,
         password: mockedAdmin.password,
       });
-      expect(res.body.message).toEqual('Project created successfully.');
+      expect(res.body.message).toEqual('Admin created successfully.');
     });
 
     test('Should return status code 400 and not create an admin when we are sending an invalid name in the request body.', async () => {
