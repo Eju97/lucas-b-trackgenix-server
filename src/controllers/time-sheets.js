@@ -57,7 +57,11 @@ export const createTimeSheet = async (req, res) => {
       employee: req.body.employee,
       project: req.body.project,
     });
-    const result = await newTimeSheet.save();
+    await newTimeSheet.save();
+    const result = await TimeSheets.find(newTimeSheet)
+      .populate('task')
+      .populate('employee')
+      .populate('project');
     return res.status(201).json({
       message: 'Time sheet created successfully',
       data: result,
