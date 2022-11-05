@@ -31,14 +31,17 @@ const validateTimeSheetBody = (req, res, next) => {
       }),
     task: Joi.string().length(24).required()
       .messages({
+        'any.required': 'Tasks are required',
         'string.required': 'Please insert a task',
       }),
     employee: Joi.string().length(24).required()
       .messages({
+        'any.required': 'Employee is required',
         'string.required': 'Please insert a employee',
       }),
     project: Joi.string().length(24).required()
       .messages({
+        'any.required': 'Project is required',
         'string.required': 'Please insert a project',
       }),
   });
