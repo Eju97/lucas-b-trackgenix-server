@@ -47,7 +47,7 @@ export const validateEmployeeBody = (req, res, next) => {
     rate: Joi.number().required(),
     role: Joi.string().valid('DEV', 'TL', 'PM', 'QA').required(),
   });
-  const validation = employeeSchema.validate(req.body);
+  const validation = employeeSchema.validate(req.body, { abortEarly: false });
 
   if (validation.error) {
     return res.status(400).json({

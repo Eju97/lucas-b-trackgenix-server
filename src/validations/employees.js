@@ -9,7 +9,7 @@ const validateEmployeesBody = (req, res, next) => {
     password: Joi.string().regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/).required(),
   });
 
-  const validation = employeeValidation.validate(req.body);
+  const validation = employeeValidation.validate(req.body, { abortEarly: false });
   if (validation.error) {
     return res.status(400).json({
       message: `There was an error:${validation.error.details[0].message}`,

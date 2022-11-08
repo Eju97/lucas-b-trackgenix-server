@@ -5,7 +5,7 @@ export const validateTaskBody = (req, res, next) => {
     description: Joi.string().min(3).max(300).required(),
   });
 
-  const validation = taskValidation.validate(req.body);
+  const validation = taskValidation.validate(req.body, { abortEarly: false });
 
   if (validation.error) {
     return res.status(400).json({
