@@ -12,10 +12,10 @@ export const validateCreation = (req, res, next) => {
     password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
       .required(),
   });
-  const validation = adminValidation.validate(req.body);
+  const validation = adminValidation.validate(req.body, { abortEarly: false });
   if (validation.error) {
     return res.status(400).json({
-      message: `There was an error: ${validation.error.details[0].message}`,
+      message: validation.error.details,
       data: undefined,
       error: true,
     });
@@ -52,7 +52,7 @@ export const validateEdit = (req, res, next) => {
   const validation = adminValidation.validate(req.body, { abortEarly: false });
   if (validation.error) {
     return res.status(400).json({
-      message: `Validation errors: ${validation.error.details}`,
+      message: validation.error.details,
       data: undefined,
       error: true,
     });

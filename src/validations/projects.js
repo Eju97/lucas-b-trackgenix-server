@@ -29,11 +29,11 @@ export const validateProjectBody = (req, res, next) => {
     })),
   });
 
-  const validation = projectSchema.validate(req.body);
+  const validation = projectSchema.validate(req.body, { abortEarly: false });
 
   if (validation.error) {
     return res.status(400).json({
-      message: `Validation errors: ${validation.error.details}`,
+      message: validation.error.details,
       data: undefined,
       error: true,
     });
@@ -51,7 +51,7 @@ export const validateEmployeeBody = (req, res, next) => {
 
   if (validation.error) {
     return res.status(400).json({
-      message: `There was an error: ${validation.error.details[0].message}`,
+      message: validation.error.details,
       data: undefined,
       error: true,
     });
