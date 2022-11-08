@@ -14,7 +14,7 @@ const validateTimeSheetBody = (req, res, next) => {
 
   if (validation.error) {
     return res.status(400).json({
-      message: `Validation was an error: ${validation.error.details[0].message}`,
+      message: `Validation errors: ${validation.error.details}`,
       data: undefined,
       error: true,
     });
