@@ -50,7 +50,7 @@ export const createAdmin = async (req, res) => {
     });
     const result = await admin.save();
     return res.status(201).json({
-      message: 'Project created successfully.',
+      message: 'Admin created successfully.',
       data: result,
       error: false,
     });

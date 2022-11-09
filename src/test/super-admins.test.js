@@ -65,7 +65,7 @@ describe('Super-admins - Unit tests', () => {
       expect(response.body.data).toBeUndefined();
       expect(response.body.error).toBeTruthy();
       expect(response.body.message).toBeDefined();
-      expect(response.body.message).toEqual('There was an error: "name" is required');
+      expect(response.body.message[0].message).toEqual('"name" is required');
     });
 
     test('should return an error with status 400 when we are sending an invalid name in the request body', async () => {
@@ -75,7 +75,7 @@ describe('Super-admins - Unit tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('There was an error: "name" length must be at least 3 characters long');
+      expect(response.body.message[0].message).toEqual('"name" length must be at least 3 characters long');
     });
 
     test('should return an error with status 400 when we are sending an invalid last name in the request body', async () => {
@@ -85,7 +85,7 @@ describe('Super-admins - Unit tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('There was an error: "lastName" is not allowed');
+      expect(response.body.message[0].message).toEqual('"lastName" is not allowed');
     });
 
     test('should return an error with status 400 when we are sending an invalid e-mail in the request bodythe super admin should not be created, wrong e-mail', async () => {
@@ -95,7 +95,7 @@ describe('Super-admins - Unit tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('There was an error: "email" must be a valid email');
+      expect(response.body.message[0].message).toEqual('"email" must be a valid email');
     });
 
     test('should return an error with status 400 when we are sending an invalid password in the request body', async () => {
@@ -105,7 +105,7 @@ describe('Super-admins - Unit tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('There was an error: "password" with value "2" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/');
+      expect(response.body.message[0].message).toEqual('"password" with value "2" fails to match the required pattern: /^[a-zA-Z0-9]{3,30}$/');
     });
   });
 
@@ -125,7 +125,7 @@ describe('Super-admins - Unit tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('There was an error: "name" is required');
+      expect(response.body.message[0].message).toEqual('"name" is required');
     });
 
     test('should not edit a super admin when the user sends an invalid id', async () => {
