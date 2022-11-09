@@ -10,11 +10,11 @@ const validateTimeSheetBody = (req, res, next) => {
     project: Joi.string().length(24).required(),
   });
 
-  const validation = timeSheetValidation.validate(req.body);
+  const validation = timeSheetValidation.validate(req.body, { abortEarly: false });
 
   if (validation.error) {
     return res.status(400).json({
-      message: `Validation was an error: ${validation.error.details[0].message}`,
+      message: validation.error.details,
       data: undefined,
       error: true,
     });
