@@ -13,15 +13,15 @@ const validateTimeSheetBody = (req, res, next) => {
         'string.required': 'Description is required',
         'any.required': 'Description is required',
       }),
-    date: Joi.date().iso().required()
-      .messages({
-        'any.required': 'Date is required',
-        'date.base': 'Insert a valid date',
-        'data.empty': 'Date is not allowed to be empty',
-        'date.format': 'Date must follow the pattern yyyy-mm-dd',
-        'date.required': 'Date is required',
-      }),
-    hours: Joi.number().positive().required()
+    date: Joi.date().iso().required().messages({
+      'any.required': 'Date is required',
+      'date.base': 'Insert a valid date',
+      'data.empty': 'Date is not allowed to be empty',
+      'date.format': 'Date must follow the pattern yyyy-mm-dd',
+      'date.required': 'Date is required',
+    }),
+    hours: Joi.number().min(1).positive()
+      .required()
       .messages({
         'any.required': 'Hours are required',
         'number.empty': 'Hours are not allowed to be empty',
@@ -29,24 +29,23 @@ const validateTimeSheetBody = (req, res, next) => {
         'number.positive': 'The minimum amount of hours must be 1 or higher.',
         'number.required': 'Hours are required',
       }),
-    task: Joi.string().length(24).required()
-      .messages({
-        'any.required': 'Tasks are required',
-        'string.required': 'Please insert a task',
-      }),
-    employee: Joi.string().length(24).required()
-      .messages({
-        'any.required': 'Employee is required',
-        'string.required': 'Please insert a employee',
-      }),
-    project: Joi.string().length(24).required()
-      .messages({
-        'any.required': 'Project is required',
-        'string.required': 'Please insert a project',
-      }),
+    task: Joi.string().length(24).required().messages({
+      'any.required': 'Tasks are required',
+      'string.required': 'Please insert a task',
+    }),
+    employee: Joi.string().length(24).required().messages({
+      'any.required': 'Employee is required',
+      'string.required': 'Please insert a employee',
+    }),
+    project: Joi.string().length(24).required().messages({
+      'any.required': 'Project is required',
+      'string.required': 'Please insert a project',
+    }),
   });
 
-  const validation = timeSheetValidation.validate(req.body, { abortEarly: false });
+  const validation = timeSheetValidation.validate(req.body, {
+    abortEarly: false,
+  });
 
   if (validation.error) {
     return res.status(400).json({
