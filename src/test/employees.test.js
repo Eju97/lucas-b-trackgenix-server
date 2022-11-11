@@ -60,7 +60,7 @@ describe('Employee - Tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('There was an error:"name" is required');
+      expect(response.body.message[0].message).toEqual('"name" is required');
     });
 
     test('should return an error with status 400 when we are sending an invalid name in the request body', async () => {
@@ -70,7 +70,7 @@ describe('Employee - Tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('There was an error:"name" length must be at least 3 characters long');
+      expect(response.body.message[0].message).toEqual('"name" length must be at least 3 characters long');
     });
 
     test('should return an error with status 400 when we are sending an invalid last name in the request body', async () => {
@@ -80,7 +80,7 @@ describe('Employee - Tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('There was an error:"lastName" length must be at least 3 characters long');
+      expect(response.body.message[0].message).toEqual('"lastName" length must be at least 3 characters long');
     });
 
     test('should return an error with status 400 when we are sending an phone in the request body', async () => {
@@ -90,7 +90,7 @@ describe('Employee - Tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('There was an error:"phone" length must be 10 characters long');
+      expect(response.body.message[0].message).toEqual('"phone" length must be 10 characters long');
     });
 
     test('should return an error with status 400 when we are sending an email in the request body', async () => {
@@ -100,7 +100,7 @@ describe('Employee - Tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('There was an error:"email" must be a valid email');
+      expect(response.body.message[0].message).toEqual('"email" must be a valid email');
     });
 
     test('should return an error with status 400 when we are sending an password in the request body', async () => {
@@ -110,7 +110,7 @@ describe('Employee - Tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('There was an error:"password" with value "test12" fails to match the required pattern: /^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/');
+      expect(response.body.message[0].message).toEqual('"password" with value "test12" fails to match the required pattern: /^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/');
     });
   });
 
@@ -131,7 +131,7 @@ describe('Employee - Tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('There was an error:"name" is required');
+      expect(response.body.message[0].message).toEqual('"name" is required');
     });
   });
 
