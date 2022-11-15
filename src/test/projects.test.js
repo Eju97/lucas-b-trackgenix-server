@@ -64,42 +64,42 @@ describe('Projects - Test', () => {
       const response = await request(app).post('/projects').send({ mockedProject, name: 'a' });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message[0].message).toEqual('"name" length must be at least 3 characters long');
+      expect(response.body.message).toEqual('Error: "name" length must be at least 3 characters long');
     });
 
     test('should not create a project when the user sends an invalid project description', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, description: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message[0].message).toEqual('"name" is required');
+      expect(response.body.message).toEqual('Error: "name" is required');
     });
 
     test('should not create a project when the user sends an invalid project endDate', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, endDate: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message[0].message).toEqual('"name" is required');
+      expect(response.body.message).toEqual('Error: "name" is required');
     });
 
     test('should not create a project when the user sends an invalid project clientName', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, clientName: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message[0].message).toEqual('"name" is required');
+      expect(response.body.message).toEqual('Error: "name" is required');
     });
 
     test('should not create a project when the user sends an invalid project startDate', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, startDate: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message[0].message).toEqual('"name" is required');
+      expect(response.body.message).toEqual('Error: "name" is required');
     });
 
     test('should not create a project when the user sends an invalid project employee', async () => {
       const response = await request(app).post('/projects').send(({ mockedProject, employee: 'a' }));
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message[0].message).toEqual('"name" is required');
+      expect(response.body.message).toEqual('Error: "name" is required');
     });
   });
 

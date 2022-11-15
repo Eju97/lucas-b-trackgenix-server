@@ -7,10 +7,10 @@ const validateSuperAdminsBody = (req, res, next) => {
     email: Joi.string().email(),
     password: Joi.string().pattern(/^[a-zA-Z0-9]{3,30}$/),
   });
-  const validation = superAdminValidation.validate(req.body, { abortEarly: false });
+  const validation = superAdminValidation.validate(req.body);
   if (validation.error) {
     return res.status(400).json({
-      message: validation.error.details,
+      message: `Error: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });
