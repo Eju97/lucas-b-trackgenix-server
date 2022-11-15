@@ -9,10 +9,10 @@ const validateEmployeesBody = (req, res, next) => {
     password: Joi.string().regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/).required(),
   });
 
-  const validation = employeeValidation.validate(req.body, { abortEarly: false });
+  const validation = employeeValidation.validate(req.body);
   if (validation.error) {
     return res.status(400).json({
-      message: validation.error.details,
+      message: `Error: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });
