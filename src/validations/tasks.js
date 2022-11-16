@@ -5,11 +5,11 @@ export const validateTaskBody = (req, res, next) => {
     description: Joi.string().min(3).max(300).required(),
   });
 
-  const validation = taskValidation.validate(req.body, { abortEarly: false });
+  const validation = taskValidation.validate(req.body);
 
   if (validation.error) {
     return res.status(400).json({
-      message: validation.error.details,
+      message: `Error: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });

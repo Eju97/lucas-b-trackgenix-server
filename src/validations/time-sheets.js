@@ -43,13 +43,11 @@ const validateTimeSheetBody = (req, res, next) => {
     }),
   });
 
-  const validation = timeSheetValidation.validate(req.body, {
-    abortEarly: false,
-  });
+  const validation = timeSheetValidation.validate(req.body);
 
   if (validation.error) {
     return res.status(400).json({
-      message: validation.error.details,
+      message: `Error: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });

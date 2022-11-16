@@ -29,11 +29,11 @@ export const validateProjectBody = (req, res, next) => {
     })),
   });
 
-  const validation = projectSchema.validate(req.body, { abortEarly: false });
+  const validation = projectSchema.validate(req.body);
 
   if (validation.error) {
     return res.status(400).json({
-      message: validation.error.details,
+      message: `Error: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });
@@ -47,11 +47,11 @@ export const validateEmployeeBody = (req, res, next) => {
     rate: Joi.number().required(),
     role: Joi.string().valid('DEV', 'TL', 'PM', 'QA').required(),
   });
-  const validation = employeeSchema.validate(req.body, { abortEarly: false });
+  const validation = employeeSchema.validate(req.body);
 
   if (validation.error) {
     return res.status(400).json({
-      message: validation.error.details,
+      message: `Error: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });
