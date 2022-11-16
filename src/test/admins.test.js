@@ -45,28 +45,28 @@ describe('Admins - Unit tests', () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, name: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual('Error: "name" length must be at least 3 characters long');
+      expect(res.body.message).toEqual('Error: Name must have a minimum of 3 letters');
     });
 
     test('Should return status code 400 and not create an admin when we are sending an invalid last name in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, lastName: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual('Error: "lastName" length must be at least 3 characters long');
+      expect(res.body.message).toEqual('Error: Last Name must have a minimum of 3 letters');
     });
 
     test('Should return status code 400 and not create an admin when we are sending an invalid email in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, email: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual('Error: "email" must be a valid email');
+      expect(res.body.message).toEqual('Error: Insert a valid email');
     });
 
     test('Should return status code 400 and not create an admin when we are sending an invalid password in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, password: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual('Error: "password" with value "R" fails to match the required pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$/');
+      expect(res.body.message).toEqual('Error: Password must contain at least 8 characters, "one" capital letter, "one" lower case and "one" number at least');
     });
   });
 
