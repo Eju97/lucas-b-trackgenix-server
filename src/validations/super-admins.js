@@ -1,9 +1,12 @@
 import Joi from 'joi';
 
 const validateSuperAdminsBody = (req, res, next) => {
+  const letterSpacesRegEx = /[A-Za-z]{3}([A-Za-z]+ ?)*/;
   const superAdminValidation = Joi.object({
-    name: Joi.string().min(3).max(50).required(),
-    last_name: Joi.string().min(3).max(50).required(),
+    name: Joi.string().min(3).max(50).regex(letterSpacesRegEx)
+      .required(),
+    last_name: Joi.string().min(3).max(50).regex(letterSpacesRegEx)
+      .required(),
     email: Joi.string().email(),
     password: Joi.string().pattern(/^[a-zA-Z0-9]{3,30}$/),
   });

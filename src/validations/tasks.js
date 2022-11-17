@@ -1,8 +1,10 @@
 import Joi from 'joi';
 
 export const validateTaskBody = (req, res, next) => {
+  const letterSpacesRegEx = /[A-Za-z]{3}([A-Za-z]+ ?)*/;
   const taskValidation = Joi.object({
-    description: Joi.string().min(3).max(300).required(),
+    description: Joi.string().min(3).max(300).regex(letterSpacesRegEx)
+      .required(),
   });
 
   const validation = taskValidation.validate(req.body);
