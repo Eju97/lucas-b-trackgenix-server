@@ -19,7 +19,7 @@ const notFoundId = '635325a5c39a0040ecf7a861';
 const mockedTimeSheet = {
   description: 'Example for testing with jest in timesheet',
   date: '2022-03-22T03:00:00.000Z',
-  hours: 15,
+  hours: 12,
   task: mongoose.Types.ObjectId('635325a5c39a0040ecf7a860'),
   employee: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
   project: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
@@ -29,7 +29,7 @@ const mockedWrongTimeSheet = {
   invalid: 'This field is not valid',
   description: 'Example for testing with jest in timesheet',
   date: '2022-03-22T03:00:00.000Z',
-  hours: 15,
+  hours: 10,
   task: mongoose.Types.ObjectId('635325a5c39a0040ecf7a860'),
   employee: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
   project: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
@@ -38,7 +38,7 @@ const mockedWrongTimeSheet = {
 const mockedIncompleteTimeSheet = {
   invalid: 'This field is not valid',
   description: 'Example for testing with jest in timesheet',
-  hours: 15,
+  hours: 2,
   task: mongoose.Types.ObjectId('635325a5c39a0040ecf7a860'),
   employee: mongoose.Types.ObjectId('635325adc90228d7485c0e1f'),
   project: mongoose.Types.ObjectId('63532304206881f4ae0b709b'),
