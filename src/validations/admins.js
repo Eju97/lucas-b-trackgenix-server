@@ -1,7 +1,6 @@
 import Joi from 'joi';
 
 export const validateCreation = (req, res, next) => {
-  // const letterSpacesRegEx = /^[a-zA-Z\s]*$/;
   const letterSpacesRegEx = /[A-Za-z]{3}([A-Za-z]+ ?)*/;
   const adminValidation = Joi.object({
     name: Joi.string()
