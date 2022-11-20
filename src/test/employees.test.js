@@ -60,7 +60,7 @@ describe('Employee - Tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('Error: "name" is required');
+      expect(response.body.message).toEqual('Error: Name is required');
     });
 
     test('should return an error with status 400 when we are sending an invalid name in the request body', async () => {
@@ -70,7 +70,7 @@ describe('Employee - Tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('Error: "name" length must be at least 3 characters long');
+      expect(response.body.message).toEqual('Error: Name must have a minimum of 3 letters');
     });
 
     test('should return an error with status 400 when we are sending an invalid last name in the request body', async () => {
@@ -80,7 +80,7 @@ describe('Employee - Tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('Error: "lastName" length must be at least 3 characters long');
+      expect(response.body.message).toEqual('Error: Last Name must have a minimum of 3 letters');
     });
 
     test('should return an error with status 400 when we are sending an phone in the request body', async () => {
@@ -100,7 +100,7 @@ describe('Employee - Tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('Error: "email" must be a valid email');
+      expect(response.body.message).toEqual('Error: Insert a valid email');
     });
 
     test('should return an error with status 400 when we are sending an password in the request body', async () => {
@@ -110,7 +110,7 @@ describe('Employee - Tests', () => {
       });
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
-      expect(response.body.message).toEqual('Error: "password" with value "test12" fails to match the required pattern: /^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/');
+      expect(response.body.message).toEqual('Error: Password must contain at least 8 characters, "one" capital letter, "one" lower case and "one" number.');
     });
   });
 
@@ -131,7 +131,7 @@ describe('Employee - Tests', () => {
       expect(response.status).toBe(400);
       expect(response.body.error).toBeTruthy();
       expect(response.body.data).toBeUndefined();
-      expect(response.body.message).toEqual('Error: "name" is required');
+      expect(response.body.message).toEqual('Error: Name is required');
     });
   });
 

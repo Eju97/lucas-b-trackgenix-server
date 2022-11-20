@@ -40,7 +40,7 @@ export const validateCreation = (req, res, next) => {
       .required().messages({
         'any.required': 'a password is required',
         'string.pattern.base': 'Password must contain at least 8 characters, "one" capital letter, "one" lower case and "one" number at least',
-        'string.required': 'email field is required',
+        'string.required': 'Password field is required',
       }),
   });
   const validation = adminValidation.validate(req.body);
