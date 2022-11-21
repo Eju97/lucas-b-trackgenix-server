@@ -11,7 +11,7 @@ export const validateTaskBody = (req, res, next) => {
 
   if (validation.error) {
     return res.status(400).json({
-      message: `Error: ${validation.error.details[0].message}`,
+      message: validation.error.details[0].message,
       data: undefined,
       error: true,
     });
