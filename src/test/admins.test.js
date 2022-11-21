@@ -45,28 +45,28 @@ describe('Admins - Unit tests', () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, name: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual('Error: Name must have a minimum of 3 letters');
+      expect(res.body.message).toEqual('Name must have a minimum of 3 letters');
     });
 
     test('Should return status code 400 and not create an admin when we are sending an invalid last name in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, lastName: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual('Error: Last Name must have a minimum of 3 letters');
+      expect(res.body.message).toEqual('Last Name must have a minimum of 3 letters');
     });
 
     test('Should return status code 400 and not create an admin when we are sending an invalid email in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, email: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual('Error: Insert a valid email');
+      expect(res.body.message).toEqual('Insert a valid email');
     });
 
     test('Should return status code 400 and not create an admin when we are sending an invalid password in the request body.', async () => {
       const res = await request(app).post('/admins').send({ ...mockedAdmin, password: 'R' });
       expect(res.status).toBe(400);
       expect(res.body.error).toBeTruthy();
-      expect(res.body.message).toEqual('Error: Password must contain at least 8 characters, "one" capital letter, "one" lower case and "one" number at least');
+      expect(res.body.message).toEqual('Password must contain at least 8 characters, "one" capital letter, "one" lower case and "one" number at least');
     });
   });
 
