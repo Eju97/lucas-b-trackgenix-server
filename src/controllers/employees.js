@@ -1,5 +1,6 @@
 import Employees from '../models/Employees';
 import APIError from '../utils/APIError';
+import firebase from '../helpers/firebase';
 
 export const getEmployees = async (req, res) => {
   try {
@@ -42,12 +43,20 @@ export const getEmployeesById = async (req, res) => {
 
 export const createEmployee = async (req, res) => {
   try {
+    const createFirebaseEmployee = await firebase.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    await firebase.auth().setCustomUserClaims(createFirebaseEmployee.uid, { role: 'EMPLOYEE' });
+
     const newEmployee = new Employees({
       name: req.body.name,
       lastName: req.body.lastName,
       phone: req.body.phone,
       email: req.body.email,
       password: req.body.password,
+      firebaseUid: createFirebaseEmployee.uid,
     });
 
     const result = await newEmployee.save();
@@ -67,6 +76,7 @@ export const createEmployee = async (req, res) => {
 
 export const deleteEmployee = async (req, res) => {
   try {
+    await firebase.auth().deleteUser(req.body.firebaseUid);
     const { id } = req.params;
     const result = await Employees.findByIdAndDelete(id);
     if (!result) {
@@ -98,6 +108,12 @@ export const editEmployee = async (req, res) => {
         status: 404,
       });
     }
+
+    await firebase.auth().updateUser(req.body.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
+
     return res.status(200).json({
       message: `Employee with ID ${id} edited.`,
       data: result,
