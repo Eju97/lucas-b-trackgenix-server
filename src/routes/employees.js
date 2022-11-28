@@ -17,6 +17,6 @@ router
   .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), getEmployeesById)
   .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), deleteEmployee)
   .put('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), validateEmployeesBody, editEmployee)
-  .post('/', (['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), validateEmployeesBody, createEmployee);
+  .post('/', validateEmployeesBody, createEmployee);
 
 export default router;

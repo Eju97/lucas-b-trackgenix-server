@@ -55,7 +55,6 @@ export const createEmployee = async (req, res) => {
       lastName: req.body.lastName,
       phone: req.body.phone,
       email: req.body.email,
-      password: req.body.password,
       firebaseUid: createFirebaseEmployee.uid,
     });
 
@@ -76,9 +75,9 @@ export const createEmployee = async (req, res) => {
 
 export const deleteEmployee = async (req, res) => {
   try {
-    await firebase.auth().deleteUser(req.body.firebaseUid);
     const { id } = req.params;
     const result = await Employees.findByIdAndDelete(id);
+    await firebase.auth().deleteUser(result.firebaseUid);
     if (!result) {
       throw new APIError({
         message: 'Employee not found',
@@ -102,17 +101,16 @@ export const editEmployee = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await Employees.findByIdAndUpdate(id, req.body, { new: true });
+    await firebase.auth().updateUser(result.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
     if (!result) {
       throw new APIError({
         message: 'Employee not found',
         status: 404,
       });
     }
-
-    await firebase.auth().updateUser(req.body.firebaseUid, {
-      email: req.body.email,
-      password: req.body.password,
-    });
 
     return res.status(200).json({
       message: `Employee with ID ${id} edited.`,
