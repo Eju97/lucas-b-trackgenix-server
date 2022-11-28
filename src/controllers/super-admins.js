@@ -22,11 +22,18 @@ export const getAllSuperAdmins = async (req, res) => {
 export const editSuperAdmins = async (req, res) => {
   try {
     const { id } = req.params;
-    const superAdmin = SuperAdmins.findById(id);
-    await firebase.auth().updateUser(superAdmin.firebaseUid, {
-      email: req.body.email,
-      password: req.body.password,
-    });
+    const superAdmin = await SuperAdmins.findById(id);
+
+    if (req.body.email) {
+      await firebase.auth().updateUser(superAdmin.firebaseUid, {
+        email: req.body.email,
+      });
+    }
+    if (req.body.password) {
+      await firebase.auth().updateUser(superAdmin.firebaseUid, {
+        password: req.body.password,
+      });
+    }
     const result = await SuperAdmins.findByIdAndUpdate(id, req.body, {
       new: true,
     });
