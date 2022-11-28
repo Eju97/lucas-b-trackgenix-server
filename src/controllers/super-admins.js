@@ -1,5 +1,6 @@
 import SuperAdmins from '../models/Super-admins';
 import APIError from '../utils/APIError';
+import firebase from '../helpers/firebase';
 
 export const getAllSuperAdmins = async (req, res) => {
   try {
@@ -21,7 +22,14 @@ export const getAllSuperAdmins = async (req, res) => {
 export const editSuperAdmins = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await SuperAdmins.findByIdAndUpdate(id, req.body, { new: true });
+    const superAdmin = SuperAdmins.findById(id);
+    await firebase.auth().updateUser(superAdmin.firebaseUid, {
+      email: req.body.email,
+      password: req.body.password,
+    });
+    const result = await SuperAdmins.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!result) {
       throw new APIError({
         message: 'Super Admin not found',
@@ -68,8 +76,11 @@ export const deletedSuperAdmins = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await SuperAdmins.findByIdAndDelete(id);
+    const deleteFirebaseSuperAdmin = await firebase
+      .auth()
+      .deleteUser(result.firebaseUid);
 
-    if (!result) {
+    if (!result && !deleteFirebaseSuperAdmin) {
       throw new APIError({
         message: 'Super Admin not found',
         status: 404,
@@ -91,11 +102,21 @@ export const deletedSuperAdmins = async (req, res) => {
 
 export const createSuperAdmin = async (req, res) => {
   try {
+    const newFirebaseSuperAdmin = await firebase.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    await firebase
+      .auth()
+      .setCustomUserClaims(newFirebaseSuperAdmin.uid, { role: 'SUPER_ADMIN' });
+
     const superAdmin = new SuperAdmins({
       name: req.body.name,
       last_name: req.body.last_name,
       email: req.body.email,
       password: req.body.password,
+      firebaseUid: newFirebaseSuperAdmin.uid,
     });
     const result = await superAdmin.save();
     return res.status(201).json({
