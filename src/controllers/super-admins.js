@@ -122,7 +122,6 @@ export const createSuperAdmin = async (req, res) => {
       name: req.body.name,
       last_name: req.body.last_name,
       email: req.body.email,
-      password: req.body.password,
       firebaseUid: newFirebaseSuperAdmin.uid,
     });
     const result = await superAdmin.save();
