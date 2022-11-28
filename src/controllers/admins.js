@@ -48,7 +48,9 @@ export const createAdmin = async (req, res) => {
       password: req.body.password,
     });
 
-    await firebase.auth().setCustomUserClaims(newFirebaseAdmin.uid, { role: 'ADMIN' });
+    await firebase
+      .auth()
+      .setCustomUserClaims(newFirebaseAdmin.uid, { role: 'ADMIN' });
 
     const admin = new Admins({
       name: req.body.name,
@@ -75,7 +77,9 @@ export const deleteAdmin = async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await Admins.findByIdAndDelete(id);
-    const deleteFirebaseAdmin = await firebase.auth().deleteUser(req.body.firebaseUid);
+    const deleteFirebaseAdmin = await firebase
+      .auth()
+      .deleteUser(deleted.firebaseUid);
 
     if (!deleted && !deleteFirebaseAdmin) {
       throw new APIError({
@@ -100,12 +104,12 @@ export const deleteAdmin = async (req, res) => {
 export const editAdmin = async (req, res) => {
   try {
     const { id } = req.params;
-    const edited = await Admins.findByIdAndUpdate(id, req.body, { new: true });
-    await firebase.auth().updateUser(req.body.firebaseUid, {
+    const admin = await Admins.findById(id);
+    await firebase.auth().updateUser(admin.firebaseUid, {
       email: req.body.email,
       password: req.body.password,
     });
-
+    const edited = await Admins.findByIdAndUpdate(id, req.body, { new: true });
     if (!edited) {
       throw new APIError({
         message: 'Admin not found',
