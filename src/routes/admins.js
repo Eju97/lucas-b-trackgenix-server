@@ -1,4 +1,5 @@
 import express from 'express';
+import checkAuth from '../middlewares/authMiddleware';
 import {
   getAdminsById,
   createAdmin,
@@ -11,10 +12,10 @@ import { validateCreation, validateEdit, validateQueryParams } from '../validati
 const router = express.Router();
 
 router
-  .get('/', validateQueryParams, getAdmins)
-  .get('/:id', getAdminsById)
-  .post('/', validateCreation, createAdmin)
-  .delete('/:id', deleteAdmin)
-  .put('/:id', validateEdit, editAdmin);
+  .get('/', checkAuth(['SUPER_ADMIN', 'ADMIN']), validateQueryParams, getAdmins)
+  .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN']), getAdminsById)
+  .post('/', checkAuth(['SUPER_ADMIN', 'ADMIN']), validateCreation, createAdmin)
+  .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN']), deleteAdmin)
+  .put('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN']), validateEdit, editAdmin);
 
 export default router;

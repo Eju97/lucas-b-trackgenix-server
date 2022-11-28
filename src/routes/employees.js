@@ -1,5 +1,6 @@
 import express from 'express';
 import validateEmployeesBody from '../validations/employees';
+import checkAuth from '../middlewares/authMiddleware';
 
 import {
   getEmployees,
@@ -12,10 +13,10 @@ import {
 const router = express.Router();
 
 router
-  .get('/', getEmployees)
-  .get('/:id', getEmployeesById)
-  .delete('/:id', deleteEmployee)
-  .put('/:id', validateEmployeesBody, editEmployee)
+  .get('/', checkAuth(['SUPER_ADMIN', 'ADMIN']), getEmployees)
+  .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), getEmployeesById)
+  .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), deleteEmployee)
+  .put('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), validateEmployeesBody, editEmployee)
   .post('/', validateEmployeesBody, createEmployee);
 
 export default router;
