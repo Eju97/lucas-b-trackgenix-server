@@ -5,9 +5,11 @@ import timeSheetsRouter from './time-sheets';
 import tasksRouter from './tasks';
 import superAdminsRoutes from './super-admins';
 import adminRouter from './admins';
+import getUserProfileRouter from './auth/getUserProfile';
 
 const router = express.Router();
 
+router.use('/getUserProfile', getUserProfileRouter);
 router.use('/projects', projectsRouter);
 router.use('/Employees', employeesRouter);
 router.use('/super-admins', superAdminsRoutes);
