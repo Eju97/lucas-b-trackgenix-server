@@ -7,14 +7,15 @@ import {
   createNewTask,
   editTask,
 } from '../controllers/tasks';
+import checkAuth from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
 router
-  .get('/', validateTaskQueryParams, getTaskList)
-  .get('/:id', getTaskById)
-  .delete('/:id', deleteTaskById)
-  .post('/', validateTaskBody, createNewTask)
-  .put('/:id', validateTaskBody, editTask);
+  .get('/', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), validateTaskQueryParams, getTaskList)
+  .get('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), getTaskById)
+  .delete('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), deleteTaskById)
+  .post('/', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), validateTaskBody, createNewTask)
+  .put('/:id', checkAuth(['SUPER_ADMIN', 'ADMIN', 'EMPLOYEE']), validateTaskBody, editTask);
 
 export default router;
