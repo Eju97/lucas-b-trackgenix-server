@@ -1,5 +1,6 @@
 import express from 'express';
 import checkAuth from '../middlewares/authMiddleware';
+
 import {
   createSuperAdmin, getAllSuperAdmins, getByIdSuperAdmin, editSuperAdmins, deletedSuperAdmins,
 } from '../controllers/super-admins';
