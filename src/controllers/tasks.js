@@ -65,7 +65,9 @@ export const createNewTask = async (req, res) => {
 export const deleteTaskById = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Tasks.findByIdAndDelete(id);
+    const result = await Tasks.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
 
     if (!result) {
       throw new APIError({

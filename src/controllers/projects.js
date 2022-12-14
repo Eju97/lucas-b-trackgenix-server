@@ -66,7 +66,9 @@ export const createProjects = async (req, res) => {
 
 export const deleteProject = async (req, res) => {
   try {
-    const result = await Projects.findByIdAndDelete(req.params.id);
+    const result = await Projects.findByIdAndUpdate(req.params.id, {
+      isDeleted: true,
+    });
     if (!result) {
       throw new APIError({
         message: 'Project not found',

@@ -6,6 +6,7 @@ const projectSchema = new Schema({
   description: { type: String, required: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
+  isDeleted: { type: Boolean, default: false },
   employees: [{
     _id: false,
     employee: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Employees' },

@@ -131,7 +131,9 @@ export const deleteTimeSheet = async (req, res) => {
         status: 400,
       });
     }
-    const result = await TimeSheets.findByIdAndDelete(id);
+    const result = await TimeSheets.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
 
     if (!result) {
       throw new APIError({
