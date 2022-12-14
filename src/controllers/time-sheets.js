@@ -98,7 +98,9 @@ export const editTimeSheet = async (req, res) => {
 export const deleteTimeSheet = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await TimeSheets.findByIdAndDelete(id);
+    const result = await TimeSheets.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
 
     if (!result) {
       throw new APIError({
