@@ -76,7 +76,9 @@ export const getByIdSuperAdmin = async (req, res) => {
 export const deletedSuperAdmins = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await SuperAdmins.findByIdAndDelete(id);
+    const result = await SuperAdmins.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
     const deleteFirebaseSuperAdmin = await firebase
       .auth()
       .deleteUser(result.firebaseUid);
