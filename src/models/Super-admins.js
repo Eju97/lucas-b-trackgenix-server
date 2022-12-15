@@ -6,7 +6,7 @@ const superAdminsSchema = new Schema({
   last_name: { type: String, require: true },
   email: { type: String, require: true },
   firebaseUid: { type: String, required: true },
-  isDeleted: { type: String, default: false },
+  isDeleted: { type: Boolean, default: false },
 });
 
 export default mongoose.model('SuperAdmins', superAdminsSchema);

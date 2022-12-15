@@ -1,12 +1,25 @@
 import Tasks from '../models/Tasks';
 import APIError from '../utils/APIError';
+import isValidObjectId from '../middlewares/idValidator';
 
 export const getTaskList = async (req, res) => {
   try {
     const tasks = await Tasks.find(req.query);
-
+    if (!tasks) {
+      throw new APIError({
+        message: 'Tasks not found',
+        status: 404,
+      });
+    }
+    if (tasks.length === 0) {
+      return res.status(200).json({
+        message: 'Tasks list is empty',
+        data: tasks,
+        error: false,
+      });
+    }
     return res.status(200).json({
-      message: 'Tasks found',
+      message: 'Tasks found successfully',
       data: tasks,
       error: false,
     });
@@ -21,6 +34,12 @@ export const getTaskList = async (req, res) => {
 export const getTaskById = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!isValidObjectId(id)) {
+      throw new APIError({
+        message: 'Invalid Task ID',
+        status: 400,
+      });
+    }
     const task = await Tasks.findById(id);
 
     if (!task) {
@@ -30,7 +49,7 @@ export const getTaskById = async (req, res) => {
       });
     }
     return res.status(200).json({
-      message: 'Tasks found',
+      message: 'Task found successfully',
       data: task,
       error: false,
     });
@@ -65,6 +84,12 @@ export const createNewTask = async (req, res) => {
 export const deleteTaskById = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!isValidObjectId(id)) {
+      throw new APIError({
+        message: 'Invalid Task ID',
+        status: 400,
+      });
+    }
     const result = await Tasks.findByIdAndUpdate(id, {
       isDeleted: true,
     });
@@ -75,8 +100,7 @@ export const deleteTaskById = async (req, res) => {
         status: 404,
       });
     }
-    return res.status(200).json({
-      message: `Task with Id ${id} deleted`,
+    return res.status(204).json({
       data: result,
       error: false,
     });
@@ -91,6 +115,12 @@ export const deleteTaskById = async (req, res) => {
 export const editTask = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!isValidObjectId(id)) {
+      throw new APIError({
+        message: 'Invalid Task ID',
+        status: 400,
+      });
+    }
     const updatedTask = await Tasks.findByIdAndUpdate(id, req.body, { new: true });
 
     if (!updatedTask) {
@@ -100,7 +130,7 @@ export const editTask = async (req, res) => {
       });
     }
     return res.status(200).json({
-      message: `Task with Id ${id} updated`,
+      message: 'Task updated successfully',
       data: updatedTask,
       error: false,
     });
