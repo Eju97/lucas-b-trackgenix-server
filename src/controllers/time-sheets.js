@@ -15,7 +15,7 @@ export const getAllTimeSheets = async (req, res) => {
     }
     if (timeSheets.length === 0) {
       return res.status(200).json({
-        message: 'Timesheet list is empty',
+        message: 'Timesheets list is empty',
         data: timeSheets,
         error: false,
       });
@@ -38,7 +38,7 @@ export const getTimeSheetById = async (req, res) => {
     const { id } = req.params;
     if (!isValidObjectId(id)) {
       throw new APIError({
-        message: `Invalid Timesheet ID ${id}`,
+        message: 'Invalid Timesheet ID',
         status: 400,
       });
     }
@@ -95,7 +95,7 @@ export const editTimeSheet = async (req, res) => {
     const { id } = req.params;
     if (!isValidObjectId(id)) {
       throw new APIError({
-        message: `Invalid Timesheet ID ${id}`,
+        message: 'Invalid Timesheet ID',
         status: 400,
       });
     }
@@ -110,7 +110,7 @@ export const editTimeSheet = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: `Timesheet with ID ${id} edited successfully`,
+      message: 'Timesheet updated successfully',
       data: result,
       error: false,
     });
@@ -127,7 +127,7 @@ export const deleteTimeSheet = async (req, res) => {
     const { id } = req.params;
     if (!isValidObjectId(id)) {
       throw new APIError({
-        message: `Invalid Timesheet ID ${id}`,
+        message: 'Invalid Timesheet ID',
         status: 400,
       });
     }
