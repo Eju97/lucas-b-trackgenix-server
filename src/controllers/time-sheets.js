@@ -21,7 +21,7 @@ export const getAllTimeSheets = async (req, res) => {
       });
     }
     return res.status(200).json({
-      message: 'Timesheets found',
+      message: 'Timesheets found successfully',
       data: timeSheets,
       error: false,
     });
@@ -53,7 +53,7 @@ export const getTimeSheetById = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: 'Timesheet found',
+      message: 'Timesheet found successfully',
       data: timeSheet,
       error: false,
     });
