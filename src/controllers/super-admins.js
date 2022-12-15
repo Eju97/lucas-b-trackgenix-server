@@ -1,13 +1,26 @@
 import SuperAdmins from '../models/Super-admins';
 import APIError from '../utils/APIError';
 import firebase from '../helpers/firebase';
+import isValidObjectId from '../middlewares/idValidator';
 
 export const getAllSuperAdmins = async (req, res) => {
   try {
     const superAdmin = await SuperAdmins.find(req.query);
-
+    if (!superAdmin) {
+      throw new APIError({
+        message: 'Super Admins not found',
+        status: 404,
+      });
+    }
+    if (superAdmin.length === 0) {
+      return res.status(200).json({
+        message: 'Super Admins list is empty',
+        data: superAdmin,
+        error: false,
+      });
+    }
     return res.status(200).json({
-      message: 'Super Admins founded.',
+      message: 'Super Admins found successfully',
       data: superAdmin,
       error: false,
     });
@@ -22,6 +35,12 @@ export const getAllSuperAdmins = async (req, res) => {
 export const editSuperAdmins = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!isValidObjectId(id)) {
+      throw new APIError({
+        message: 'Invalid Super Admin ID',
+        status: 400,
+      });
+    }
     const superAdmin = await SuperAdmins.findById(id);
     await firebase.auth().updateUser(superAdmin.firebaseUid, {
       email: req.body.email,
@@ -38,7 +57,7 @@ export const editSuperAdmins = async (req, res) => {
       });
     }
     return res.status(200).json({
-      message: `Super Admin with ID ${id} edited.`,
+      message: 'Super Admin updated successfully',
       data: result,
       error: false,
     });
@@ -53,6 +72,12 @@ export const editSuperAdmins = async (req, res) => {
 export const getByIdSuperAdmin = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!isValidObjectId(id)) {
+      throw new APIError({
+        message: 'Invalid Super Admin ID',
+        status: 400,
+      });
+    }
     const superAdmin = await SuperAdmins.findById(id);
     if (!superAdmin) {
       throw new APIError({
@@ -61,7 +86,7 @@ export const getByIdSuperAdmin = async (req, res) => {
       });
     }
     return res.status(200).json({
-      message: 'Super admin found',
+      message: 'Super Admin found successfully',
       data: superAdmin,
       error: false,
     });
@@ -76,6 +101,12 @@ export const getByIdSuperAdmin = async (req, res) => {
 export const deletedSuperAdmins = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!isValidObjectId(id)) {
+      throw new APIError({
+        message: 'Invalid Super Admin ID',
+        status: 400,
+      });
+    }
     const result = await SuperAdmins.findByIdAndDelete(id);
     const deleteFirebaseSuperAdmin = await firebase
       .auth()
@@ -88,8 +119,7 @@ export const deletedSuperAdmins = async (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      message: `Super Admin with ID ${id} deleted.`,
+    return res.status(204).json({
       data: result,
       error: false,
     });
@@ -120,7 +150,7 @@ export const createSuperAdmin = async (req, res) => {
     });
     const result = await superAdmin.save();
     return res.status(201).json({
-      message: 'Super Admin created',
+      message: 'Super Admin created successfully',
       data: result,
       error: false,
     });

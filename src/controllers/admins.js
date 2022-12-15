@@ -1,13 +1,26 @@
 import Admins from '../models/Admins';
 import APIError from '../utils/APIError';
 import firebase from '../helpers/firebase';
+import isValidObjectId from '../middlewares/idValidator';
 
 export const getAdmins = async (req, res) => {
   try {
     const admins = await Admins.find(req.query);
-
+    if (!admins) {
+      throw new APIError({
+        message: 'Admins not found',
+        status: 404,
+      });
+    }
+    if (admins.length === 0) {
+      return res.status(200).json({
+        message: 'Admins list is empty',
+        data: admins,
+        error: false,
+      });
+    }
     return res.status(200).json({
-      message: 'Admins found',
+      message: 'Admins found successfully',
       data: admins,
       error: false,
     });
@@ -21,7 +34,14 @@ export const getAdmins = async (req, res) => {
 
 export const getAdminsById = async (req, res) => {
   try {
-    const filteredAdmin = await Admins.findById(req.params.id);
+    const { id } = req.params;
+    if (!isValidObjectId(id)) {
+      throw new APIError({
+        message: 'Invalid Admin ID',
+        status: 400,
+      });
+    }
+    const filteredAdmin = await Admins.findById(id);
     if (!filteredAdmin) {
       throw new APIError({
         message: 'Admin not found',
@@ -29,7 +49,7 @@ export const getAdminsById = async (req, res) => {
       });
     }
     return res.status(200).json({
-      message: 'Admin found',
+      message: 'Admin found successfully',
       data: filteredAdmin,
       error: false,
     });
@@ -75,6 +95,12 @@ export const createAdmin = async (req, res) => {
 export const deleteAdmin = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!isValidObjectId(id)) {
+      throw new APIError({
+        message: 'Invalid Admin ID',
+        status: 400,
+      });
+    }
     const deleted = await Admins.findByIdAndDelete(id);
     const deleteFirebaseAdmin = await firebase
       .auth()
@@ -87,8 +113,7 @@ export const deleteAdmin = async (req, res) => {
       });
     }
 
-    return res.status(201).json({
-      message: 'Admin deleted',
+    return res.status(204).json({
       data: deleted,
       error: false,
     });
@@ -103,6 +128,12 @@ export const deleteAdmin = async (req, res) => {
 export const editAdmin = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!isValidObjectId(id)) {
+      throw new APIError({
+        message: 'Invalid Admin ID',
+        status: 400,
+      });
+    }
     const admin = await Admins.findById(id);
     await firebase.auth().updateUser(admin.firebaseUid, {
       email: req.body.email,
@@ -115,8 +146,8 @@ export const editAdmin = async (req, res) => {
         status: 404,
       });
     }
-    return res.status(201).json({
-      message: 'Admin updated',
+    return res.status(200).json({
+      message: 'Admin updated successfully',
       data: edited,
       error: false,
     });
