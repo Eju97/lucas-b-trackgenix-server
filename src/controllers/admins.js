@@ -75,10 +75,14 @@ export const createAdmin = async (req, res) => {
 export const deleteAdmin = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await Admins.findByIdAndDelete(id);
+    const deleted = await Admins.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
     const deleteFirebaseAdmin = await firebase
       .auth()
-      .deleteUser(deleted.firebaseUid);
+      .updateUser(deleted.firebaseUid, {
+        disabled: true,
+      });
 
     if (!deleted && !deleteFirebaseAdmin) {
       throw new APIError({

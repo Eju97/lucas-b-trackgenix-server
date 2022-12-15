@@ -81,7 +81,9 @@ export const deletedSuperAdmins = async (req, res) => {
     });
     const deleteFirebaseSuperAdmin = await firebase
       .auth()
-      .deleteUser(result.firebaseUid);
+      .updateUser(result.firebaseUid, {
+        disabled: true,
+      });
 
     if (!result && !deleteFirebaseSuperAdmin) {
       throw new APIError({

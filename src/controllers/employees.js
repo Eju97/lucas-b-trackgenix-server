@@ -76,8 +76,14 @@ export const createEmployee = async (req, res) => {
 export const deleteEmployee = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Employees.findByIdAndDelete(id);
-    await firebase.auth().deleteUser(result.firebaseUid);
+    const result = await Employees.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
+    await firebase
+      .auth()
+      .updateUser(result.firebaseUid, {
+        disabled: true,
+      });
     if (!result) {
       throw new APIError({
         message: 'Employee not found',
