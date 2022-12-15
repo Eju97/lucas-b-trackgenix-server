@@ -102,8 +102,14 @@ export const deleteEmployee = async (req, res) => {
         status: 400,
       });
     }
-    const result = await Employees.findByIdAndDelete(id);
-    await firebase.auth().deleteUser(result.firebaseUid);
+    const result = await Employees.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
+    await firebase
+      .auth()
+      .updateUser(result.firebaseUid, {
+        disabled: true,
+      });
     if (!result) {
       throw new APIError({
         message: 'Employee not found',

@@ -101,10 +101,14 @@ export const deleteAdmin = async (req, res) => {
         status: 400,
       });
     }
-    const deleted = await Admins.findByIdAndDelete(id);
+    const deleted = await Admins.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
     const deleteFirebaseAdmin = await firebase
       .auth()
-      .deleteUser(deleted.firebaseUid);
+      .updateUser(deleted.firebaseUid, {
+        disabled: true,
+      });
 
     if (!deleted && !deleteFirebaseAdmin) {
       throw new APIError({

@@ -7,6 +7,7 @@ const adminSchema = new Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   firebaseUid: { type: String, required: true },
+  isDeleted: { type: String, default: false },
 });
 
 export default mongoose.model('Admins', adminSchema);
