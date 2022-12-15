@@ -107,7 +107,9 @@ export const deletedSuperAdmins = async (req, res) => {
         status: 400,
       });
     }
-    const result = await SuperAdmins.findByIdAndDelete(id);
+    const result = await SuperAdmins.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
     const deleteFirebaseSuperAdmin = await firebase
       .auth()
       .deleteUser(result.firebaseUid);
