@@ -4,7 +4,15 @@ export const validateTaskBody = (req, res, next) => {
   const letterSpacesRegEx = /[A-Za-z]{3}([A-Za-z]+ ?)*/;
   const taskValidation = Joi.object({
     description: Joi.string().min(3).max(300).regex(letterSpacesRegEx)
-      .required(),
+      .required()
+      .messages({
+        'any.required': 'Description is required',
+        'string.empty': 'Description is not allowed to be empty',
+        'string.min': 'Description must have a minimum of 3 characters',
+        'string.max': 'Description can not be longer than 300 characters',
+        'string.pattern.base': 'Description can only contain letters',
+        'string.required': 'Description field is required',
+      }),
   });
 
   const validation = taskValidation.validate(req.body);
