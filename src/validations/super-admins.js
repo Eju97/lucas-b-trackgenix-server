@@ -38,7 +38,7 @@ const validateSuperAdminsBody = (req, res, next) => {
         'string.empty': 'Password field is not allowed to be empty',
         'string.min': 'Pasword length must have a minimum of 8 characters',
         'string.pattern.base':
-        'Password must have at least 1 capital letter, 1 lower case and 1 number',
+        'Password must have at least 1 upper case, 1 lower case and 1 number',
         'string.required': 'Password field is required',
       }),
   });
