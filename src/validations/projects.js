@@ -56,7 +56,7 @@ export const validateProjectBody = (req, res, next) => {
         'date.format': 'End Date must follow the pattern DD-MM-AAAA',
         'date.required': 'End Date is required',
       }),
-    employees: Joi.array().items.required(Joi.object({
+    employees: Joi.array().required(Joi.object({
       employee: Joi.string().hex().length(24).required(),
       rate: Joi.number().required(),
       role: Joi.string().valid('DEV', 'TL', 'PM', 'QA').required(),
