@@ -51,7 +51,7 @@ export const getEmployeesById = async (req, res) => {
     return res.status(200).json({
       message: 'Employee found successfully',
       data: employee,
-      error: true,
+      error: false,
     });
   } catch (error) {
     return res.status(error.status || 500).json({
